@@ -1,0 +1,3 @@
+2026-04-02 09:14:53 - GRCLoginPage - INFO - Login page loaded successfully
+2026-04-02 09:14:53 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[normalize-space()='✕']")
+2026-04-02 09:15:03 - GRCLoginPage - INFO - Closed initial popup before login

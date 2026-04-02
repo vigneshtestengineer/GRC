@@ -1,0 +1,12 @@
+2026-03-31 15:29:49 - tests.conftest - INFO - ================================================================================
+2026-03-31 15:29:49 - tests.conftest - INFO - TEST SESSION STARTED - OrangeHRM Automation
+2026-03-31 15:29:49 - tests.conftest - INFO - ================================================================================
+2026-03-31 15:29:49 - tests.conftest - INFO - ================================================================================
+2026-03-31 15:29:49 - tests.conftest - INFO - Initializing WebDriver
+2026-03-31 15:31:16 - tests.conftest - ERROR - Test failed: test_valid_login
+2026-03-31 15:31:16 - tests.conftest - INFO - Screenshot saved: E:\AutomationTask\GRC Payroll\reports\screenshots\test_valid_login_20260331_153116.png
+2026-03-31 15:31:16 - tests.conftest - INFO - Quitting WebDriver
+2026-03-31 15:31:18 - tests.conftest - INFO - ================================================================================
+2026-03-31 15:31:18 - tests.conftest - INFO - ================================================================================
+2026-03-31 15:31:18 - tests.conftest - INFO - TEST SESSION COMPLETED
+2026-03-31 15:31:18 - tests.conftest - INFO - ================================================================================

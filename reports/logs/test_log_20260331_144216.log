@@ -1,0 +1,13 @@
+2026-03-31 14:42:20 - GRCLoginPage - INFO - Login page loaded successfully
+2026-03-31 14:42:20 - GRCLoginPage - INFO - Element found: ('id', 'captcahCanvas')
+2026-03-31 14:42:21 - GRCLoginPage - INFO - Captcha OCR result: 
+2026-03-31 14:42:21 - GRCLoginPage - INFO - Logging in with user: valid_user
+2026-03-31 14:42:21 - GRCLoginPage - INFO - Closed initial popup before login
+2026-03-31 14:42:21 - GRCLoginPage - INFO - Element found: ('id', 'Username')
+2026-03-31 14:42:21 - GRCLoginPage - INFO - Entered text 'valid_user' in element: ('id', 'Username')
+2026-03-31 14:42:21 - GRCLoginPage - INFO - Element found: ('id', 'password')
+2026-03-31 14:42:21 - GRCLoginPage - INFO - Entered text 'valid_password' in element: ('id', 'password')
+2026-03-31 14:42:21 - GRCLoginPage - INFO - Element found: ('id', 'group_short_name')
+2026-03-31 14:42:21 - GRCLoginPage - INFO - Entered text 'valid_group' in element: ('id', 'group_short_name')
+2026-03-31 14:42:21 - GRCLoginPage - INFO - Element found: ('name', 'captcha')
+2026-03-31 14:42:21 - GRCLoginPage - INFO - Entered text '' in element: ('name', 'captcha')

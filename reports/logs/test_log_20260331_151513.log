@@ -1,0 +1,17 @@
+2026-03-31 15:15:20 - GRCLoginPage - INFO - Login page loaded successfully
+2026-03-31 15:15:20 - GRCLoginPage - INFO - Element found: ('id', 'captcahCanvas')
+2026-03-31 15:15:20 - GRCLoginPage - WARNING - Captcha OCR returned empty result, retrying with inverted image.
+2026-03-31 15:15:20 - GRCLoginPage - WARNING - Captcha OCR still empty, retrying on original grayscale image.
+2026-03-31 15:15:20 - GRCLoginPage - INFO - Captcha OCR result: iPepeCentralLabour
+2026-03-31 15:15:20 - GRCLoginPage - INFO - Logging in with user: vignesh.kv@aparajitha.com
+2026-03-31 15:15:20 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[normalize-space()='✕']")
+2026-03-31 15:15:20 - GRCLoginPage - INFO - Closed initial popup before login
+2026-03-31 15:15:20 - GRCLoginPage - INFO - Element found: ('id', 'Username')
+2026-03-31 15:15:20 - GRCLoginPage - INFO - Entered text 'vignesh.kv@aparajitha.com' in element: ('id', 'Username')
+2026-03-31 15:15:20 - GRCLoginPage - INFO - Element found: ('id', 'password')
+2026-03-31 15:15:20 - GRCLoginPage - INFO - Entered text 'Admin@123' in element: ('id', 'password')
+2026-03-31 15:15:20 - GRCLoginPage - INFO - Element found: ('id', 'group_short_name')
+2026-03-31 15:15:20 - GRCLoginPage - INFO - Entered text 'MSO' in element: ('id', 'group_short_name')
+2026-03-31 15:15:20 - GRCLoginPage - INFO - Element found: ('name', 'captcha')
+2026-03-31 15:15:20 - GRCLoginPage - INFO - Entered text 'iPepeCentralLabour' in element: ('name', 'captcha')
+2026-03-31 15:16:02 - GRCLoginPage - ERROR - Element not found: ('css selector', "button[type='submit']")

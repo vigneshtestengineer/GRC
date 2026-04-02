@@ -1,0 +1,48 @@
+2026-04-01 17:09:55 - GRCLoginPage - INFO - Login page loaded successfully
+2026-04-01 17:09:55 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[normalize-space()='✕']")
+2026-04-01 17:10:05 - GRCLoginPage - INFO - Closed initial popup before login
+2026-04-01 17:10:05 - GRCLoginPage - INFO - Element found: ('id', 'captcahCanvas')
+2026-04-01 17:10:05 - GRCLoginPage - INFO - Saved captcha image: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_original_20260401_171005_968390.png
+2026-04-01 17:10:06 - GRCLoginPage - INFO - Saved captcha image: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_processed_20260401_171006_005847.png
+2026-04-01 17:10:06 - GRCLoginPage - WARNING - Captcha OCR returned empty result, retrying with inverted image.
+2026-04-01 17:10:06 - GRCLoginPage - INFO - Saved captcha image: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_inverted_20260401_171006_153449.png
+2026-04-01 17:10:06 - GRCLoginPage - WARNING - Captcha OCR still empty, retrying on original grayscale image.
+2026-04-01 17:10:06 - GRCLoginPage - INFO - Saved captcha image: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_grayscale_20260401_171006_269789.png
+2026-04-01 17:10:06 - GRCLoginPage - INFO - Captcha OCR result: YBNV76
+2026-04-01 17:10:06 - GRCLoginPage - INFO - Saved captcha text: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_text_20260401_171006_382027.txt
+2026-04-01 17:10:06 - GRCLoginPage - INFO - Logging in with user: vignesh.kv@aparajitha.com
+2026-04-01 17:10:16 - GRCLoginPage - INFO - Element found: ('id', 'Username')
+2026-04-01 17:10:16 - GRCLoginPage - INFO - Entered text 'vignesh.kv@aparajitha.com' in element: ('id', 'Username')
+2026-04-01 17:10:16 - GRCLoginPage - INFO - Element found: ('id', 'password')
+2026-04-01 17:10:16 - GRCLoginPage - INFO - Entered text 'Admin@123' in element: ('id', 'password')
+2026-04-01 17:10:16 - GRCLoginPage - INFO - Element found: ('id', 'group_short_name')
+2026-04-01 17:10:16 - GRCLoginPage - INFO - Entered text 'MSO' in element: ('id', 'group_short_name')
+2026-04-01 17:10:16 - GRCLoginPage - INFO - Element found: ('name', 'captcha')
+2026-04-01 17:10:16 - GRCLoginPage - INFO - Entered text 'YBNV76' in element: ('name', 'captcha')
+2026-04-01 17:10:16 - GRCLoginPage - INFO - Element found: ('xpath', "//button[@id='Sign In']")
+2026-04-01 17:10:17 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[@id='Sign In']")
+2026-04-01 17:10:19 - GRCLoginPage - INFO - Login action performed
+2026-04-01 17:11:00 - GRCLoginPage - INFO - Login page loaded successfully
+2026-04-01 17:11:01 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[normalize-space()='✕']")
+2026-04-01 17:11:10 - GRCLoginPage - INFO - Closed initial popup before login
+2026-04-01 17:11:11 - GRCLoginPage - INFO - Element found: ('id', 'captcahCanvas')
+2026-04-01 17:11:11 - GRCLoginPage - INFO - Saved captcha image: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_original_20260401_171111_585836.png
+2026-04-01 17:11:11 - GRCLoginPage - INFO - Saved captcha image: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_processed_20260401_171111_601226.png
+2026-04-01 17:11:11 - GRCLoginPage - WARNING - Captcha OCR returned empty result, retrying with inverted image.
+2026-04-01 17:11:11 - GRCLoginPage - INFO - Saved captcha image: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_inverted_20260401_171111_723771.png
+2026-04-01 17:11:11 - GRCLoginPage - WARNING - Captcha OCR still empty, retrying on original grayscale image.
+2026-04-01 17:11:11 - GRCLoginPage - INFO - Saved captcha image: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_grayscale_20260401_171111_842449.png
+2026-04-01 17:11:11 - GRCLoginPage - INFO - Captcha OCR result: CPYR49
+2026-04-01 17:11:11 - GRCLoginPage - INFO - Saved captcha text: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_text_20260401_171111_959393.txt
+2026-04-01 17:11:11 - GRCLoginPage - INFO - Logging in with user: vignesh.kv@aparajitha.com
+2026-04-01 17:11:21 - GRCLoginPage - INFO - Element found: ('id', 'Username')
+2026-04-01 17:11:22 - GRCLoginPage - INFO - Entered text 'vignesh.kv@aparajitha.com' in element: ('id', 'Username')
+2026-04-01 17:11:22 - GRCLoginPage - INFO - Element found: ('id', 'password')
+2026-04-01 17:11:22 - GRCLoginPage - INFO - Entered text 'Admin@123' in element: ('id', 'password')
+2026-04-01 17:11:22 - GRCLoginPage - INFO - Element found: ('id', 'group_short_name')
+2026-04-01 17:11:22 - GRCLoginPage - INFO - Entered text 'MSO' in element: ('id', 'group_short_name')
+2026-04-01 17:11:22 - GRCLoginPage - INFO - Element found: ('name', 'captcha')
+2026-04-01 17:11:22 - GRCLoginPage - INFO - Entered text 'CPYR49' in element: ('name', 'captcha')
+2026-04-01 17:11:22 - GRCLoginPage - INFO - Element found: ('xpath', "//button[@id='Sign In']")
+2026-04-01 17:11:23 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[@id='Sign In']")
+2026-04-01 17:11:25 - GRCLoginPage - INFO - Login action performed

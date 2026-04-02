@@ -1,0 +1,21 @@
+2026-04-02 09:29:09 - GRCLoginPage - INFO - Login page loaded successfully
+2026-04-02 09:29:10 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[normalize-space()='✕']")
+2026-04-02 09:29:20 - GRCLoginPage - INFO - Closed initial popup before login
+2026-04-02 09:30:00 - GRCLoginPage - INFO - Using captcha element located by: ('xpath', "//input[@name='captcha']/ancestor::div[1]/following::canvas[1]")
+2026-04-02 09:30:00 - GRCLoginPage - INFO - Saved captcha image: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_original_20260402_093000_353205.png
+2026-04-02 09:30:00 - GRCLoginPage - INFO - Saved captcha image: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_processed_20260402_093000_367681.png
+2026-04-02 09:30:00 - GRCLoginPage - INFO - Saved captcha image: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_perfect_20260402_093000_413250.png
+2026-04-02 09:30:00 - GRCLoginPage - INFO - Captcha OCR result: SEAMER
+2026-04-02 09:30:00 - GRCLoginPage - INFO - Saved captcha text: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_text_20260402_093000_838491.txt
+2026-04-02 09:30:00 - GRCLoginPage - INFO - Logging in with user: vignesh.kv@aparajitha.com
+2026-04-02 09:30:10 - GRCLoginPage - INFO - Element found: ('id', 'Username')
+2026-04-02 09:30:11 - GRCLoginPage - INFO - Entered text 'vignesh.kv@aparajitha.com' in element: ('id', 'Username')
+2026-04-02 09:30:11 - GRCLoginPage - INFO - Element found: ('id', 'password')
+2026-04-02 09:30:11 - GRCLoginPage - INFO - Entered text 'Admin@123' in element: ('id', 'password')
+2026-04-02 09:30:11 - GRCLoginPage - INFO - Element found: ('id', 'group_short_name')
+2026-04-02 09:30:11 - GRCLoginPage - INFO - Entered text 'MSO' in element: ('id', 'group_short_name')
+2026-04-02 09:30:11 - GRCLoginPage - INFO - Element found: ('name', 'captcha')
+2026-04-02 09:30:11 - GRCLoginPage - INFO - Entered text 'SEAMER' in element: ('name', 'captcha')
+2026-04-02 09:30:12 - GRCLoginPage - INFO - Element found: ('xpath', "//button[@id='Sign In']")
+2026-04-02 09:30:13 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[@id='Sign In']")
+2026-04-02 09:30:15 - GRCLoginPage - INFO - Login action performed
