@@ -1,0 +1,25 @@
+2026-04-06 15:36:07 - GRCLoginPage - INFO - Login page loaded successfully
+2026-04-06 15:36:07 - GRCLoginPage - INFO - Logging in with user: vignesh.kv@aparajitha.com
+2026-04-06 15:36:07 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[normalize-space()='✕']")
+2026-04-06 15:36:17 - GRCLoginPage - INFO - Closed initial popup before login
+2026-04-06 15:36:17 - GRCLoginPage - INFO - Element found: ('id', 'Username')
+2026-04-06 15:36:17 - GRCLoginPage - INFO - Entered text 'vignesh.kv@aparajitha.com' in element: ('id', 'Username')
+2026-04-06 15:36:17 - GRCLoginPage - INFO - Element found: ('id', 'password')
+2026-04-06 15:36:18 - GRCLoginPage - INFO - Entered text 'Admin@123' in element: ('id', 'password')
+2026-04-06 15:36:18 - GRCLoginPage - INFO - Element found: ('id', 'group_short_name')
+2026-04-06 15:36:18 - GRCLoginPage - INFO - Entered text 'MSO' in element: ('id', 'group_short_name')
+2026-04-06 15:36:58 - GRCLoginPage - INFO - Using captcha element located by: ('xpath', "//input[@name='captcha']/ancestor::div[1]/following::canvas[1]")
+2026-04-06 15:36:58 - GRCLoginPage - INFO - Captcha screenshot saved to: E:\AutomationTask\GRC Payroll\reports\captchas\captcha.png
+2026-04-06 15:36:58 - GRCLoginPage - INFO - OCR candidate [original | --oem 3 --psm 8 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'UTRTAT' (confidence=0.00, score=24.00)
+2026-04-06 15:36:59 - GRCLoginPage - INFO - OCR candidate [original | --oem 3 --psm 13 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'UTRTAT' (confidence=0.00, score=24.00)
+2026-04-06 15:36:59 - GRCLoginPage - INFO - OCR candidate [grayscale_autocontrast | --oem 3 --psm 7 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'UTPT47' (confidence=90.00, score=115.00)
+2026-04-06 15:36:59 - GRCLoginPage - INFO - OCR candidate [grayscale_autocontrast | --oem 3 --psm 8 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'UTRTAT' (confidence=0.00, score=24.00)
+2026-04-06 15:36:59 - GRCLoginPage - INFO - OCR candidate [grayscale_autocontrast | --oem 3 --psm 13 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'UTRTAT' (confidence=0.00, score=24.00)
+2026-04-06 15:36:59 - GRCLoginPage - INFO - OCR candidate [processed | --oem 3 --psm 8 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'pea' (confidence=14.00, score=22.00)
+2026-04-06 15:36:59 - GRCLoginPage - INFO - OCR candidate [processed | --oem 3 --psm 13 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'pea' (confidence=14.00, score=22.00)
+2026-04-06 15:37:00 - GRCLoginPage - INFO - OCR candidate [enhanced | --oem 3 --psm 8 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'SURE' (confidence=21.00, score=45.00)
+2026-04-06 15:37:00 - GRCLoginPage - INFO - OCR candidate [enhanced | --oem 3 --psm 13 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'SURE' (confidence=21.00, score=45.00)
+2026-04-06 15:37:00 - GRCLoginPage - INFO - OCR candidate [perfect | --oem 3 --psm 8 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'pecer24' (confidence=0.00, score=26.00)
+2026-04-06 15:37:01 - GRCLoginPage - INFO - OCR candidate [perfect | --oem 3 --psm 13 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'pecer24' (confidence=0.00, score=26.00)
+2026-04-06 15:37:01 - GRCLoginPage - INFO - OCR captcha text: 'UTPT47'
+2026-04-06 15:37:01 - GRCLoginPage - INFO - Saved captcha text: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_text_20260406_153701_001198.txt

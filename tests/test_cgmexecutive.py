@@ -13,8 +13,7 @@ def test_open_general_master_executive(driver):
     password = Config.PASSWORD
     group_name = Config.GROUP
 
-    captcha_text = login_page.get_captcha_text()
-    login_page.login(username, password, group_name, captcha_text)
+    login_page.login(username, password, group_name)
 
     executive_page = CGMExecutivePage(driver)
     executive_page.open_general_master_executive()

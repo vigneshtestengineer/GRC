@@ -1,7 +1,8 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 import sys
 import os
-from io import BytesIO
+import re
 from datetime import datetime
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -10,6 +11,8 @@ from config.config import Config
 from PIL import Image, ImageOps, ImageFilter
 import pytesseract
 from pytesseract import TesseractNotFoundError
+
+SCREENSHOT_DIR = Config.CAPTCHA_IMAGE_DIR
 
 
 class GRCLoginPage(BasePage):
@@ -72,13 +75,165 @@ class GRCLoginPage(BasePage):
             self.wait_for_element_to_disappear(self.CLOSE_POPUP_BUTTON, timeout=5)
             self.logger.info("Closed initial popup before login")
 
+    @property
+    def captcha_image(self):
+        return self._locate_captcha_element(timeout=4)
+
+    @property
+    def captcha_input(self):
+        return self.wait_for_element(self.CAPTCHA_TEXTBOX, timeout=5)
+
+    def locate_and_convert_captcha(self) -> str:
+        """
+        Equivalent of LocateandConvertcapctha() in Java.
+
+        Steps:
+          1. Takes a screenshot of ONLY the captcha element.
+          2. Saves it to /screenshot/captcha.png
+          3. Runs pytesseract OCR (equivalent of Tesseract.doOCR).
+          4. Strips non-alphanumeric characters.
+          5. Returns cleaned captcha text.
+        """
+        os.makedirs(SCREENSHOT_DIR, exist_ok=True)
+        dest_path = os.path.join(SCREENSHOT_DIR, "captcha.png")
+
+        captcha_element = self.captcha_image
+        captcha_element.screenshot(dest_path)
+        self.logger.info(f"Captcha screenshot saved to: {dest_path}")
+
+        tesseract_cmd = getattr(Config, "TESSERACT_CMD", r"E:\Tesseract-OCR\tesseract.exe")
+        pytesseract.pytesseract.tesseract_cmd = tesseract_cmd
+
+        try:
+            image = Image.open(dest_path)
+
+            candidate_images = [
+                ("original", image),
+                ("grayscale_autocontrast", ImageOps.autocontrast(image.convert("L"))),
+                ("processed", self._prepare_captcha_image(image)),
+                ("enhanced", self._prepare_captcha_image_enhanced(image)),
+                ("perfect", self._prepare_captcha_image_perfect(image)),
+            ]
+            ocr_configs = [
+                '--oem 3 --psm 7 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+                '--oem 3 --psm 8 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+                '--oem 3 --psm 13 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+            ]
+
+            best_candidate = {"text": "", "score": -1}
+            fallback_candidate = {"text": "", "score": -1}
+
+            for image_name, candidate_image in candidate_images:
+                for config in ocr_configs:
+                    cleaned_text, confidence = self._extract_text_with_confidence(candidate_image, config)
+                    if not cleaned_text:
+                        continue
+
+                    score = self._score_captcha_candidate(cleaned_text, confidence)
+                    self.logger.info(
+                        "OCR candidate [%s | %s]: '%s' (confidence=%.2f, score=%.2f)",
+                        image_name,
+                        config,
+                        cleaned_text,
+                        confidence,
+                        score,
+                    )
+
+                    if score > fallback_candidate["score"]:
+                        fallback_candidate = {"text": cleaned_text, "score": score}
+
+                    if self._is_valid_captcha_text(cleaned_text) and score > best_candidate["score"]:
+                        best_candidate = {"text": cleaned_text, "score": score}
+
+            captcha_text = best_candidate["text"] if best_candidate["text"] else fallback_candidate["text"]
+        except TesseractNotFoundError as exc:
+            error_message = (
+                "Tesseract OCR executable not found. "
+                "Install Tesseract and set pytesseract.pytesseract.tesseract_cmd correctly."
+            )
+            self.logger.error(error_message)
+            raise RuntimeError(error_message) from exc
+
+        captcha_text = re.sub(r"[^a-zA-Z0-9]", "", captcha_text)
+        if not captcha_text:
+            raise RuntimeError("Captcha OCR returned empty text.")
+
+        self.logger.info(f"OCR captcha text: '{captcha_text}'")
+        self._save_captcha_text(captcha_text)
+        return captcha_text
+
+    def _extract_text_with_confidence(self, image, config):
+        cleaned = ""
+        confidence = 0.0
+        data = pytesseract.image_to_data(
+            image,
+            config=config,
+            output_type=pytesseract.Output.DICT,
+        )
+
+        words = []
+        conf_values = []
+        for raw_word, conf_str in zip(data.get("text", []), data.get("conf", [])):
+            word = re.sub(r"[^a-zA-Z0-9]", "", (raw_word or ""))
+            if not word:
+                continue
+
+            words.append(word)
+            try:
+                conf = float(conf_str)
+                if conf >= 0:
+                    conf_values.append(conf)
+            except (TypeError, ValueError):
+                continue
+
+        if words:
+            cleaned = "".join(words)
+            confidence = sum(conf_values) / len(conf_values) if conf_values else 0.0
+            return cleaned, confidence
+
+        raw_text = pytesseract.image_to_string(image, config=config)
+        cleaned = re.sub(r"[^a-zA-Z0-9]", "", raw_text)
+        return cleaned, confidence
+
+    def _score_captcha_candidate(self, text, confidence):
+        score = max(0.0, float(confidence))
+        length = len(text)
+        if 4 <= length <= 8:
+            score += 20.0
+        elif length > 0:
+            score += 5.0
+
+        unique_chars = len(set(text))
+        score += min(unique_chars, 8)
+        return score
+
     def enter_captcha(self, captcha_text):
-        if not captcha_text or not captcha_text.strip():
-            raise ValueError("Captcha text is empty; OCR did not return a valid value.")
-        self.enter_text(self.CAPTCHA_TEXTBOX, captcha_text)
+        if not captcha_text or not str(captcha_text).strip():
+            raise ValueError("Captcha text is empty, so it cannot be entered.")
+
+        captcha_text = str(captcha_text).strip()
+        field = self.captcha_input
+        field.clear()
+        field.send_keys(Keys.CONTROL, "a")
+        field.send_keys(Keys.BACKSPACE)
+        field.send_keys(captcha_text)
+
+        typed_value = field.get_attribute("value") or ""
+        if typed_value.strip() != captcha_text:
+            self.driver.execute_script(
+                """
+                arguments[0].value = arguments[1];
+                arguments[0].dispatchEvent(new Event('input', {bubbles: true}));
+                arguments[0].dispatchEvent(new Event('change', {bubbles: true}));
+                """,
+                field,
+                captcha_text,
+            )
+
         self.wait.until(
             lambda d: d.find_element(*self.CAPTCHA_TEXTBOX).get_attribute("value").strip() == captcha_text
         )
+        self.logger.info(f"Entered captcha: '{captcha_text}'")
 
     def _is_usable_captcha_element(self, element):
         try:
@@ -192,11 +347,89 @@ class GRCLoginPage(BasePage):
         return True
 
     def _extract_captcha_text(self, image, prefix):
-        image_path = self._save_captcha_image(image, prefix)
-        text = self._normalize_ocr_text(self._run_tesseract(image_path))
+        text = self._normalize_ocr_text(self._run_tesseract(image))
         self.logger.debug(f"OCR result for {prefix}: '{text}'")
         print(f"Captcha OCR candidate [{prefix}]: {text}")
         return text
+
+    def _extract_captcha_text_by_characters(self, image, prefix):
+        image = image.convert("L")
+        image = ImageOps.autocontrast(image)
+        width, height = image.size
+        pixels = image.load()
+        segments = []
+        start = None
+
+        for x in range(width):
+            dark_pixel_count = sum(1 for y in range(height) if pixels[x, y] == 0)
+            has_dark_pixel = dark_pixel_count >= max(2, height // 18)
+            if has_dark_pixel and start is None:
+                start = x
+            elif not has_dark_pixel and start is not None:
+                if x - start >= 6:
+                    segments.append((start, x - 1))
+                start = None
+
+        if start is not None and width - start >= 6:
+            segments.append((start, width - 1))
+
+        recognized = []
+        for index, (left, right) in enumerate(segments):
+            char_image = image.crop((max(0, left - 2), 0, min(width, right + 3), height))
+            bbox = ImageOps.invert(char_image).getbbox()
+            if bbox:
+                char_image = char_image.crop(bbox)
+
+            char_image = char_image.resize((max(24, char_image.width * 3), max(36, char_image.height * 3)), Image.LANCZOS)
+            char_image = ImageOps.autocontrast(char_image)
+            char_image = char_image.filter(ImageFilter.MedianFilter(size=3))
+            char_image = char_image.filter(ImageFilter.UnsharpMask(radius=2, percent=180, threshold=1))
+            recognized.append(self._read_single_character(char_image))
+
+        text = "".join(recognized)
+        self.logger.debug(f"Segmented OCR result for {prefix}: '{text}'")
+        print(f"Captcha OCR segmented candidate [{prefix}]: {text}")
+        return text
+
+    def _prefer_digit_when_ambiguous(self, alnum_text, digit_text):
+        if len(alnum_text) != 1 or len(digit_text) != 1 or not digit_text.isdigit():
+            return alnum_text
+
+        digit_confusions = {
+            "0": {"O", "Q", "D"},
+            "1": {"I", "L", "T"},
+            "2": {"Z"},
+            "5": {"S"},
+            "6": {"G"},
+            "8": {"B"},
+        }
+        if alnum_text in digit_confusions.get(digit_text, set()):
+            return digit_text
+        return alnum_text
+
+    def _read_single_character(self, char_image):
+        ocr_options = [
+            ("alnum", '--oem 3 --psm 10 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+            ("digit", '--oem 3 --psm 10 -c tessedit_char_whitelist=0123456789'),
+            ("alpha", '--oem 3 --psm 10 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+            ("alnum_fallback", '--oem 3 --psm 13 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+        ]
+        results = {}
+
+        for key, config in ocr_options:
+            text = self._normalize_ocr_text(pytesseract.image_to_string(char_image, config=config))
+            if len(text) == 1:
+                results[key] = text
+
+        if "alnum" in results and "digit" in results:
+            return self._prefer_digit_when_ambiguous(results["alnum"], results["digit"])
+        if "alnum" in results:
+            return results["alnum"]
+        if "digit" in results:
+            return results["digit"]
+        if "alpha" in results:
+            return results["alpha"]
+        return results.get("alnum_fallback", "")
 
     def _ensure_captcha_dir(self):
         captcha_dir = Config.CAPTCHA_IMAGE_DIR
@@ -230,26 +463,25 @@ class GRCLoginPage(BasePage):
         self.logger.debug(f"Saved captcha debug image: {debug_file}")
         return debug_file
 
-    def _run_tesseract(self, image_path):
+    def _run_tesseract(self, image):
         ocr_configs = [
             (
                 '--oem 3 --psm 8 '
-                '-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz '
-                '-c load_system_dawg=0 -c load_freq_dawg=0 -c user_defined_dpi=300 '
-                '-c classify_bln_numeric_mode=1'
+                '-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ '
+                '-c load_system_dawg=0 -c load_freq_dawg=0 -c user_defined_dpi=300'
             ),
             (
                 '--oem 3 --psm 7 '
-                '-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz '
+                '-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ '
                 '-c load_system_dawg=0 -c load_freq_dawg=0 -c user_defined_dpi=300'
             ),
             (
                 '--oem 3 --psm 13 '
-                '-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz '
+                '-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ '
                 '-c load_system_dawg=0 -c load_freq_dawg=0 -c user_defined_dpi=300'
             ),
         ]
-        image = Image.open(image_path).convert("L")
+        image = image.convert("L")
         results = []
 
         for config in ocr_configs:
@@ -268,112 +500,21 @@ class GRCLoginPage(BasePage):
             "|": "I",
             "!": "I",
             "$": "S",
-            "O": "0",
-            "Q": "0",
-            "I": "1",
-            "L": "1",
-            "Z": "2",
-            "S": "5",
-            "B": "8",
+            " ": "",
         }
         normalized = ''.join(replacements.get(ch, ch) for ch in text if ch.isalnum() or ch in replacements)
         return normalized.upper()
 
-    def get_captcha_text(self):
+    def get_captcha_text(self, popup_already_closed=False):
         """
         Captures the captcha image from the page and uses OCR to read the text.
         Returns:
             str: Captcha text recognized by Tesseract
         """
-        self.close_initial_popup()
+        if not popup_already_closed:
+            self.close_initial_popup()
         self.wait_for_element(self.CAPTCHA_TEXTBOX, timeout=3)
-        self.sleep(0.1)
-
-        captcha_element = self._locate_captcha_element(timeout=4)
-        captcha_png = captcha_element.screenshot_as_png
-
-        original_image = Image.open(BytesIO(captcha_png))
-        self._save_captcha_image(original_image, "captcha_original")
-
-        preprocessed_image = self._prepare_captcha_image(original_image)
-        self._save_captcha_image(preprocessed_image, "captcha_processed")
-
-        if getattr(Config, "TESSERACT_CMD", None):
-            tesseract_cmd = Config.TESSERACT_CMD
-            if os.path.isdir(tesseract_cmd):
-                tesseract_cmd = os.path.join(tesseract_cmd, "tesseract.exe")
-            pytesseract.pytesseract.tesseract_cmd = tesseract_cmd
-            if not os.path.isfile(tesseract_cmd):
-                raise RuntimeError(
-                    f"Tesseract executable not found at configured path: {tesseract_cmd}"
-                )
-
-        try:
-            perfect_image = self._prepare_captcha_image_perfect(original_image)
-            enhanced_image = self._prepare_captcha_image_enhanced(original_image)
-            candidate_images = [
-                ("perfect", perfect_image),
-                ("enhanced", enhanced_image),
-                ("perfect_inverted", ImageOps.invert(perfect_image)),
-                ("processed", preprocessed_image),
-                ("enhanced_inverted", ImageOps.invert(enhanced_image)),
-                ("processed_inverted", ImageOps.invert(preprocessed_image.convert("L"))),
-                ("grayscale", ImageOps.autocontrast(original_image.convert("L"))),
-                ("equalized", ImageOps.equalize(original_image.convert("L"))),
-                ("thresholded", original_image.convert("L").point(lambda x: 0 if x < 150 else 255, mode='1')),
-                ("sharpened", original_image.convert("L").filter(ImageFilter.UnsharpMask(radius=2, percent=250, threshold=2))),
-                ("original", original_image.convert("L"))
-            ]
-
-            captcha_text = None
-            for prefix, image in candidate_images:
-                candidate_text = self._extract_captcha_text(image, f"captcha_{prefix}")
-                if self._is_valid_captcha_text(candidate_text):
-                    captcha_text = candidate_text
-                    print(f"Captcha OCR final choice [{prefix}]: {captcha_text}")
-                    break
-                self.logger.warning(
-                    f"Captcha OCR produced invalid result from {prefix}: '{candidate_text}'"
-                )
-
-            if not captcha_text:
-                fallback_candidates = []
-                for prefix, image in candidate_images:
-                    candidate_text = self._extract_captcha_text(image, f"captcha_fallback_{prefix}")
-                    if candidate_text:
-                        fallback_candidates.append(candidate_text)
-
-                if fallback_candidates:
-                    captcha_text = max(fallback_candidates, key=len)
-                    self.logger.warning(
-                        "Captcha OCR used best-effort fallback result: '%s'",
-                        captcha_text,
-                    )
-
-            if not captcha_text:
-                self._save_captcha_debug_image(original_image, "captcha_original")
-                self._save_captcha_debug_image(preprocessed_image, "captcha_processed")
-                self.logger.error(
-                    "Captcha OCR failed to produce a valid text string. "
-                    "Saved debug images to reports/captcha_debug."
-                )
-                raise RuntimeError(
-                    "Captcha OCR returned invalid text. "
-                    "Inspect debug images and adjust preprocessing."
-                )
-        except TesseractNotFoundError as exc:
-            error_message = (
-                "Tesseract OCR executable not found. "
-                "Install Tesseract and add it to PATH, or set pytesseract.pytesseract.tesseract_cmd. "
-                "See https://github.com/madmaze/pytesseract for installation details."
-            )
-            self.logger.error(error_message)
-            raise RuntimeError(error_message) from exc
-
-        self.logger.info(f"Captcha OCR result: {captcha_text}")
-        print(f"Captcha OCR result: {captcha_text}")
-        self._save_captcha_text(captcha_text)
-        return captcha_text
+        return self.locate_and_convert_captcha()
 
     def click_login_button(self):
         self.wait_for_element(self.CAPTCHA_TEXTBOX, timeout=5)
@@ -396,7 +537,7 @@ class GRCLoginPage(BasePage):
         self.enter_group_name(group_name)
 
         if captcha_text is None or not str(captcha_text).strip():
-            captcha_text = self.get_captcha_text()
+            captcha_text = self.get_captcha_text(popup_already_closed=True)
 
         self.enter_captcha(captcha_text)
         self.wait.until(

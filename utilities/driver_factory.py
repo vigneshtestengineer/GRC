@@ -33,6 +33,10 @@ class DriverFactory:
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--remote-debugging-port=9222")
+        # Hide Selenium automation infobar and reduce automation fingerprints.
+        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        chrome_options.add_experimental_option("useAutomationExtension", False)
+        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
         return chrome_options
 
     @staticmethod
@@ -90,6 +94,7 @@ class DriverFactory:
                     driver = DriverFactory._create_chrome_driver(retry_options)
                 else:
                     raise
+            DriverFactory._apply_chrome_stealth(driver)
             
         elif browser.lower() == "firefox":
             firefox_options = FirefoxOptions()
@@ -107,3 +112,23 @@ class DriverFactory:
         driver.maximize_window()
         
         return driver
+
+    @staticmethod
+    def _apply_chrome_stealth(driver):
+        """
+        Apply browser-level JS patches to reduce automation detection signals.
+        """
+        try:
+            driver.execute_cdp_cmd(
+                "Page.addScriptToEvaluateOnNewDocument",
+                {
+                    "source": """
+                        Object.defineProperty(navigator, 'webdriver', {
+                            get: () => undefined
+                        });
+                    """
+                },
+            )
+        except Exception:
+            # Non-critical: continue even if CDP command is unavailable.
+            pass
