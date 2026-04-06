@@ -17,6 +17,18 @@ SCREENSHOT_DIR = Config.CAPTCHA_IMAGE_DIR
 
 class GRCLoginPage(BasePage):
     """Login page object class"""
+    AMBIGUOUS_ALPHA_TO_DIGIT = {
+        "O": "0",
+        "Q": "0",
+        "D": "0",
+        "I": "1",
+        "L": "1",
+        "T": "7",
+        "Z": "2",
+        "S": "5",
+        "G": "6",
+        "B": "8",
+    }
 
     # Locators
     USERNAME_INPUT = (By.ID, "Username")
@@ -81,7 +93,8 @@ class GRCLoginPage(BasePage):
 
     @property
     def captcha_input(self):
-        return self.wait_for_element(self.CAPTCHA_TEXTBOX, timeout=5)
+        self.wait_for_element(self.CAPTCHA_TEXTBOX, timeout=5)
+        return self.driver.find_element(*self.CAPTCHA_TEXTBOX)
 
     def locate_and_convert_captcha(self) -> str:
         """
@@ -128,6 +141,10 @@ class GRCLoginPage(BasePage):
                     cleaned_text, confidence = self._extract_text_with_confidence(candidate_image, config)
                     if not cleaned_text:
                         continue
+
+                    segmented_text = self._extract_captcha_text_by_characters(candidate_image, image_name)
+                    cleaned_text = self._merge_ocr_with_segmented(cleaned_text, segmented_text)
+                    cleaned_text = self._resolve_numeric_ambiguities(cleaned_text)
 
                     score = self._score_captcha_candidate(cleaned_text, confidence)
                     self.logger.info(
@@ -207,33 +224,99 @@ class GRCLoginPage(BasePage):
         score += min(unique_chars, 8)
         return score
 
+    def _merge_ocr_with_segmented(self, ocr_text, segmented_text):
+        if not ocr_text:
+            return segmented_text or ""
+        if not segmented_text:
+            return ocr_text
+        if len(ocr_text) != len(segmented_text):
+            return ocr_text
+
+        merged = []
+        for base_char, seg_char in zip(ocr_text, segmented_text):
+            if base_char == seg_char:
+                merged.append(base_char)
+                continue
+
+            if (
+                base_char.isalpha()
+                and seg_char.isdigit()
+                and self.AMBIGUOUS_ALPHA_TO_DIGIT.get(base_char.upper()) == seg_char
+            ):
+                merged.append(seg_char)
+                continue
+
+            merged.append(base_char)
+        return "".join(merged)
+
+    def _resolve_numeric_ambiguities(self, text):
+        if not text:
+            return text
+
+        digits = sum(1 for ch in text if ch.isdigit())
+        letters = sum(1 for ch in text if ch.isalpha())
+        if digits < letters:
+            return text
+
+        resolved = []
+        for ch in text:
+            replacement = self.AMBIGUOUS_ALPHA_TO_DIGIT.get(ch.upper(), ch)
+            resolved.append(replacement)
+        return "".join(resolved)
+
     def enter_captcha(self, captcha_text):
         if not captcha_text or not str(captcha_text).strip():
             raise ValueError("Captcha text is empty, so it cannot be entered.")
 
         captcha_text = str(captcha_text).strip()
-        field = self.captcha_input
-        field.clear()
-        field.send_keys(Keys.CONTROL, "a")
-        field.send_keys(Keys.BACKSPACE)
-        field.send_keys(captcha_text)
+        for attempt in range(1, 4):
+            field = self.captcha_input
+            self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", field)
+            try:
+                field.click()
+            except Exception:
+                self.driver.execute_script("arguments[0].click();", field)
 
-        typed_value = field.get_attribute("value") or ""
-        if typed_value.strip() != captcha_text:
-            self.driver.execute_script(
-                """
-                arguments[0].value = arguments[1];
-                arguments[0].dispatchEvent(new Event('input', {bubbles: true}));
-                arguments[0].dispatchEvent(new Event('change', {bubbles: true}));
-                """,
-                field,
+            try:
+                field.clear()
+            except Exception:
+                pass
+
+            try:
+                field.send_keys(Keys.CONTROL, "a")
+                field.send_keys(Keys.DELETE)
+                field.send_keys(captcha_text)
+            except Exception:
+                pass
+
+            typed_value = (field.get_attribute("value") or "").strip()
+            if typed_value != captcha_text:
+                self.driver.execute_script(
+                    """
+                    arguments[0].focus();
+                    arguments[0].value = arguments[1];
+                    arguments[0].dispatchEvent(new Event('input', {bubbles: true}));
+                    arguments[0].dispatchEvent(new Event('change', {bubbles: true}));
+                    arguments[0].dispatchEvent(new Event('blur', {bubbles: true}));
+                    """,
+                    field,
+                    captcha_text,
+                )
+
+            final_value = (self.driver.find_element(*self.CAPTCHA_TEXTBOX).get_attribute("value") or "").strip()
+            if final_value == captcha_text:
+                self.logger.info(f"Entered captcha: '{captcha_text}'")
+                return
+
+            self.logger.warning(
+                "Captcha input attempt %d failed. Expected '%s', found '%s'",
+                attempt,
                 captcha_text,
+                final_value,
             )
+            self.sleep(0.2)
 
-        self.wait.until(
-            lambda d: d.find_element(*self.CAPTCHA_TEXTBOX).get_attribute("value").strip() == captcha_text
-        )
-        self.logger.info(f"Entered captcha: '{captcha_text}'")
+        raise RuntimeError(f"Captcha could not be entered. Expected '{captcha_text}'.")
 
     def _is_usable_captcha_element(self, element):
         try:
@@ -355,6 +438,7 @@ class GRCLoginPage(BasePage):
     def _extract_captcha_text_by_characters(self, image, prefix):
         image = image.convert("L")
         image = ImageOps.autocontrast(image)
+        image = image.point(lambda x: 0 if x < 170 else 255, mode='L')
         width, height = image.size
         pixels = image.load()
         segments = []
