@@ -1,0 +1,14 @@
+2026-04-07 15:28:01 - CGMExecutivePage - INFO - CGM Executive Dashboard loaded successfully
+2026-04-07 15:28:01 - CGMExecutivePage - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[text()='apps']]")
+2026-04-07 15:28:02 - CGMExecutivePage - INFO - Clicked on element: ('xpath', "//mat-card[span[text()='General Master-Executive']]")
+2026-04-07 15:28:02 - CGMExecutivePage - INFO - Switched to new browser window/tab: 1348488126F2E15D8D7686B19F7DE0EE
+2026-04-07 15:28:04 - CGMExecutivePage - INFO - Switched to General Master-Executive tab and verified URL http://13.203.6.58:5002/#/home/welcome
+2026-04-07 15:28:05 - CGMExecutivePage - INFO - Element found: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-04-07 15:28:07 - CGMExecutivePage - INFO - Entered text 'Pure value' in element: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-04-07 15:28:08 - CGMExecutivePage - INFO - Element found: ('xpath', "//td[contains(@class, 'cdk-column-legal_entity_name') and contains(@class, 'mat-cell')]")
+2026-04-07 15:28:08 - CGMExecutivePage - INFO - Clicked on element: ('xpath', "//td[contains(@class, 'cdk-column-legal_entity_name') and contains(@class, 'mat-cell')]")
+2026-04-07 15:28:08 - CGMExecutivePage - INFO - Element found: ('xpath', "//td[contains(@class,'mat-column-legal_entity_name')]")
+2026-04-07 15:28:09 - CGMExecutivePage - INFO - Clicked on element: ('xpath', "//td[contains(@class,'mat-column-legal_entity_name')]")
+2026-04-07 15:28:10 - CGMExecutivePage - INFO - Element found: ('xpath', "//button[contains(@class, 'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-04-07 15:28:10 - CGMExecutivePage - INFO - Clicked on element: ('xpath', "//button[contains(@class, 'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-04-07 15:28:12 - CGMExecutivePage - INFO - Clicked on element: ('xpath', "//compfie-vertical-navigation-collapsable-item[.//mat-icon[@data-mat-icon-name='apps']]")

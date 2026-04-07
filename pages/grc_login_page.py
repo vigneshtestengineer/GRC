@@ -627,7 +627,6 @@ class GRCLoginPage(BasePage):
         self.wait.until(
             lambda d: d.find_element(*self.CAPTCHA_TEXTBOX).get_attribute("value").strip() == captcha_text
         )
-        self.sleep(1)
         self.click_login_button()
-        self.sleep(2)  # wait for login to process, adjust as needed
+        self.wait.until(EC.url_changes(Config.LOGIN_URL))  # wait for login to process, adjust as needed
         self.logger.info("Login action performed")

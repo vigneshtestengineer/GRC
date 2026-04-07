@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 import sys
 import os
@@ -17,8 +18,17 @@ class CGMExecutivePage(BasePage):
     ENTITY_ROW = (By.XPATH, "//td[contains(@class, 'cdk-column-legal_entity_name') and contains(@class, 'mat-cell')]")
     ADD_BUTTON = (By.XPATH, "//button[contains(@class, 'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
     SELECT_LEGAL_ENTITY = (By.XPATH, "//td[contains(@class,'mat-column-legal_entity_name')]")
-    APPS_NAV_ITEM = (By.XPATH, "//compfie-vertical-navigation-collapsable-item[.//mat-icon[@data-mat-icon-name='apps']]")
+    OPEN_GENERAL_MASTER_MENU = (By.XPATH, "//compfie-vertical-navigation-collapsable-item[.//mat-icon[@data-mat-icon-name='apps']]")
     EXECUTIVE_URL = "http://13.203.6.58:5002/#/home/welcome"
+
+    # Unit Creation locators
+
+    CLICK_ON_UNIT_MASTER = (By.XPATH, "//span[normalize-space()='Unit Creation']")
+    CLICK_ADD_UNIT_BUTTON = (By.XPATH, "//button[.//mat-icon[text()='add'] and .//span[contains(normalize-space(),'Add')]]")
+    CLICK_BUSSINESSGROUP_DROPDOWN = (By.XPATH, "//mat-select[.//span[contains(text(),'Choose Business Group')]]")
+    SEARCH_BUSSINESSGROUP = (By.XPATH, "//input[@aria-label='dropdown search']")
+    CLICK_COUNTRY_DROPDOWN = (By.XPATH, "//mat-select[@id='country']")
+
 
     def __init__(self, driver):
         """Initialize CGM Executive page"""
@@ -60,9 +70,6 @@ class CGMExecutivePage(BasePage):
         self.scroll_to_element(self.ADD_BUTTON)
         self.click(self.ADD_BUTTON)
 
-        self.wait_for_element_to_be_clickable(self.APPS_NAV_ITEM, timeout=10)
-        self.click(self.APPS_NAV_ITEM, timeout=10)
-
     def _switch_to_new_window_if_opened(self, previous_windows):
         """Switch to a newly opened browser window/tab if the click opened one."""
         current_windows = self.driver.window_handles
@@ -75,4 +82,26 @@ class CGMExecutivePage(BasePage):
                 self.logger.debug("Detected window count change, but no new handle found.")
         else:
             self.logger.debug("No new browser window/tab opened after click.")
+            
+# Click General master to create the unit creation
 
+    def general_master_menu(self):
+        """Open General Master menu from the left navigation for creation of Unit creation"""
+        self.wait_for_element_to_be_clickable(self.OPEN_GENERAL_MASTER_MENU, timeout=10)
+        self.click(self.OPEN_GENERAL_MASTER_MENU, timeout=10)
+
+# Create Unit master
+
+    def create_unit_master(self):
+
+        self.wait_for_element_to_be_clickable(self.CLICK_ON_UNIT_MASTER, timeout=10)
+        self.click(self.CLICK_ON_UNIT_MASTER, timeout=10)
+        self.wait_for_element_to_be_clickable(self.CLICK_ADD_UNIT_BUTTON, timeout=10)
+        self.click(self.CLICK_ADD_UNIT_BUTTON, timeout=10)
+        element = self.wait_for_element_to_be_clickable(self.CLICK_BUSSINESSGROUP_DROPDOWN, timeout=10)
+        self.enter_text(self.SEARCH_BUSSINESSGROUP, "Microsoft Bussiness Groups", timeout=10)
+        self.wait.until(
+            lambda d: d.find_element(*self.SEARCH_BUSSINESSGROUP).get_attribute("value").strip() == "Microsoft Bussiness Groups"
+        )
+        element.send_keys(Keys.ENTER)
+        

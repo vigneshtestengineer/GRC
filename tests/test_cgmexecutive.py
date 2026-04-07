@@ -17,6 +17,8 @@ def test_open_general_master_executive(driver):
 
     executive_page = CGMExecutivePage(driver)
     executive_page.open_general_master_executive()
+    executive_page.general_master_menu()
+    executive_page.create_unit_master()
 
     assert driver.current_url == CGMExecutivePage.EXECUTIVE_URL
     assert driver.find_element(*CGMExecutivePage.SEARCH_INPUT).get_attribute("value") == "Pure value"
