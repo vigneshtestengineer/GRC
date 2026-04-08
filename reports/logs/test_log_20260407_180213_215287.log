@@ -1,0 +1,17 @@
+2026-04-07 18:02:13 - CGMExecutivePage - INFO - CGM Executive Dashboard loaded successfully
+2026-04-07 18:02:13 - CGMExecutivePage - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[text()='apps']]")
+2026-04-07 18:02:13 - CGMExecutivePage - INFO - Clicked on element: ('xpath', "//mat-card[span[text()='General Master-Executive']]")
+2026-04-07 18:02:13 - CGMExecutivePage - INFO - Switched to new browser window/tab: DBFB651513E8A8A89391C9886283A687
+2026-04-07 18:02:15 - CGMExecutivePage - INFO - Switched to General Master-Executive tab and verified URL http://13.203.6.58:5002/#/home/welcome
+2026-04-07 18:02:16 - CGMExecutivePage - INFO - Element found: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-04-07 18:02:18 - CGMExecutivePage - INFO - Entered text 'Pure value' in element: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-04-07 18:02:19 - CGMExecutivePage - INFO - Element found: ('xpath', "//td[contains(@class, 'cdk-column-legal_entity_name') and contains(@class, 'mat-cell')]")
+2026-04-07 18:02:19 - CGMExecutivePage - INFO - Clicked on element: ('xpath', "//td[contains(@class, 'cdk-column-legal_entity_name') and contains(@class, 'mat-cell')]")
+2026-04-07 18:02:19 - CGMExecutivePage - INFO - Element found: ('xpath', "//td[contains(@class,'mat-column-legal_entity_name')]")
+2026-04-07 18:02:20 - CGMExecutivePage - INFO - Clicked on element: ('xpath', "//td[contains(@class,'mat-column-legal_entity_name')]")
+2026-04-07 18:02:21 - CGMExecutivePage - INFO - Element found: ('xpath', "//button[contains(@class, 'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-04-07 18:02:21 - CGMExecutivePage - INFO - Clicked on element: ('xpath', "//button[contains(@class, 'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-04-07 18:02:23 - CGMExecutivePage - INFO - Element found: ('xpath', "//span[normalize-space()='General Master(s)']/ancestor::div[contains(@class,'compfie-vertical-navigation-item-wrapper')]")
+2026-04-07 18:02:23 - CGMExecutivePage - INFO - Clicked on element: ('xpath', "//span[normalize-space()='General Master(s)']/ancestor::div[contains(@class,'compfie-vertical-navigation-item-wrapper')]")
+2026-04-07 18:02:24 - CGMExecutivePage - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Unit Creation']")
+2026-04-07 18:02:25 - CGMExecutivePage - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[text()='add'] and .//span[contains(normalize-space(),'Add')]]")

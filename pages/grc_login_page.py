@@ -17,18 +17,28 @@ SCREENSHOT_DIR = Config.CAPTCHA_IMAGE_DIR
 
 class GRCLoginPage(BasePage):
     """Login page object class"""
+    # AMBIGUOUS_ALPHA_TO_DIGIT = {
+    #     "O": "0",
+    #     "Q": "0",
+    #     "D": "0",
+    #     "I": "1",
+    #     "L": "1",
+    #     "T": "7",
+    #     "Z": "2",
+    #     "S": "5",
+    #     "G": "6",
+    #     "B": "8",
+    # }
+
     AMBIGUOUS_ALPHA_TO_DIGIT = {
-        "O": "0",
-        "Q": "0",
-        "D": "0",
-        "I": "1",
-        "L": "1",
-        "T": "7",
-        "Z": "2",
-        "S": "5",
-        "G": "6",
-        "B": "8",
-    }
+    "O": "0",
+    "I": "1",
+    "L": "1",
+    "S": "5",
+    "Z": "2",
+    "G": "6",
+    "B": "8",
+}
 
     # Locators
     USERNAME_INPUT = (By.ID, "Username")
@@ -627,6 +637,7 @@ class GRCLoginPage(BasePage):
         self.wait.until(
             lambda d: d.find_element(*self.CAPTCHA_TEXTBOX).get_attribute("value").strip() == captcha_text
         )
+        self.sleep(1)
         self.click_login_button()
-        self.wait.until(EC.url_changes(Config.LOGIN_URL))  # wait for login to process, adjust as needed
+        self.sleep(2)  # wait for login to process, adjust as needed
         self.logger.info("Login action performed")

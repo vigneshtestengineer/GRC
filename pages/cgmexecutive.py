@@ -18,7 +18,7 @@ class CGMExecutivePage(BasePage):
     ENTITY_ROW = (By.XPATH, "//td[contains(@class, 'cdk-column-legal_entity_name') and contains(@class, 'mat-cell')]")
     ADD_BUTTON = (By.XPATH, "//button[contains(@class, 'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
     SELECT_LEGAL_ENTITY = (By.XPATH, "//td[contains(@class,'mat-column-legal_entity_name')]")
-    OPEN_GENERAL_MASTER_MENU = (By.XPATH, "//compfie-vertical-navigation-collapsable-item[.//mat-icon[@data-mat-icon-name='apps']]")
+    OPEN_GENERAL_MASTER_MENU = (By.XPATH, "//span[normalize-space()='General Master(s)']/ancestor::div[contains(@class,'compfie-vertical-navigation-item-wrapper')]")
     EXECUTIVE_URL = "http://13.203.6.58:5002/#/home/welcome"
 
     # Unit Creation locators

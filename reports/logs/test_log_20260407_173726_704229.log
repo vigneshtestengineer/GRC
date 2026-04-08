@@ -1,0 +1,12 @@
+2026-04-07 17:37:27 - tests.conftest - INFO - ================================================================================
+2026-04-07 17:37:27 - tests.conftest - INFO - TEST SESSION STARTED - OrangeHRM Automation
+2026-04-07 17:37:27 - tests.conftest - INFO - ================================================================================
+2026-04-07 17:37:27 - tests.conftest - INFO - ================================================================================
+2026-04-07 17:37:27 - tests.conftest - INFO - Initializing WebDriver
+2026-04-07 17:39:28 - tests.conftest - ERROR - Test failed: test_open_general_master_executive
+2026-04-07 17:39:28 - tests.conftest - INFO - Screenshot saved: E:\AutomationTask\GRC Payroll\reports\screenshots\test_open_general_master_executive_20260407_173928.png
+2026-04-07 17:39:28 - tests.conftest - INFO - Quitting WebDriver
+2026-04-07 17:39:30 - tests.conftest - INFO - ================================================================================
+2026-04-07 17:39:30 - tests.conftest - INFO - ================================================================================
+2026-04-07 17:39:30 - tests.conftest - INFO - TEST SESSION COMPLETED
+2026-04-07 17:39:30 - tests.conftest - INFO - ================================================================================
