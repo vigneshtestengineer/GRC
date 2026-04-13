@@ -11,7 +11,12 @@ from webdriver_manager.firefox import GeckoDriverManager
 from selenium.common.exceptions import WebDriverException
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from config.config import Config
+from utilities.json_config import get_bool, get_int, get_str
+
+BROWSER = get_str("browser", "browser", "chrome")
+HEADLESS = get_bool("browser", "headless", False)
+IMPLICIT_WAIT = get_int("browser", "implicit_wait", 10)
+PAGE_LOAD_TIMEOUT = get_int("browser", "page_load_timeout", 30)
 
 class DriverFactory:
     """Factory class to create WebDriver instances"""
@@ -22,7 +27,7 @@ class DriverFactory:
         Build Chrome options with sensible defaults for local/CI runs.
         """
         chrome_options = ChromeOptions()
-        headless = Config.HEADLESS or force_headless
+        headless = HEADLESS or force_headless
         if headless:
             # "new" headless is more stable in modern Chrome.
             chrome_options.add_argument("--headless=new")
@@ -33,10 +38,19 @@ class DriverFactory:
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--remote-debugging-port=9222")
+        chrome_options.add_argument("--disable-save-password-bubble")
         # Hide Selenium automation infobar and reduce automation fingerprints.
         chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
         chrome_options.add_experimental_option("useAutomationExtension", False)
         chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+        chrome_options.add_experimental_option(
+            "prefs",
+            {
+                "credentials_enable_service": False,
+                "profile.password_manager_enabled": False,
+                "profile.password_manager_leak_detection": False,
+            },
+        )
         return chrome_options
 
     @staticmethod
@@ -74,7 +88,7 @@ class DriverFactory:
         Returns:
             WebDriver: Selenium WebDriver instance
         """
-        browser = browser or Config.BROWSER
+        browser = browser or BROWSER
         
         if browser.lower() == "chrome":
             chrome_options = DriverFactory._build_chrome_options()
@@ -83,7 +97,7 @@ class DriverFactory:
             except WebDriverException as exc:
                 error_text = str(exc)
                 should_retry_headless = (
-                    not Config.HEADLESS and (
+                    not HEADLESS and (
                         "DevToolsActivePort" in error_text
                         or "Chrome failed to start" in error_text
                         or "chrome not reachable" in error_text
@@ -98,7 +112,7 @@ class DriverFactory:
             
         elif browser.lower() == "firefox":
             firefox_options = FirefoxOptions()
-            if Config.HEADLESS:
+            if HEADLESS:
                 firefox_options.add_argument("--headless")
             
             service = Service(GeckoDriverManager().install())
@@ -107,8 +121,8 @@ class DriverFactory:
         else:
             raise ValueError(f"Unsupported browser: {browser}")
         
-        driver.implicitly_wait(Config.IMPLICIT_WAIT)
-        driver.set_page_load_timeout(Config.PAGE_LOAD_TIMEOUT)
+        driver.implicitly_wait(IMPLICIT_WAIT)
+        driver.set_page_load_timeout(PAGE_LOAD_TIMEOUT)
         driver.maximize_window()
         
         return driver

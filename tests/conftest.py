@@ -9,9 +9,10 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utilities.driver_factory import DriverFactory
 from utilities.screenshot import Screenshot
 from utilities.logger import Logger
-from config.config import Config
+from utilities.json_config import get_path
 
 logger = Logger.get_logger(__name__)
+CAPTCHA_DIR = get_path("paths", "captcha_image_dir", "reports/captchas")
 
 @pytest.fixture(scope="function")
 def driver(request):
@@ -62,7 +63,7 @@ def pytest_runtest_makereport(item, call):
 @pytest.fixture(autouse=True)
 def clear_captcha_folder():
     """Clear the reports/captchas folder before every test."""
-    captcha_dir = Config.CAPTCHA_IMAGE_DIR
+    captcha_dir = CAPTCHA_DIR
     if os.path.exists(captcha_dir):
         for entry in os.scandir(captcha_dir):
             try:

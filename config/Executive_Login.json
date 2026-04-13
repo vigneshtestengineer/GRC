@@ -1,0 +1,34 @@
+{
+  "paths": {
+    "reports_dir": "reports",
+    "screenshots_dir": "reports/screenshots",
+    "captcha_image_dir": "reports/captchas",
+    "logs_dir": "reports/logs",
+    "test_data_dir": "test_data"
+  },
+  "app": {
+    "base_url": "http://13.203.6.58:5009/#/login",
+    "login_url": "http://13.203.6.58:5009/#/login"
+  },
+  "ocr": {
+    "tesseract_cmd": "E:\\Tesseract-OCR\\tesseract.exe"
+  },
+  "browser": {
+    "browser": "chrome",
+    "headless": false,
+    "implicit_wait": 10,
+    "explicit_wait": 20,
+    "page_load_timeout": 30
+  },
+  "auth": {
+    "username": "vignesh.kv@aparajitha.com",
+    "password": "Admin@123",
+    "group": "MSO"
+  },
+  "features": {
+    "take_screenshot_on_failure": true
+  },
+  "logging": {
+    "log_level": "INFO"
+  }
+}

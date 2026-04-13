@@ -1,0 +1,41 @@
+2026-04-13 15:57:34 - unit_Master - INFO - CGM Executive Dashboard loaded successfully
+2026-04-13 15:57:34 - unit_Master - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[text()='apps']]")
+2026-04-13 15:57:34 - unit_Master - INFO - Clicked on element: ('xpath', "//mat-card[span[text()='General Master-Executive']]")
+2026-04-13 15:57:34 - unit_Master - INFO - Switched to new browser window/tab: 07AEDE9713CA7E2C6347088D679AD696
+2026-04-13 15:57:38 - unit_Master - INFO - Switched to General Master-Executive tab and verified URL http://13.203.6.58:5002/#/home/welcome
+2026-04-13 15:57:39 - unit_Master - INFO - Element found: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-04-13 15:57:41 - unit_Master - INFO - Entered text 'Pure value' in element: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-04-13 15:57:41 - unit_Master - INFO - Element found: ('xpath', '//table//tbody//tr[1]//td')
+2026-04-13 15:57:42 - unit_Master - INFO - Clicked on element: ('xpath', '//table//tbody//tr[1]//td')
+2026-04-13 15:58:03 - unit_Master - INFO - Element found: ('xpath', "//button[contains(@class, 'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-04-13 15:58:03 - unit_Master - INFO - Clicked on element: ('xpath', "//button[contains(@class, 'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-04-13 15:58:03 - unit_Master - INFO - Element found: ('xpath', "//span[normalize-space()='General Master(s)']")
+2026-04-13 15:58:05 - unit_Master - INFO - Element found: ('xpath', "//span[normalize-space()='General Master(s)']")
+2026-04-13 15:58:05 - unit_Master - INFO - Clicked on element: ('xpath', "//span[normalize-space()='General Master(s)']")
+2026-04-13 15:58:16 - unit_Master - WARNING - General Master menu did not expand on attempt 1. Retrying with wrapper click.
+2026-04-13 15:58:16 - unit_Master - INFO - Clicked on element: ('xpath', "//span[normalize-space()='General Master(s)']/ancestor::div[contains(@class,'compfie-vertical-navigation-item-wrapper')][1]")
+2026-04-13 15:58:16 - unit_Master - INFO - General Master menu expanded successfully using wrapper click.
+2026-04-13 15:58:17 - unit_Master - INFO - Element found: ('xpath', "//span[normalize-space()='General Master(s)']")
+2026-04-13 15:58:17 - unit_Master - INFO - Clicked on element: ('xpath', "//span[normalize-space()='General Master(s)']")
+2026-04-13 15:58:28 - unit_Master - WARNING - General Master menu did not expand on attempt 1. Retrying with wrapper click.
+2026-04-13 15:58:28 - unit_Master - INFO - Clicked on element: ('xpath', "//span[normalize-space()='General Master(s)']/ancestor::div[contains(@class,'compfie-vertical-navigation-item-wrapper')][1]")
+2026-04-13 15:58:28 - unit_Master - INFO - General Master menu expanded successfully using wrapper click.
+2026-04-13 15:58:28 - unit_Master - INFO - Element found: ('xpath', "//span[normalize-space()='Unit Creation']")
+2026-04-13 15:58:29 - unit_Master - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Unit Creation']")
+2026-04-13 15:58:30 - unit_Master - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[text()='add'] and .//span[contains(normalize-space(),'Add')]]")
+2026-04-13 15:58:33 - unit_Master - INFO - Clicked on element: ('xpath', "//mat-select[.//span[contains(text(),'Choose Business Group')]]")
+2026-04-13 15:58:33 - unit_Master - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-04-13 15:58:33 - unit_Master - INFO - Entered text 'Microsoft Bussiness Groups' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-04-13 15:58:33 - unit_Master - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-04-13 15:58:34 - unit_Master - INFO - Clicked on element: ('xpath', "//mat-select[@id='country']")
+2026-04-13 15:58:34 - unit_Master - INFO - Element found: ('xpath', "//input[@type='text' and contains(@class,'mat-select-search-input')]")
+2026-04-13 15:58:34 - unit_Master - INFO - Entered text 'India' in element: ('xpath', "//input[@type='text' and contains(@class,'mat-select-search-input')]")
+2026-04-13 15:58:34 - unit_Master - INFO - Element found: ('xpath', "//input[@type='text' and contains(@class,'mat-select-search-input')]")
+2026-04-13 15:58:35 - unit_Master - INFO - Clicked on element: ('xpath', "//mat-select[@id='division']")
+2026-04-13 15:58:35 - unit_Master - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-13 15:58:35 - unit_Master - INFO - Clicked on element: ('xpath', "//mat-select[@id='category']")
+2026-04-13 15:58:35 - unit_Master - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-04-13 15:58:35 - unit_Master - INFO - Generated unit name: Apex Industries 796
+2026-04-13 15:58:35 - unit_Master - INFO - Element found: ('xpath', "//input[@id='unit_name']")
+2026-04-13 15:58:36 - unit_Master - INFO - Entered text 'Apex Industries 796' in element: ('xpath', "//input[@id='unit_name']")
+2026-04-13 15:58:36 - unit_Master - INFO - Unit name entered: Apex Industries 796
