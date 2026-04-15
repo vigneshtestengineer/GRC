@@ -23,7 +23,8 @@
   "auth": {
     "username": "vignesh.kv@aparajitha.com",
     "password": "Admin@123",
-    "group": "MSO"
+    "group": "MSO",
+    "legal_entity": "Microsoft Pure Value"
   },
   "features": {
     "take_screenshot_on_failure": true

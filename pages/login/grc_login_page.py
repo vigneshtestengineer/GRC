@@ -62,7 +62,6 @@ class GRCLoginPage(BasePage):
     INVALID_CAPTCHA_ERROR = (By.XPATH, "//mat-error[contains(text(),'Invalid Captcha')]")
     CLOSE_POPUP_BUTTON = (By.XPATH, "//button[normalize-space()='✕']")
     LOGIN_BUTTON = (By.XPATH, "//button[@id='Sign In']")
-
     def __init__(self, driver):
         """Initialize login page"""
         super().__init__(driver)

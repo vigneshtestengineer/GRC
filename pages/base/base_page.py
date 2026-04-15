@@ -52,6 +52,7 @@ class BasePage:
         self.driver = driver
         self.wait = WebDriverWait(driver, EXPLICIT_WAIT)
         self.logger = Logger.get_logger(self.__class__.__name__)
+        self.generated_codes = set()
     
     def find_element(self, locator):
         """
@@ -278,16 +279,16 @@ class BasePage:
         return unit_name
     
     def generate_unit_code(self):
-       while True:
-        code = (
-            ''.join(random.choices(string.ascii_uppercase, k=3)) +
-            ''.join(random.choices(string.digits, k=2))
-        )
+        while True:
+            code = (
+                ''.join(random.choices(string.ascii_uppercase, k=3)) +
+                ''.join(random.choices(string.digits, k=2))
+            )
 
-        if code not in self.generated_codes:
-            self.generated_codes.add(code)
-            self.logger.info(f"Generated unit code: {code}")
-            return code
+            if code not in self.generated_codes:
+                self.generated_codes.add(code)
+                self.logger.info(f"Generated unit code: {code}")
+                return code
          
 
     def generate_address(self):

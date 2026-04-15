@@ -1,11 +1,17 @@
 {
     "Master_Details": {
-        "Bussiness_Group" : "Microsoft Bussiness Groups",
-        "Country" : "India"
+        "Bussiness_Group": "Microsoft Bussiness Groups",
+        "Country": "India"
     },
-
-    "Unit_Details" : {
-        "State": "Meghalaya"
+    "Unit_Details": {
+        "unit_name": "Gamma Systems 207",
+        "unit_code": "APA08",
+        "unit_address": "No. 348, Temple Road, Delhi, West Bengal - 851073",
+        "State": "Meghalaya",
+        "Pin_Code": "558559",
+        "Mobile_Number": "9876543210",
+        "Unit_Email": "vignesh.kv@aparajitha.com",
+        "Nature_of_Work": "IT Services",
+        "Industry_Type": "Factory"
     }
-
 }
