@@ -1,0 +1,57 @@
+2026-04-16 12:44:02 - GRCLoginPage - INFO - Login page loaded successfully
+2026-04-16 12:44:02 - GRCLoginPage - INFO - Logging in with user: vignesh.kv@aparajitha.com
+2026-04-16 12:44:02 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[normalize-space()='✕']")
+2026-04-16 12:44:12 - GRCLoginPage - INFO - Closed initial popup before login
+2026-04-16 12:44:12 - GRCLoginPage - INFO - Element found: ('id', 'Username')
+2026-04-16 12:44:13 - GRCLoginPage - INFO - Entered text 'vignesh.kv@aparajitha.com' in element: ('id', 'Username')
+2026-04-16 12:44:13 - GRCLoginPage - INFO - Element found: ('id', 'password')
+2026-04-16 12:44:13 - GRCLoginPage - INFO - Entered text 'Admin@123' in element: ('id', 'password')
+2026-04-16 12:44:13 - GRCLoginPage - INFO - Element found: ('id', 'group_short_name')
+2026-04-16 12:44:13 - GRCLoginPage - INFO - Entered text 'MSO' in element: ('id', 'group_short_name')
+2026-04-16 12:44:53 - GRCLoginPage - INFO - Using captcha element located by: ('xpath', "//input[@name='captcha']/ancestor::div[1]/following::canvas[1]")
+2026-04-16 12:44:53 - GRCLoginPage - INFO - Captcha screenshot saved to: E:\AutomationTask\GRC Payroll\reports\captchas\captcha.png
+2026-04-16 12:44:54 - GRCLoginPage - INFO - OCR candidate [quick | --oem 3 --psm 8 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'OERASE' (confidence=0.00, score=25.00)
+2026-04-16 12:44:54 - GRCLoginPage - INFO - OCR candidate [quick | --oem 3 --psm 7 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'OEFASE' (confidence=29.00, score=54.00)
+2026-04-16 12:44:54 - GRCLoginPage - INFO - OCR candidate [processed | --oem 3 --psm 8 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'DERAEE' (confidence=0.00, score=24.00)
+2026-04-16 12:44:54 - GRCLoginPage - INFO - OCR captcha text: 'OEFASE'
+2026-04-16 12:44:54 - GRCLoginPage - INFO - Saved captcha text: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_text_20260416_124454_570631.txt
+2026-04-16 12:44:54 - GRCLoginPage - INFO - Submitting login attempt 1/5 with captcha.
+2026-04-16 12:44:54 - GRCLoginPage - INFO - Entered captcha: 'OEFASE'
+2026-04-16 12:44:55 - GRCLoginPage - INFO - Element found: ('xpath', "//button[@id='Sign In']")
+2026-04-16 12:44:56 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[@id='Sign In']")
+2026-04-16 12:44:57 - GRCLoginPage - WARNING - Invalid Captcha received on attempt 1/5. Capturing a new captcha and retrying.
+2026-04-16 12:45:37 - GRCLoginPage - INFO - Using captcha element located by: ('xpath', "//input[@name='captcha']/ancestor::div[1]/following::canvas[1]")
+2026-04-16 12:45:37 - GRCLoginPage - INFO - Captcha screenshot saved to: E:\AutomationTask\GRC Payroll\reports\captchas\captcha.png
+2026-04-16 12:45:38 - GRCLoginPage - INFO - OCR candidate [quick | --oem 3 --psm 8 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'VNG8ES' (confidence=0.00, score=26.00)
+2026-04-16 12:45:38 - GRCLoginPage - INFO - OCR candidate [quick | --oem 3 --psm 7 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'VV0885' (confidence=0.00, score=24.00)
+2026-04-16 12:45:41 - GRCLoginPage - INFO - OCR candidate [processed | --oem 3 --psm 8 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'VBE' (confidence=3.00, score=11.00)
+2026-04-16 12:45:41 - GRCLoginPage - INFO - OCR captcha text: 'VNG8ES'
+2026-04-16 12:45:41 - GRCLoginPage - INFO - Saved captcha text: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_text_20260416_124541_617265.txt
+2026-04-16 12:45:41 - GRCLoginPage - INFO - Submitting login attempt 2/5 with captcha.
+2026-04-16 12:45:41 - GRCLoginPage - INFO - Entered captcha: 'VNG8ES'
+2026-04-16 12:45:42 - GRCLoginPage - INFO - Element found: ('xpath', "//button[@id='Sign In']")
+2026-04-16 12:45:43 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[@id='Sign In']")
+2026-04-16 12:45:44 - GRCLoginPage - WARNING - Invalid Captcha received on attempt 2/5. Capturing a new captcha and retrying.
+2026-04-16 12:46:24 - GRCLoginPage - INFO - Using captcha element located by: ('xpath', "//input[@name='captcha']/ancestor::div[1]/following::canvas[1]")
+2026-04-16 12:46:25 - GRCLoginPage - INFO - Captcha screenshot saved to: E:\AutomationTask\GRC Payroll\reports\captchas\captcha.png
+2026-04-16 12:46:25 - GRCLoginPage - INFO - OCR candidate [quick | --oem 3 --psm 8 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'UROTCE' (confidence=0.00, score=26.00)
+2026-04-16 12:46:25 - GRCLoginPage - INFO - OCR candidate [quick | --oem 3 --psm 7 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'UROTCE' (confidence=0.00, score=26.00)
+2026-04-16 12:46:25 - GRCLoginPage - INFO - OCR candidate [processed | --oem 3 --psm 8 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'UROLe6e' (confidence=0.00, score=26.00)
+2026-04-16 12:46:25 - GRCLoginPage - INFO - OCR captcha text: 'UROTCE'
+2026-04-16 12:46:25 - GRCLoginPage - INFO - Saved captcha text: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_text_20260416_124625_629226.txt
+2026-04-16 12:46:25 - GRCLoginPage - INFO - Submitting login attempt 3/5 with captcha.
+2026-04-16 12:46:25 - GRCLoginPage - INFO - Entered captcha: 'UROTCE'
+2026-04-16 12:46:26 - GRCLoginPage - INFO - Element found: ('xpath', "//button[@id='Sign In']")
+2026-04-16 12:46:27 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[@id='Sign In']")
+2026-04-16 12:46:28 - GRCLoginPage - WARNING - Invalid Captcha received on attempt 3/5. Capturing a new captcha and retrying.
+2026-04-16 12:47:08 - GRCLoginPage - INFO - Using captcha element located by: ('xpath', "//input[@name='captcha']/ancestor::div[1]/following::canvas[1]")
+2026-04-16 12:47:08 - GRCLoginPage - INFO - Captcha screenshot saved to: E:\AutomationTask\GRC Payroll\reports\captchas\captcha.png
+2026-04-16 12:47:09 - GRCLoginPage - INFO - OCR candidate [quick | --oem 3 --psm 8 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'TeZKAW' (confidence=0.00, score=26.00)
+2026-04-16 12:47:09 - GRCLoginPage - INFO - OCR candidate [quick | --oem 3 --psm 7 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]: 'TGZKAW' (confidence=86.00, score=112.00)
+2026-04-16 12:47:09 - GRCLoginPage - INFO - OCR captcha text: 'TGZKAW'
+2026-04-16 12:47:09 - GRCLoginPage - INFO - Saved captcha text: E:\AutomationTask\GRC Payroll\reports\captchas\captcha_text_20260416_124709_144743.txt
+2026-04-16 12:47:09 - GRCLoginPage - INFO - Submitting login attempt 4/5 with captcha.
+2026-04-16 12:47:09 - GRCLoginPage - INFO - Entered captcha: 'TGZKAW'
+2026-04-16 12:47:10 - GRCLoginPage - INFO - Element found: ('xpath', "//button[@id='Sign In']")
+2026-04-16 12:47:11 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[@id='Sign In']")
+2026-04-16 12:47:23 - GRCLoginPage - INFO - Login action performed

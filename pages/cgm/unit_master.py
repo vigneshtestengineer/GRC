@@ -9,6 +9,7 @@ from datetime import datetime
 from pathlib import Path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pages.base.base_page import BasePage
+from pages.cgm.date_picker import set_date_of_creation
 from utilities.json_config import get_str
 
 LEGAL_ENTITY = get_str("auth", "legal_entity", "")
@@ -78,6 +79,9 @@ class unit_Master(BasePage):
     NATURE_OF_WORK = (By.XPATH, "//input[@id='nature_of_work']")
     CLICK_INDUSTRY_DROPDOWN = (By.XPATH, "//mat-select[@id='industry_type']")
     SEARCH_INDUSTRY = (By.XPATH, "//input[@aria-label='dropdown search']")
+    CLICK_DATE_OF_CREATION = (By.XPATH, "(//button[@aria-label='Open calendar'])[1]")
+    DATE_OF_CREATION_INPUT = (By.ID, "date_of_creation")
+    APPLY_DATE_OF_CREATION = (By.XPATH, "//button[@matdatepickerapply and .//span[normalize-space()='Apply']]")
 
     def __init__(self, driver):
         """Initialize CGM Executive page"""
@@ -206,7 +210,6 @@ class unit_Master(BasePage):
             unit_address,
         )
 
-            
 # Click General master to create the unit creation
 
     def general_master_menu(self):
@@ -270,9 +273,10 @@ class unit_Master(BasePage):
         self.find_element(self.SEARCH_DIVISION).send_keys(Keys.ENTER)
         self.wait_for_element(self.CLICK_CATEGORY_DROPDOWN, timeout=20)
         self.click(self.CLICK_CATEGORY_DROPDOWN, timeout=20)
+        self.sleep(0.7)
         self.find_element(self.SEARCH_CATEGORY).send_keys(Keys.ENTER)
         self.wait_for_element(self.ENTER_UNIT_NAME, timeout=20)
-        self.unit_name = self.generate_unit_name() 
+        self.unit_name = self.generate_unit_name()
         self.wait_for_element(self.ENTER_UNIT_NAME, timeout=20)
         self.enter_text(self.ENTER_UNIT_NAME, self.unit_name)
         self.logger.info(f"Unit name entered: {self.unit_name}")
@@ -301,3 +305,6 @@ class unit_Master(BasePage):
         self.enter_text(self.SEARCH_INDUSTRY, self.industry_type)
         self.find_element(self.SEARCH_INDUSTRY).send_keys(Keys.ENTER)
         self.sleep(0.9)
+        set_date_of_creation(self, "01/01/2020")
+        self.sleep(2)
+        
