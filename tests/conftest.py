@@ -1,5 +1,16 @@
 """
-Pytest fixtures and hooks for OrangeHRM automation
+Pytest fixtures and hooks for GRC automation
+
+Overall Purpose
+
+This file does 5 main things:
+
+1. Creates and destroys WebDriver
+2. Logs test execution
+3. Takes screenshots on failure
+4. Cleans CAPTCHA folder before each test
+5. Configures Pytest behavior
+
 """
 import pytest
 import sys
@@ -33,7 +44,7 @@ def setup_teardown():
     Session-level setup and teardown
     """
     logger.info("=" * 80)
-    logger.info("TEST SESSION STARTED - OrangeHRM Automation")
+    logger.info("TEST SESSION STARTED - GRC Automation")
     logger.info("=" * 80)
     yield
     logger.info("=" * 80)

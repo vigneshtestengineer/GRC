@@ -9,7 +9,7 @@ from datetime import datetime
 from pathlib import Path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pages.base.base_page import BasePage
-from pages.cgm.date_picker import set_date_of_creation
+from pages.cgm.date_picker import Date_of_creation, Date_of_commencement
 from utilities.json_config import get_str
 
 LEGAL_ENTITY = get_str("auth", "legal_entity", "")
@@ -304,7 +304,8 @@ class unit_Master(BasePage):
         self.click(self.CLICK_INDUSTRY_DROPDOWN, timeout=20)
         self.enter_text(self.SEARCH_INDUSTRY, self.industry_type)
         self.find_element(self.SEARCH_INDUSTRY).send_keys(Keys.ENTER)
-        self.sleep(0.9)
-        set_date_of_creation(self, "01/01/2020")
-        self.sleep(2)
-        
+        self.sleep(0.5)
+        Date_of_creation(self.driver).set_date("01/01/2020")
+        self.sleep(0.5)
+        Date_of_commencement(self.driver).set_date("01/02/2020")
+        self.sleep(0.5)

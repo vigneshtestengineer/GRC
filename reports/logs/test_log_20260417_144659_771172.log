@@ -1,0 +1,71 @@
+2026-04-17 14:46:59 - unit_Master - INFO - CGM Executive Dashboard loaded successfully
+2026-04-17 14:46:59 - unit_Master - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[text()='apps']]")
+2026-04-17 14:46:59 - unit_Master - INFO - Clicked on element: ('xpath', "//mat-card[span[text()='General Master-Executive']]")
+2026-04-17 14:46:59 - unit_Master - INFO - Switched to new browser window/tab: B999306C87DFE0C26008C2AB13BD1C2B
+2026-04-17 14:47:02 - unit_Master - INFO - Switched to General Master-Executive tab and verified URL http://13.203.6.58:5002/#/home/welcome
+2026-04-17 14:47:03 - unit_Master - INFO - Element found: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-04-17 14:47:04 - unit_Master - INFO - Entered text 'Microsoft Pure Value' in element: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-04-17 14:47:04 - unit_Master - INFO - Element found: ('xpath', '//table//tbody//tr[1]//td')
+2026-04-17 14:47:05 - unit_Master - INFO - Element found: ('xpath', '//table//tbody//tr[1]//td')
+2026-04-17 14:47:05 - unit_Master - INFO - Legal entity row selected successfully.
+2026-04-17 14:47:05 - unit_Master - INFO - Element found: ('xpath', "//button[contains(@class, 'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-04-17 14:47:06 - unit_Master - INFO - Clicked on element: ('xpath', "//button[contains(@class, 'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-04-17 14:47:06 - unit_Master - INFO - Element found: ('xpath', "//span[normalize-space()='General Master(s)']")
+2026-04-17 14:47:07 - unit_Master - INFO - Element found: ('xpath', "//span[normalize-space()='General Master(s)']")
+2026-04-17 14:47:08 - unit_Master - INFO - Clicked on element: ('xpath', "//span[normalize-space()='General Master(s)']")
+2026-04-17 14:47:18 - unit_Master - WARNING - General Master menu did not expand on attempt 1. Retrying with wrapper click.
+2026-04-17 14:47:18 - unit_Master - INFO - Clicked on element: ('xpath', "//span[normalize-space()='General Master(s)']/ancestor::div[contains(@class,'compfie-vertical-navigation-item-wrapper')][1]")
+2026-04-17 14:47:19 - unit_Master - INFO - General Master menu expanded successfully using wrapper click.
+2026-04-17 14:47:19 - unit_Master - INFO - Element found: ('xpath', "//span[normalize-space()='General Master(s)']")
+2026-04-17 14:47:19 - unit_Master - INFO - Clicked on element: ('xpath', "//span[normalize-space()='General Master(s)']")
+2026-04-17 14:47:30 - unit_Master - WARNING - General Master menu did not expand on attempt 1. Retrying with wrapper click.
+2026-04-17 14:47:30 - unit_Master - INFO - Clicked on element: ('xpath', "//span[normalize-space()='General Master(s)']/ancestor::div[contains(@class,'compfie-vertical-navigation-item-wrapper')][1]")
+2026-04-17 14:47:31 - unit_Master - INFO - General Master menu expanded successfully using wrapper click.
+2026-04-17 14:47:31 - unit_Master - INFO - Element found: ('xpath', "//span[normalize-space()='Unit Creation']")
+2026-04-17 14:47:31 - unit_Master - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Unit Creation']")
+2026-04-17 14:47:32 - unit_Master - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[text()='add'] and .//span[contains(normalize-space(),'Add')]]")
+2026-04-17 14:47:35 - unit_Master - INFO - Clicked on element: ('xpath', "//mat-select[.//span[contains(text(),'Choose Business Group')]]")
+2026-04-17 14:47:35 - unit_Master - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-04-17 14:47:35 - unit_Master - INFO - Entered text 'Microsoft Bussiness Groups' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-04-17 14:47:35 - unit_Master - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-04-17 14:47:36 - unit_Master - INFO - Clicked on element: ('xpath', "//mat-select[@id='country']")
+2026-04-17 14:47:36 - unit_Master - INFO - Element found: ('xpath', "//input[@type='text' and contains(@class,'mat-select-search-input')]")
+2026-04-17 14:47:36 - unit_Master - INFO - Entered text 'India' in element: ('xpath', "//input[@type='text' and contains(@class,'mat-select-search-input')]")
+2026-04-17 14:47:36 - unit_Master - INFO - Element found: ('xpath', "//input[@type='text' and contains(@class,'mat-select-search-input')]")
+2026-04-17 14:47:36 - unit_Master - INFO - Clicked on element: ('xpath', "//mat-select[@id='division']")
+2026-04-17 14:47:36 - unit_Master - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-17 14:47:36 - unit_Master - INFO - Clicked on element: ('xpath', "//mat-select[@id='category']")
+2026-04-17 14:47:37 - unit_Master - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-04-17 14:47:37 - unit_Master - INFO - Generated unit name: Lynx Works 135
+2026-04-17 14:47:37 - unit_Master - INFO - Element found: ('xpath', "//input[@id='unit_name']")
+2026-04-17 14:47:37 - unit_Master - INFO - Entered text 'Lynx Works 135' in element: ('xpath', "//input[@id='unit_name']")
+2026-04-17 14:47:37 - unit_Master - INFO - Unit name entered: Lynx Works 135
+2026-04-17 14:47:37 - unit_Master - INFO - Generated unit code: ECM33
+2026-04-17 14:47:37 - unit_Master - INFO - Element found: ('xpath', "//input[@id='unit_code']")
+2026-04-17 14:47:38 - unit_Master - INFO - Entered text 'ECM33' in element: ('xpath', "//input[@id='unit_code']")
+2026-04-17 14:47:38 - unit_Master - INFO - Unit code entered: ECM33
+2026-04-17 14:47:38 - unit_Master - INFO - Generated address: No. 104, MG Road, Bangalore, Tamil Nadu - 187278
+2026-04-17 14:47:38 - unit_Master - INFO - Element found: ('xpath', "//textarea[@id='unit_addr1']")
+2026-04-17 14:47:38 - unit_Master - INFO - Entered text 'No. 104, MG Road, Bangalore, Tamil Nadu - 187278' in element: ('xpath', "//textarea[@id='unit_addr1']")
+2026-04-17 14:47:38 - unit_Master - INFO - Unit address entered: No. 104, MG Road, Bangalore, Tamil Nadu - 187278
+2026-04-17 14:47:38 - unit_Master - INFO - Saved generated unit details to E:\AutomationTask\GRC Payroll\config\Unit_Master_Data.json: unit_name='Lynx Works 135', unit_code='ECM33', unit_address='No. 104, MG Road, Bangalore, Tamil Nadu - 187278'
+2026-04-17 14:47:38 - unit_Master - INFO - Clicked on element: ('xpath', "//mat-select[@id='unit_state']")
+2026-04-17 14:47:38 - unit_Master - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-04-17 14:47:38 - unit_Master - INFO - Entered text 'Meghalaya' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-04-17 14:47:38 - unit_Master - INFO - Clicked on element: ('xpath', "(//mat-option[contains(@class,'mat-option')])[2]")
+2026-04-17 14:47:38 - unit_Master - INFO - Unit state selected: Meghalaya
+2026-04-17 14:47:39 - unit_Master - INFO - Clicked on element: ('xpath', "//mat-select[@id='unit_loc']")
+2026-04-17 14:47:39 - unit_Master - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-04-17 14:47:39 - unit_Master - INFO - Clicked on element: ('xpath', "//input[@id='unit_pincode']")
+2026-04-17 14:47:39 - unit_Master - INFO - Element found: ('xpath', "//input[@id='unit_pincode']")
+2026-04-17 14:47:39 - unit_Master - INFO - Entered text '558559' in element: ('xpath', "//input[@id='unit_pincode']")
+2026-04-17 14:47:39 - unit_Master - INFO - Element found: ('xpath', "//input[@id='mat-input-22']")
+2026-04-17 14:47:39 - unit_Master - INFO - Entered text '9876543210' in element: ('xpath', "//input[@id='mat-input-22']")
+2026-04-17 14:47:39 - unit_Master - INFO - Element found: ('xpath', "//input[@id='email_id']")
+2026-04-17 14:47:39 - unit_Master - INFO - Entered text 'vignesh.kv@aparajitha.com' in element: ('xpath', "//input[@id='email_id']")
+2026-04-17 14:47:39 - unit_Master - INFO - Element found: ('xpath', "//input[@id='nature_of_work']")
+2026-04-17 14:47:40 - unit_Master - INFO - Entered text 'IT Services' in element: ('xpath', "//input[@id='nature_of_work']")
+2026-04-17 14:47:40 - unit_Master - INFO - Clicked on element: ('xpath', "//mat-select[@id='industry_type']")
+2026-04-17 14:47:40 - unit_Master - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-04-17 14:47:40 - unit_Master - INFO - Entered text 'Factory' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-04-17 14:47:40 - unit_Master - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")

@@ -22,19 +22,7 @@ OCR_TIME_BUDGET_SECONDS = 2.5
 
 class GRCLoginPage(BasePage):
     """Login page object class"""
-    # AMBIGUOUS_ALPHA_TO_DIGIT = {
-    #     "O": "0",
-    #     "Q": "0",
-    #     "D": "0",
-    #     "I": "1",
-    #     "L": "1",
-    #     "T": "7",
-    #     "Z": "2",
-    #     "S": "5",
-    #     "G": "6",
-    #     "B": "8",
-    # }
-
+    
     AMBIGUOUS_ALPHA_TO_DIGIT = {
     "O": "0",
     "I": "1",

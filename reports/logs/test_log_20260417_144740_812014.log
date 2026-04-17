@@ -1,0 +1,8 @@
+2026-04-17 14:47:52 - Date_of_creation - INFO - Found date input field: 'date_of_creation'
+2026-04-17 14:47:52 - Date_of_creation - INFO - Found 5 calendar buttons on page
+2026-04-17 14:47:52 - Date_of_creation - INFO - Clicked calendar button index 1 for 'date_of_creation'
+2026-04-17 14:47:53 - Date_of_creation - INFO - Clicked on element: ('xpath', "//button[@aria-label='Choose month and year']")
+2026-04-17 14:47:54 - Date_of_creation - INFO - Clicked on element: ('xpath', "//button[.//div[normalize-space(text())='2020']]")
+2026-04-17 14:47:55 - Date_of_creation - INFO - Clicked on element: ('xpath', "//button[.//div[normalize-space(text())='JAN']]")
+2026-04-17 14:47:55 - Date_of_creation - INFO - Clicked on element: ('xpath', "//button[.//div[normalize-space(text())='1']]")
+2026-04-17 14:47:56 - Date_of_creation - INFO - Clicked on element: ('xpath', '//button[@matdatepickerapply]')
