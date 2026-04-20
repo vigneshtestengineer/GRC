@@ -20,13 +20,16 @@ class Screenshot:
             driver: WebDriver instance
             test_name (str): Name of the test
         Returns:
-            str: Screenshot file path
+            str: Screenshot file path, or None if driver is unavailable
         """
-        os.makedirs(SCREENSHOTS_DIR, exist_ok=True)
-        
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        screenshot_name = f"{test_name}_{timestamp}.png"
-        screenshot_path = os.path.join(SCREENSHOTS_DIR, screenshot_name)
-        
-        driver.save_screenshot(screenshot_path)
-        return screenshot_path
+        try:
+            os.makedirs(SCREENSHOTS_DIR, exist_ok=True)
+            
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            screenshot_name = f"{test_name}_{timestamp}.png"
+            screenshot_path = os.path.join(SCREENSHOTS_DIR, screenshot_name)
+            
+            driver.save_screenshot(screenshot_path)
+            return screenshot_path
+        except Exception as e:
+            return None

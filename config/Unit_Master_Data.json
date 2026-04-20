@@ -4,14 +4,19 @@
         "Country": "India"
     },
     "Unit_Details": {
-        "unit_name": "Lynx Works 135",
-        "unit_code": "ECM33",
-        "unit_address": "No. 104, MG Road, Bangalore, Tamil Nadu - 187278",
+        "unit_name": "Nova Manufacturing 663",
+        "unit_code": "GZJ87",
+        "unit_address": "No. 322, Nehru Street, Kolkata, Maharashtra - 286160",
         "State": "Meghalaya",
         "Pin_Code": "558559",
         "Mobile_Number": "9876543210",
         "Unit_Email": "vignesh.kv@aparajitha.com",
         "Nature_of_Work": "IT Services",
-        "Industry_Type": "Factory"
+        "Industry_Type": "Factory",
+        "Date_of_Creation": "01/01/2021",
+        "Date_of_Commitment": "01/01/2021",
+        "Service_Agreement": "Microsoft Pure Value group of agreement",
+        "Date_of_Commencement_of_operations": "01/01/2021",
+        "Employee_Type": "Contract Labour(s)"
     }
 }

@@ -66,7 +66,8 @@ def pytest_runtest_makereport(item, call):
                 test_name = item.name
                 screenshot_path = Screenshot.take_screenshot(driver, test_name)
                 logger.error(f"Test failed: {test_name}")
-                logger.info(f"Screenshot saved: {screenshot_path}")
+                if screenshot_path:
+                    logger.info(f"Screenshot saved: {screenshot_path}")
         elif report.passed:
             logger.info(f"Test passed: {item.name}")
 

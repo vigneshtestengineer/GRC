@@ -6,14 +6,17 @@ import sys
 import os
 from io import BytesIO
 from datetime import datetime
+from pages.base.date_picker import DatePicker
 from pathlib import Path
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pages.base.base_page import BasePage
-from pages.cgm.date_picker import Date_of_creation, Date_of_commencement
 from utilities.json_config import get_str
 
 LEGAL_ENTITY = get_str("auth", "legal_entity", "")
-UNIT_MASTER_DATA_FILE = Path(__file__).resolve().parents[2] / "config" / "Unit_Master_Data.json"
+UNIT_MASTER_DATA_FILE = (
+    Path(__file__).resolve().parents[2] / "config" / "Unit_Master_Data.json"
+)
 
 try:
     with open(UNIT_MASTER_DATA_FILE, "r", encoding="utf-8") as file:
@@ -31,30 +34,56 @@ MOBILE_NUMBER = UNIT_DETAILS.get("Mobile_Number", "")
 UNIT_EMAIL = UNIT_DETAILS.get("Unit_Email", "")
 NATURE_OF_WORK = UNIT_DETAILS.get("Nature_of_Work", "")
 INDUSTRY_TYPE = UNIT_DETAILS.get("Industry_Type", "")
+SERVICE_AGREEMENT = UNIT_DETAILS.get("Service_Agreement", "")
+EMPLOYEE_TYPE = UNIT_DETAILS.get("Employee_Type", "")
+
 
 class unit_Master(BasePage):
     """CGM Executive page object class"""
 
+    # LOCATORS
+
     MENU_BUTTON = (By.XPATH, "//button[.//mat-icon[text()='apps']]")
-    GENERAL_MASTER_EXECUTIVE_CARD = (By.XPATH, "//mat-card[span[text()='General Master-Executive']]")
-    SEARCH_LEGALENTITY = (By.XPATH, "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+    GENERAL_MASTER_EXECUTIVE_CARD = (
+        By.XPATH,
+        "//mat-card[span[text()='General Master-Executive']]",
+    )
+    SEARCH_LEGALENTITY = (
+        By.XPATH,
+        "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]",
+    )
     SELECT_LEGALENTITY = (By.XPATH, "//table//tbody//tr[1]//td")
     SELECT_LEGALENTITY_ROW = (By.XPATH, "//table//tbody//tr[1]")
-    SELECT_LEGALENTITY_BUTTON = (By.XPATH, "//button[contains(@class, 'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
-    OPEN_GENERAL_MASTER_MENU = (By.XPATH, "//span[normalize-space()='General Master(s)']")
+    SELECT_LEGALENTITY_BUTTON = (
+        By.XPATH,
+        "//button[contains(@class, 'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]",
+    )
+    OPEN_GENERAL_MASTER_MENU = (
+        By.XPATH,
+        "//span[normalize-space()='General Master(s)']",
+    )
     OPEN_GENERAL_MASTER_MENU_WRAPPER = (
         By.XPATH,
         "//span[normalize-space()='General Master(s)']/ancestor::div[contains(@class,'compfie-vertical-navigation-item-wrapper')][1]",
     )
     CLICK_COUNTRY_DROPDOWN = (By.XPATH, "//mat-select[@id='country']")
-    SEARCH_COUNTRY = (By.XPATH, "//input[@type='text' and contains(@class,'mat-select-search-input')]")
+    SEARCH_COUNTRY = (
+        By.XPATH,
+        "//input[@type='text' and contains(@class,'mat-select-search-input')]",
+    )
     EXECUTIVE_URL = "http://13.203.6.58:5002/#/home/welcome"
 
     # Unit Creation locators
 
     CLICK_ON_UNIT_MASTER = (By.XPATH, "//span[normalize-space()='Unit Creation']")
-    CLICK_ADD_UNIT_BUTTON = (By.XPATH, "//button[.//mat-icon[text()='add'] and .//span[contains(normalize-space(),'Add')]]")
-    CLICK_BUSSINESSGROUP_DROPDOWN = (By.XPATH, "//mat-select[.//span[contains(text(),'Choose Business Group')]]")
+    CLICK_ADD_UNIT_BUTTON = (
+        By.XPATH,
+        "//button[.//mat-icon[text()='add'] and .//span[contains(normalize-space(),'Add')]]",
+    )
+    CLICK_BUSSINESSGROUP_DROPDOWN = (
+        By.XPATH,
+        "//mat-select[.//span[contains(text(),'Choose Business Group')]]",
+    )
     SEARCH_BUSSINESSGROUP = (By.XPATH, "//input[@aria-label='dropdown search']")
     CLICK_COUNTRY_DROPDOWN = (By.XPATH, "//mat-select[@id='country']")
     SPLASH_SCREEN_OVERLAY = (By.TAG_NAME, "compfie-splash-screen")
@@ -62,17 +91,17 @@ class unit_Master(BasePage):
     # Unit master Details locators
 
     CLICK_DIVISION_DROPDOWN = (By.XPATH, "//mat-select[@id='division']")
-    SEARCH_DIVISION= (By.XPATH, "//input[@placeholder='Search...']")
+    SEARCH_DIVISION = (By.XPATH, "//input[@placeholder='Search...']")
     CLICK_CATEGORY_DROPDOWN = (By.XPATH, "//mat-select[@id='category']")
-    SEARCH_CATEGORY=(By.XPATH, "//input[@aria-label='dropdown search']")
+    SEARCH_CATEGORY = (By.XPATH, "//input[@aria-label='dropdown search']")
     ENTER_UNIT_NAME = (By.XPATH, "//input[@id='unit_name']")
     ENTER_UNIT_CODE = (By.XPATH, "//input[@id='unit_code']")
     ENTER_UNIT_ADDRESS = (By.XPATH, "//textarea[@id='unit_addr1']")
-    SELECT_UNIT_STATE= (By.XPATH, "//mat-select[@id='unit_state']")
-    SEARCH_UNIT_STATE=  (By.XPATH, "//input[@aria-label='dropdown search']")
-    CLICK_UNIT_STATE=  (By.XPATH, "(//mat-option[contains(@class,'mat-option')])[2]")
-    SELECT_UNIT_CITY= (By.XPATH, "//mat-select[@id='unit_loc']")
-    SEARCH_UNIT_CITY= (By.XPATH, "//input[@aria-label='dropdown search']")
+    SELECT_UNIT_STATE = (By.XPATH, "//mat-select[@id='unit_state']")
+    SEARCH_UNIT_STATE = (By.XPATH, "//input[@aria-label='dropdown search']")
+    CLICK_UNIT_STATE = (By.XPATH, "(//mat-option[contains(@class,'mat-option')])[2]")
+    SELECT_UNIT_CITY = (By.XPATH, "//mat-select[@id='unit_loc']")
+    SEARCH_UNIT_CITY = (By.XPATH, "//input[@aria-label='dropdown search']")
     PIN_CODE = (By.XPATH, "//input[@id='unit_pincode']")
     MOBILE_NUMBER = (By.XPATH, "//input[@id='mat-input-22']")
     UNIT_EMAIL = (By.XPATH, "//input[@id='email_id']")
@@ -81,7 +110,17 @@ class unit_Master(BasePage):
     SEARCH_INDUSTRY = (By.XPATH, "//input[@aria-label='dropdown search']")
     CLICK_DATE_OF_CREATION = (By.XPATH, "(//button[@aria-label='Open calendar'])[1]")
     DATE_OF_CREATION_INPUT = (By.ID, "date_of_creation")
-    APPLY_DATE_OF_CREATION = (By.XPATH, "//button[@matdatepickerapply and .//span[normalize-space()='Apply']]")
+    APPLY_DATE_OF_CREATION = (
+        By.XPATH,
+        "//button[@matdatepickerapply and .//span[normalize-space()='Apply']]",
+    )
+    SERVICE_AGREEMENT_DROPDOWN = (By.XPATH, "//mat-select[@id='legal_agreement_id']")
+    SEARCH_AGREEMENT = (By.XPATH, "//input[@aria-label='dropdown search']")
+    APPLICABLE_EMPLOYEE = (
+        By.XPATH,
+        "//mat-checkbox[.//span[contains(normalize-space(),'{text}')]]//label",
+    )
+    ID_CARD = (By.XPATH, "//mat-checkbox[.//span[contains(normalize-space(),'Permanent Card')]]")
 
     def __init__(self, driver):
         """Initialize CGM Executive page"""
@@ -97,6 +136,13 @@ class unit_Master(BasePage):
         self.unit_email = self.Unit_Details.get("Unit_Email", "")
         self.nature_of_work = self.Unit_Details.get("Nature_of_Work", "")
         self.industry_type = self.Unit_Details.get("Industry_Type", "")
+        self.date_of_creation = self.Unit_Details.get("Date_of_Creation", "")
+        self.date_of_commitment = self.Unit_Details.get("Date_of_Commitment", "")
+        self.service_agreement = self.Unit_Details.get("Service_Agreement", "")
+        self.date_of_commencement_of_operations = self.Unit_Details.get(
+            "Date_of_Commencement_of_operations", ""
+        )
+        self.employee_type = self.Unit_Details.get("Employee_Type", "")
         self.wait_for_page_load()
 
     def wait_for_page_load(self):
@@ -105,27 +151,36 @@ class unit_Master(BasePage):
         self.logger.info("CGM Executive Dashboard loaded successfully")
 
     def open_general_master_executive(self):
- 
+
         self.click(self.MENU_BUTTON)
         previous_windows = self.driver.window_handles
 
-        self.wait_for_element_to_be_clickable(self.GENERAL_MASTER_EXECUTIVE_CARD, timeout=15)
+        self.wait_for_element_to_be_clickable(
+            self.GENERAL_MASTER_EXECUTIVE_CARD, timeout=15
+        )
         self.click(self.GENERAL_MASTER_EXECUTIVE_CARD)
         self._switch_to_new_window_if_opened(previous_windows)
 
         self.wait.until(EC.url_contains(self.EXECUTIVE_URL))
-        self.logger.info(f"Switched to General Master-Executive tab and verified URL {self.EXECUTIVE_URL}")
+        self.logger.info(
+            f"Switched to General Master-Executive tab and verified URL {self.EXECUTIVE_URL}"
+        )
         self.sleep(0.5)
         self.wait_for_element(self.SEARCH_LEGALENTITY, timeout=20)
         self.enter_text(self.SEARCH_LEGALENTITY, LEGAL_ENTITY)
         self.wait.until(
-            lambda d: d.find_element(*self.SEARCH_LEGALENTITY).get_attribute("value").strip() == LEGAL_ENTITY
+            lambda d: d.find_element(*self.SEARCH_LEGALENTITY)
+            .get_attribute("value")
+            .strip()
+            == LEGAL_ENTITY
         )
         self.sleep(0.5)
 
         self._select_legal_entity_row()
 
-        self.wait_for_element_to_be_clickable(self.SELECT_LEGALENTITY_BUTTON, timeout=15)
+        self.wait_for_element_to_be_clickable(
+            self.SELECT_LEGALENTITY_BUTTON, timeout=15
+        )
         self.scroll_to_element(self.SELECT_LEGALENTITY_BUTTON)
         self.click(self.SELECT_LEGALENTITY_BUTTON)
 
@@ -136,9 +191,13 @@ class unit_Master(BasePage):
             new_windows = [h for h in current_windows if h not in previous_windows]
             if new_windows:
                 self.driver.switch_to.window(new_windows[-1])
-                self.logger.info(f"Switched to new browser window/tab: {new_windows[-1]}")
+                self.logger.info(
+                    f"Switched to new browser window/tab: {new_windows[-1]}"
+                )
             else:
-                self.logger.debug("Detected window count change, but no new handle found.")
+                self.logger.debug(
+                    "Detected window count change, but no new handle found."
+                )
         else:
             self.logger.debug("No new browser window/tab opened after click.")
 
@@ -183,7 +242,9 @@ class unit_Master(BasePage):
                 )
                 self.sleep(0.5)
 
-        raise RuntimeError("Legal entity row was clicked, but the select button did not become enabled.")
+        raise RuntimeError(
+            "Legal entity row was clicked, but the select button did not become enabled."
+        )
 
     def _save_generated_unit_details(self, unit_name, unit_code, unit_address=""):
         """Persist generated unit values into Unit_Master_Data.json."""
@@ -210,34 +271,40 @@ class unit_Master(BasePage):
             unit_address,
         )
 
-# Click General master to create the unit creation
+    # Click General master to create the unit creation
 
     def general_master_menu(self):
         # """ Open General Master menu from the left navigation for creation of Unit creation """"
         for attempt in range(1, 3):
-            self.wait_for_element_to_be_clickable(self.OPEN_GENERAL_MASTER_MENU, timeout=20)
-            self.scroll_to_element(self.OPEN_GENERAL_MASTER_MENU)
+            # self.wait_for_element_to_be_clickable(
+            #     self.OPEN_GENERAL_MASTER_MENU, timeout=20
+            # )
+            # self.scroll_to_element(self.OPEN_GENERAL_MASTER_MENU)
             self.click(self.OPEN_GENERAL_MASTER_MENU, timeout=20)
-            self.sleep(0.5)
+            self.sleep(0.2)
 
+            # if self.is_element_visible(self.CLICK_ON_UNIT_MASTER, timeout=6):
+            #     self.logger.info("General Master menu expanded successfully.")
+            #     return
+
+            # # Retry by clicking the parent wrapper in case only label click was captured.
+            # self.logger.warning(
+            #     "General Master menu did not expand on attempt %d. Retrying with wrapper click.",
+            #     attempt,
+            # )
+            # self.click(self.OPEN_GENERAL_MASTER_MENU_WRAPPER, timeout=20)
+            # self.sleep(0.2)
             if self.is_element_visible(self.CLICK_ON_UNIT_MASTER, timeout=6):
-                self.logger.info("General Master menu expanded successfully.")
+                self.logger.info(
+                    "General Master menu expanded successfully using wrapper click."
+                )
                 return
 
-            # Retry by clicking the parent wrapper in case only label click was captured.
-            self.logger.warning(
-                "General Master menu did not expand on attempt %d. Retrying with wrapper click.",
-                attempt,
-            )
-            self.click(self.OPEN_GENERAL_MASTER_MENU_WRAPPER, timeout=20)
-            self.sleep(0.5)
-            if self.is_element_visible(self.CLICK_ON_UNIT_MASTER, timeout=6):
-                self.logger.info("General Master menu expanded successfully using wrapper click.")
-                return
+        raise RuntimeError(
+            "Could not expand 'General Master(s)' menu to access 'Unit Creation'."
+        )
 
-        raise RuntimeError("Could not expand 'General Master(s)' menu to access 'Unit Creation'.")
-
-# Create Unit master
+    # Create Unit master
 
     def create_unit_master(self):
         # Unit Creation.
@@ -248,12 +315,17 @@ class unit_Master(BasePage):
         self.wait_for_element_to_be_clickable(self.CLICK_ADD_UNIT_BUTTON, timeout=10)
         self.click(self.CLICK_ADD_UNIT_BUTTON, timeout=10)
         self.wait_for_element_to_disappear(self.SPLASH_SCREEN_OVERLAY, timeout=20)
-        self.wait_for_element_to_be_clickable(self.CLICK_BUSSINESSGROUP_DROPDOWN, timeout=20)
+        self.wait_for_element_to_be_clickable(
+            self.CLICK_BUSSINESSGROUP_DROPDOWN, timeout=20
+        )
         self.click(self.CLICK_BUSSINESSGROUP_DROPDOWN, timeout=20)
         self.wait_for_element(self.SEARCH_BUSSINESSGROUP, timeout=20)
         self.enter_text(self.SEARCH_BUSSINESSGROUP, self.business_group)
         self.wait.until(
-            lambda d: d.find_element(*self.SEARCH_BUSSINESSGROUP).get_attribute("value").strip() == self.business_group
+            lambda d: d.find_element(*self.SEARCH_BUSSINESSGROUP)
+            .get_attribute("value")
+            .strip()
+            == self.business_group
         )
         self.find_element(self.SEARCH_BUSSINESSGROUP).send_keys(Keys.ENTER)
 
@@ -262,7 +334,10 @@ class unit_Master(BasePage):
         self.wait_for_element(self.SEARCH_COUNTRY, timeout=10)
         self.enter_text(self.SEARCH_COUNTRY, self.country)
         self.wait.until(
-            lambda d: d.find_element(*self.SEARCH_COUNTRY).get_attribute("value").strip() == self.country
+            lambda d: d.find_element(*self.SEARCH_COUNTRY)
+            .get_attribute("value")
+            .strip()
+            == self.country
         )
         self.find_element(self.SEARCH_COUNTRY).send_keys(Keys.ENTER)
 
@@ -286,11 +361,16 @@ class unit_Master(BasePage):
         self.unit_address = self.generate_address()
         self.enter_text(self.ENTER_UNIT_ADDRESS, self.unit_address)
         self.logger.info(f"Unit address entered: {self.unit_address}")
-        self._save_generated_unit_details(self.unit_name, self.unit_code, self.unit_address)
+        self._save_generated_unit_details(
+            self.unit_name, self.unit_code, self.unit_address
+        )
         self.click(self.SELECT_UNIT_STATE, timeout=20)
         self.enter_text(self.SEARCH_UNIT_STATE, self.state)
         self.wait.until(
-            lambda d: d.find_element(*self.SEARCH_UNIT_STATE).get_attribute("value").strip() == self.state
+            lambda d: d.find_element(*self.SEARCH_UNIT_STATE)
+            .get_attribute("value")
+            .strip()
+            == self.state
         )
         self.click(self.CLICK_UNIT_STATE, timeout=20)
         self.logger.info(f"Unit state selected: {self.state}")
@@ -304,8 +384,54 @@ class unit_Master(BasePage):
         self.click(self.CLICK_INDUSTRY_DROPDOWN, timeout=20)
         self.enter_text(self.SEARCH_INDUSTRY, self.industry_type)
         self.find_element(self.SEARCH_INDUSTRY).send_keys(Keys.ENTER)
+        self.sleep(0.1)
+        # Date of Creation  →  (//button[@aria-label='Open calendar'])[1]
+        DatePicker(self.driver).set_date(
+            "(//button[@aria-label='Open calendar'])[1]", self.date_of_creation
+        )
+        # Date of Commitment  →  (//button[@aria-label='Open calendar'])[2]
+        DatePicker(self.driver).set_date(
+            "(//button[@aria-label='Open calendar'])[2]", self.date_of_commitment
+        )
+        self.click(self.SERVICE_AGREEMENT_DROPDOWN, timeout=20)
+        self.enter_text(self.SEARCH_AGREEMENT, self.service_agreement)
+        self.wait.until(
+            lambda d: d.find_element(*self.SEARCH_AGREEMENT)
+            .get_attribute("value")
+            .strip()
+            == self.service_agreement
+        )
+        self.find_element(self.SEARCH_AGREEMENT).send_keys(Keys.ENTER)
+        self.logger.info(f"Service agreement selected: {self.service_agreement}")
+
+        # Date of Commencement of Operations  →  (//button[@aria-label='Open calendar'])[5]
+        DatePicker(self.driver).set_date(
+            "(//button[@aria-label='Open calendar'])[5]",
+            self.date_of_commencement_of_operations,
+        )
         self.sleep(0.5)
-        Date_of_creation(self.driver).set_date("01/01/2020")
-        self.sleep(0.5)
-        Date_of_commencement(self.driver).set_date("01/02/2020")
-        self.sleep(0.5)
+
+        employee_type_checkbox = (
+            By.XPATH,
+            f"//mat-checkbox[.//span[contains(@class,'mat-checkbox-label') and contains(normalize-space(),'{self.employee_type}')]]//input[@type='checkbox']",
+        )
+
+        self.wait_for_element_to_be_clickable(employee_type_checkbox, timeout=10)
+        self.driver.execute_script(
+                "arguments[0].click();", self.find_element(employee_type_checkbox)
+        )
+        self.logger.info("Employee type checked: %s", self.employee_type)
+        self.sleep(0.2)
+
+        if self.employee_type == "Contract Labour(s)":
+            unit_radio = (By.XPATH, "//mat-radio-button[.//span[contains(normalize-space(),'Unit')]]")
+            self.wait_for_element_to_be_clickable(unit_radio, timeout=10)
+            self.driver.execute_script(
+                "arguments[0].click();", self.find_element(unit_radio)
+            )
+            self.logger.info("Selected 'Unit' radio button for Contract Labour(s).")
+            self.sleep(0.5)
+
+            self.wait_for_element_to_be_clickable(self.ID_CARD, timeout=10)
+            self.click(self.ID_CARD, timeout=10)
+            self.sleep(0.5)
