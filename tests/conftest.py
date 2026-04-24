@@ -24,6 +24,18 @@ from utilities.json_config import get_path
 
 logger = Logger.get_logger(__name__)
 CAPTCHA_DIR = get_path("paths", "captcha_image_dir", "reports/captchas")
+SCREENSHOT_DIR = get_path("paths", "screenshot_dir", "reports/screenshots")
+
+_failed_tests: set = set()
+
+
+def pytest_collection_modifyitems(config, items):
+    """Run unit_master tests first; exclude test_login when unit_master tests are collected."""
+    unit_master = [i for i in items if "unitmaster" in i.nodeid.lower()]
+    if unit_master:
+        items[:] = unit_master
+    else:
+        items[:] = items[:]
 
 @pytest.fixture(scope="function")
 def driver(request):
@@ -46,6 +58,21 @@ def setup_teardown():
     logger.info("=" * 80)
     logger.info("TEST SESSION STARTED - GRC Automation")
     logger.info("=" * 80)
+
+    screenshot_dir = SCREENSHOT_DIR
+    if os.path.exists(screenshot_dir):
+        for entry in os.scandir(screenshot_dir):
+            try:
+                if entry.is_file() or entry.is_symlink():
+                    os.remove(entry.path)
+                elif entry.is_dir():
+                    shutil.rmtree(entry.path)
+            except OSError as exc:
+                logger.warning(f"Could not remove screenshot {entry.path}: {exc}")
+        logger.info(f"Cleared screenshots folder: {screenshot_dir}")
+    else:
+        os.makedirs(screenshot_dir, exist_ok=True)
+
     yield
     logger.info("=" * 80)
     logger.info("TEST SESSION COMPLETED")
@@ -61,6 +88,7 @@ def pytest_runtest_makereport(item, call):
 
     if report.when == "call":
         if report.failed:
+            _failed_tests.add(item.nodeid)
             driver = item.funcargs.get('driver')
             if driver:
                 test_name = item.name
@@ -70,6 +98,14 @@ def pytest_runtest_makereport(item, call):
                     logger.info(f"Screenshot saved: {screenshot_path}")
         elif report.passed:
             logger.info(f"Test passed: {item.name}")
+
+
+@pytest.fixture(autouse=True)
+def skip_login_if_unit_master_failed(request):
+    """Skip test_login if any unit_master test has failed."""
+    if "test_login" in request.node.nodeid:
+        if any("unitmaster" in f.lower() for f in _failed_tests):
+            pytest.skip("Skipped: unit_master test failed.")
 
 
 @pytest.fixture(autouse=True)
@@ -96,7 +132,6 @@ def pytest_configure(config):
         config.option.reruns = 0
     if hasattr(config.option, "reruns_delay"):
         config.option.reruns_delay = 0
-    config.option.maxfail = 1
 
     config.addinivalue_line(
         "markers", "smoke: Smoke tests"

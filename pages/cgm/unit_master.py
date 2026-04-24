@@ -1,6 +1,8 @@
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 import json
 import sys
 import os
@@ -26,6 +28,8 @@ except (FileNotFoundError, json.JSONDecodeError):
 
 MASTER_DETAILS = UNIT_MASTER_DATA.get("Master_Details", {})
 UNIT_DETAILS = UNIT_MASTER_DATA.get("Unit_Details", {})
+UNIT_RIGHTS_ALLOCATION = UNIT_MASTER_DATA.get("Unit_Rights_Allocation", {})
+SCOPE_INFORMATION = UNIT_MASTER_DATA.get("Scope_Information", {})
 BUSSINESS_GROUP = MASTER_DETAILS.get("Bussiness_Group", "")
 COUNTRY = MASTER_DETAILS.get("Country", "")
 STATE = UNIT_DETAILS.get("State", "")
@@ -36,6 +40,20 @@ NATURE_OF_WORK = UNIT_DETAILS.get("Nature_of_Work", "")
 INDUSTRY_TYPE = UNIT_DETAILS.get("Industry_Type", "")
 SERVICE_AGREEMENT = UNIT_DETAILS.get("Service_Agreement", "")
 EMPLOYEE_TYPE = UNIT_DETAILS.get("Employee_Type", "")
+CGM_EXE = UNIT_RIGHTS_ALLOCATION.get("CGM_EXE", "")
+TAMS_EXE = UNIT_RIGHTS_ALLOCATION.get("TAMS_EXE", "")
+PAYROLL_EXE = UNIT_RIGHTS_ALLOCATION.get("Payroll_EXE", "")
+CGM_ADMIN = UNIT_RIGHTS_ALLOCATION.get("CGM_ADMIN", "")
+CGM_MODULE = UNIT_RIGHTS_ALLOCATION.get("CGM_MODULE", "")
+TAMS_MODULE = UNIT_RIGHTS_ALLOCATION.get("TAMS_MODULE", "")
+PAYROLL_MODULE = UNIT_RIGHTS_ALLOCATION.get("PAYROLL_MODULE", "")
+EXECUTIVE_ROLE = UNIT_RIGHTS_ALLOCATION.get("EXECUTIVE_ROLE", "")
+ADMIN_ROLE = UNIT_RIGHTS_ALLOCATION.get("ADMIN_ROLE", "")
+DOMAIN = SCOPE_INFORMATION.get("Domain", "")
+ORGANIZATION_TYPE = SCOPE_INFORMATION.get("Organization_type", "")
+STATE = SCOPE_INFORMATION.get("State", "")
+ACT = SCOPE_INFORMATION.get("Act", "")
+
 
 
 class unit_Master(BasePage):
@@ -120,7 +138,67 @@ class unit_Master(BasePage):
         By.XPATH,
         "//mat-checkbox[.//span[contains(normalize-space(),'{text}')]]//label",
     )
-    ID_CARD = (By.XPATH, "//mat-checkbox[.//span[contains(normalize-space(),'Permanent Card')]]")
+    ECODE_BASED = (
+        By.XPATH,
+        "//mat-radio-button[.//span[contains(normalize-space(),'Unit')]]",
+    )
+    ID_CARD = (
+        By.XPATH,
+        "((//span[contains(@class,'mat-checkbox-inner-container')])[5])",
+    )
+
+    # Unit Rights Allocation locators
+
+    CLICK_UNIT_RIGHTS_ALLOCATION = (
+        By.XPATH,
+        "//mat-expansion-panel-header[.//p[normalize-space()='Unit Rights Allocation(s)']]",
+    )
+    RIGHTS_ADD_BTN = (
+        By.XPATH,
+        "(//button[.//mat-icon[@data-mat-icon-name='plus-sm']])[6]",
+    )
+
+    # Unit Rights Allocation(s) rows
+
+    SELECT_USER_NAME_DROPDOWN_ONE = (
+        By.XPATH,
+        "((//mat-select[.//span[contains(text(),'User Name')]])[1])",
+    )
+    SELECT_MODULE_NAME_ONE = (
+        By.XPATH,
+        "((//mat-select[.//span[contains(text(),'Module Name')]])[1])",
+    )
+    SELECT_ROLE_ONE = (
+        By.XPATH,
+        "((//mat-select[.//span[contains(text(),'Role Name')]])[1])",
+    )
+
+    SEARCH_UNIT_RIGHTS = (By.XPATH, "//input[@aria-label='dropdown search']")
+
+    # SCOPE INFORMATIONS locators
+
+    SELECT_SCOPE_INFORMATION = (By.XPATH, "//div[@role='tab'][.//span[normalize-space()='SCOPE INFORMATION']]")
+
+    SCOPE_INFORMATION_DROPDOWN = (By.XPATH, "//p[normalize-space()='Scope Information']")
+
+    DOMAIN_DROPDOWN = (By.XPATH, "//mat-select[@id='domain_id']")
+
+    # Common Search locator for dropdowns
+    SEARCH = (By.XPATH, "//input[@aria-label='dropdown search']")
+
+    # Selecting the 1st element after search in dropdown
+    SELECT_DATA = (By.XPATH, "//mat-option[not(@aria-disabled='true')][1]")
+
+    ORGANIZATION_DROPDOWN = (By.XPATH, "//mat-select[@id='org_id']")
+
+    SCOPE_STATE = (By.XPATH, "//mat-select[@id='state_id']")
+
+    ACT_DROPDOWN = (By.XPATH, "//mat-select[@id='act_id']")
+
+    # Save Unit master
+
+    UNIT_MASTER_SAVE_BUTTON = (By.XPATH, "//button[.//span[normalize-space()='Submit as save']]")
+
 
     def __init__(self, driver):
         """Initialize CGM Executive page"""
@@ -128,6 +206,7 @@ class unit_Master(BasePage):
         self.unit_master_data = UNIT_MASTER_DATA
         self.Master_Details = self.unit_master_data.get("Master_Details", {})
         self.Unit_Details = self.unit_master_data.get("Unit_Details", {})
+        self.Scope_Information = self.unit_master_data.get("Scope_Information", {})
         self.business_group = self.Master_Details.get("Bussiness_Group", "")
         self.country = self.Master_Details.get("Country", "")
         self.state = self.Unit_Details.get("State", "")
@@ -143,12 +222,23 @@ class unit_Master(BasePage):
             "Date_of_Commencement_of_operations", ""
         )
         self.employee_type = self.Unit_Details.get("Employee_Type", "")
-        self.wait_for_page_load()
+        self.unit_rights_allocation = self.unit_master_data.get(
+            "Unit_Rights_Allocation", {}
+        )
+        self.cgm_exe = self.unit_rights_allocation.get("CGM_EXE", "")
+        self.tams_exe = self.unit_rights_allocation.get("TAMS_EXE", "")
+        self.payroll_exe = self.unit_rights_allocation.get("Payroll_EXE", "")
+        self.cgm_admin = self.unit_rights_allocation.get("CGM_ADMIN", "")
+        self.cgm_module = self.unit_rights_allocation.get("CGM_MODULE", "")
+        self.tams_module = self.unit_rights_allocation.get("TAMS_MODULE", "")
+        self.payroll_module = self.unit_rights_allocation.get("PAYROLL_MODULE", "")
+        self.executive_role = self.unit_rights_allocation.get("EXECUTIVE_ROLE", "")
+        self.admin_role = self.unit_rights_allocation.get("ADMIN_ROLE", "")
+        self.domain = self.Scope_Information.get("Domain", "")
+        self.organization_type = self.Scope_Information.get("Organization_type", "")
+        self.state = self.Scope_Information.get("State", "")
+        self.act = self.Scope_Information.get("Act", "")
 
-    def wait_for_page_load(self):
-        """Wait for CGM Executive page to load"""
-        self.wait_for_element(self.MENU_BUTTON)
-        self.logger.info("CGM Executive Dashboard loaded successfully")
 
     def open_general_master_executive(self):
 
@@ -156,7 +246,7 @@ class unit_Master(BasePage):
         previous_windows = self.driver.window_handles
 
         self.wait_for_element_to_be_clickable(
-            self.GENERAL_MASTER_EXECUTIVE_CARD, timeout=15
+            self.GENERAL_MASTER_EXECUTIVE_CARD, timeout=8
         )
         self.click(self.GENERAL_MASTER_EXECUTIVE_CARD)
         self._switch_to_new_window_if_opened(previous_windows)
@@ -165,8 +255,7 @@ class unit_Master(BasePage):
         self.logger.info(
             f"Switched to General Master-Executive tab and verified URL {self.EXECUTIVE_URL}"
         )
-        self.sleep(0.5)
-        self.wait_for_element(self.SEARCH_LEGALENTITY, timeout=20)
+        self.wait_for_element(self.SEARCH_LEGALENTITY, timeout=10)
         self.enter_text(self.SEARCH_LEGALENTITY, LEGAL_ENTITY)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_LEGALENTITY)
@@ -174,12 +263,11 @@ class unit_Master(BasePage):
             .strip()
             == LEGAL_ENTITY
         )
-        self.sleep(0.5)
 
         self._select_legal_entity_row()
 
         self.wait_for_element_to_be_clickable(
-            self.SELECT_LEGALENTITY_BUTTON, timeout=15
+            self.SELECT_LEGALENTITY_BUTTON, timeout=8
         )
         self.scroll_to_element(self.SELECT_LEGALENTITY_BUTTON)
         self.click(self.SELECT_LEGALENTITY_BUTTON)
@@ -203,8 +291,8 @@ class unit_Master(BasePage):
 
     def _select_legal_entity_row(self):
         """Click the legal entity row and wait until the action button becomes usable."""
-        for attempt in range(1, 4):
-            self.wait_for_element(self.SELECT_LEGALENTITY, timeout=20)
+        for attempt in range(1, 3):
+            self.wait_for_element(self.SELECT_LEGALENTITY, timeout=8)
             self.scroll_to_element(self.SELECT_LEGALENTITY)
             row_cell = self.find_element(self.SELECT_LEGALENTITY)
 
@@ -214,7 +302,7 @@ class unit_Master(BasePage):
                 self.driver.execute_script("arguments[0].click();", row_cell)
 
             try:
-                self.wait.until(
+                WebDriverWait(self.driver, 5).until(
                     lambda d: d.execute_script(
                         """
                         const button = arguments[0];
@@ -233,14 +321,12 @@ class unit_Master(BasePage):
                     )
                 )
                 self.logger.info("Legal entity row selected successfully.")
-                self.sleep(0.5)
                 return
             except Exception:
                 self.logger.warning(
                     "Legal entity row click did not enable the select button on attempt %d. Retrying.",
                     attempt,
                 )
-                self.sleep(0.5)
 
         raise RuntimeError(
             "Legal entity row was clicked, but the select button did not become enabled."
@@ -274,34 +360,25 @@ class unit_Master(BasePage):
     # Click General master to create the unit creation
 
     def general_master_menu(self):
-        # """ Open General Master menu from the left navigation for creation of Unit creation """"
+        # If the menu is already open, clicking again would close it (toggle).
+        if self.is_element_visible(self.CLICK_ON_UNIT_MASTER, timeout=2):
+            self.logger.info("General Master menu already expanded.")
+            return
+
         for attempt in range(1, 3):
-            # self.wait_for_element_to_be_clickable(
-            #     self.OPEN_GENERAL_MASTER_MENU, timeout=20
-            # )
-            # self.scroll_to_element(self.OPEN_GENERAL_MASTER_MENU)
-            self.click(self.OPEN_GENERAL_MASTER_MENU, timeout=20)
-            self.sleep(0.2)
-
-            # if self.is_element_visible(self.CLICK_ON_UNIT_MASTER, timeout=6):
-            #     self.logger.info("General Master menu expanded successfully.")
-            #     return
-
-            # # Retry by clicking the parent wrapper in case only label click was captured.
-            # self.logger.warning(
-            #     "General Master menu did not expand on attempt %d. Retrying with wrapper click.",
-            #     attempt,
-            # )
-            # self.click(self.OPEN_GENERAL_MASTER_MENU_WRAPPER, timeout=20)
-            # self.sleep(0.2)
-            if self.is_element_visible(self.CLICK_ON_UNIT_MASTER, timeout=6):
+            try:
+                self.click(self.OPEN_GENERAL_MASTER_MENU, timeout=5)
+                self.wait_for_element_to_be_clickable(self.CLICK_ON_UNIT_MASTER, timeout=8)
                 self.logger.info(
-                    "General Master menu expanded successfully using wrapper click."
+                    "General Master menu expanded successfully%s.",
+                    " on retry" if attempt > 1 else "",
                 )
                 return
+            except Exception as e:
+                self.logger.debug(f"Attempt {attempt} failed: {e}")
 
         raise RuntimeError(
-            "Could not expand 'General Master(s)' menu to access 'Unit Creation'."
+            "Could not expand 'General Master(s)' menu to access 'Unit Creation' after 2 attempts."
         )
 
     # Create Unit master
@@ -309,17 +386,16 @@ class unit_Master(BasePage):
     def create_unit_master(self):
         # Unit Creation.
         self.general_master_menu()
-        self.wait_for_element_to_be_clickable(self.CLICK_ON_UNIT_MASTER, timeout=20)
-        self.scroll_to_element(self.CLICK_ON_UNIT_MASTER)
-        self.click(self.CLICK_ON_UNIT_MASTER, timeout=20)
-        self.wait_for_element_to_be_clickable(self.CLICK_ADD_UNIT_BUTTON, timeout=10)
-        self.click(self.CLICK_ADD_UNIT_BUTTON, timeout=10)
-        self.wait_for_element_to_disappear(self.SPLASH_SCREEN_OVERLAY, timeout=20)
+        self.wait_for_element_to_be_clickable(self.CLICK_ON_UNIT_MASTER, timeout=8)
+        self.click(self.CLICK_ON_UNIT_MASTER, timeout=8)
+        self.wait_for_element_to_be_clickable(self.CLICK_ADD_UNIT_BUTTON, timeout=6)
+        self.click(self.CLICK_ADD_UNIT_BUTTON, timeout=6)
+        self.wait_for_element_to_disappear(self.SPLASH_SCREEN_OVERLAY, timeout=10)
         self.wait_for_element_to_be_clickable(
-            self.CLICK_BUSSINESSGROUP_DROPDOWN, timeout=20
+            self.CLICK_BUSSINESSGROUP_DROPDOWN, timeout=8
         )
-        self.click(self.CLICK_BUSSINESSGROUP_DROPDOWN, timeout=20)
-        self.wait_for_element(self.SEARCH_BUSSINESSGROUP, timeout=20)
+        self.click(self.CLICK_BUSSINESSGROUP_DROPDOWN, timeout=8)
+        self.wait_for_element(self.SEARCH_BUSSINESSGROUP, timeout=8)
         self.enter_text(self.SEARCH_BUSSINESSGROUP, self.business_group)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_BUSSINESSGROUP)
@@ -329,9 +405,9 @@ class unit_Master(BasePage):
         )
         self.find_element(self.SEARCH_BUSSINESSGROUP).send_keys(Keys.ENTER)
 
-        self.wait_for_element_to_be_clickable(self.CLICK_COUNTRY_DROPDOWN, timeout=20)
-        self.click(self.CLICK_COUNTRY_DROPDOWN, timeout=20)
-        self.wait_for_element(self.SEARCH_COUNTRY, timeout=10)
+        self.wait_for_element_to_be_clickable(self.CLICK_COUNTRY_DROPDOWN, timeout=8)
+        self.click(self.CLICK_COUNTRY_DROPDOWN, timeout=8)
+        self.wait_for_element(self.SEARCH_COUNTRY, timeout=6)
         self.enter_text(self.SEARCH_COUNTRY, self.country)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_COUNTRY)
@@ -343,16 +419,15 @@ class unit_Master(BasePage):
 
         """ Enter the Unit master details"""
 
-        self.wait_for_element_to_be_clickable(self.CLICK_DIVISION_DROPDOWN, timeout=20)
-        self.click(self.CLICK_DIVISION_DROPDOWN, timeout=20)
+        self.wait_for_element_to_be_clickable(self.CLICK_DIVISION_DROPDOWN, timeout=8)
+        self.click(self.CLICK_DIVISION_DROPDOWN, timeout=8)
         self.find_element(self.SEARCH_DIVISION).send_keys(Keys.ENTER)
-        self.wait_for_element(self.CLICK_CATEGORY_DROPDOWN, timeout=20)
-        self.click(self.CLICK_CATEGORY_DROPDOWN, timeout=20)
-        self.sleep(0.7)
+        self.wait_for_element(self.CLICK_CATEGORY_DROPDOWN, timeout=8)
+        self.click(self.CLICK_CATEGORY_DROPDOWN, timeout=8)
+        self.sleep(0.2)
         self.find_element(self.SEARCH_CATEGORY).send_keys(Keys.ENTER)
-        self.wait_for_element(self.ENTER_UNIT_NAME, timeout=20)
+        self.wait_for_element(self.ENTER_UNIT_NAME, timeout=8)
         self.unit_name = self.generate_unit_name()
-        self.wait_for_element(self.ENTER_UNIT_NAME, timeout=20)
         self.enter_text(self.ENTER_UNIT_NAME, self.unit_name)
         self.logger.info(f"Unit name entered: {self.unit_name}")
         self.unit_code = self.generate_unit_code()
@@ -364,7 +439,7 @@ class unit_Master(BasePage):
         self._save_generated_unit_details(
             self.unit_name, self.unit_code, self.unit_address
         )
-        self.click(self.SELECT_UNIT_STATE, timeout=20)
+        self.click(self.SELECT_UNIT_STATE, timeout=8)
         self.enter_text(self.SEARCH_UNIT_STATE, self.state)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_UNIT_STATE)
@@ -372,19 +447,18 @@ class unit_Master(BasePage):
             .strip()
             == self.state
         )
-        self.click(self.CLICK_UNIT_STATE, timeout=20)
+        self.click(self.CLICK_UNIT_STATE, timeout=8)
         self.logger.info(f"Unit state selected: {self.state}")
-        self.click(self.SELECT_UNIT_CITY, timeout=20)
+        self.click(self.SELECT_UNIT_CITY, timeout=8)
         self.find_element(self.SEARCH_UNIT_CITY).send_keys(Keys.ENTER)
-        self.click(self.PIN_CODE, timeout=20)
+        self.click(self.PIN_CODE, timeout=8)
         self.enter_text(self.PIN_CODE, self.pin_code)
         self.enter_text(self.MOBILE_NUMBER, self.mobile_number)
         self.enter_text(self.UNIT_EMAIL, self.unit_email)
         self.enter_text(self.NATURE_OF_WORK, self.nature_of_work)
-        self.click(self.CLICK_INDUSTRY_DROPDOWN, timeout=20)
+        self.click(self.CLICK_INDUSTRY_DROPDOWN, timeout=8)
         self.enter_text(self.SEARCH_INDUSTRY, self.industry_type)
         self.find_element(self.SEARCH_INDUSTRY).send_keys(Keys.ENTER)
-        self.sleep(0.1)
         # Date of Creation  →  (//button[@aria-label='Open calendar'])[1]
         DatePicker(self.driver).set_date(
             "(//button[@aria-label='Open calendar'])[1]", self.date_of_creation
@@ -393,7 +467,7 @@ class unit_Master(BasePage):
         DatePicker(self.driver).set_date(
             "(//button[@aria-label='Open calendar'])[2]", self.date_of_commitment
         )
-        self.click(self.SERVICE_AGREEMENT_DROPDOWN, timeout=20)
+        self.click(self.SERVICE_AGREEMENT_DROPDOWN, timeout=8)
         self.enter_text(self.SEARCH_AGREEMENT, self.service_agreement)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_AGREEMENT)
@@ -409,29 +483,165 @@ class unit_Master(BasePage):
             "(//button[@aria-label='Open calendar'])[5]",
             self.date_of_commencement_of_operations,
         )
-        self.sleep(0.5)
+        self.sleep(0.1)
 
         employee_type_checkbox = (
             By.XPATH,
             f"//mat-checkbox[.//span[contains(@class,'mat-checkbox-label') and contains(normalize-space(),'{self.employee_type}')]]//input[@type='checkbox']",
         )
 
-        self.wait_for_element_to_be_clickable(employee_type_checkbox, timeout=10)
+        self.wait_for_element_to_be_clickable(employee_type_checkbox, timeout=6)
         self.driver.execute_script(
-                "arguments[0].click();", self.find_element(employee_type_checkbox)
+            "arguments[0].click();", self.find_element(employee_type_checkbox)
         )
         self.logger.info("Employee type checked: %s", self.employee_type)
-        self.sleep(0.2)
 
         if self.employee_type == "Contract Labour(s)":
-            unit_radio = (By.XPATH, "//mat-radio-button[.//span[contains(normalize-space(),'Unit')]]")
-            self.wait_for_element_to_be_clickable(unit_radio, timeout=10)
-            self.driver.execute_script(
-                "arguments[0].click();", self.find_element(unit_radio)
-            )
-            self.logger.info("Selected 'Unit' radio button for Contract Labour(s).")
-            self.sleep(0.5)
 
-            self.wait_for_element_to_be_clickable(self.ID_CARD, timeout=10)
-            self.click(self.ID_CARD, timeout=10)
-            self.sleep(0.5)
+            self.click(self.ECODE_BASED, timeout=6)
+
+        self.logger.info("Selected 'Unit' radio button for Contract Labour(s).")
+
+        self.sleep(0.5)
+
+        self.wait_for_element_to_be_clickable(self.ID_CARD, timeout=6)
+        self.click(self.ID_CARD, timeout=6)
+        self.logger.info("Checked 'ID Card' checkbox.")
+
+        self.click(self.CLICK_UNIT_RIGHTS_ALLOCATION, timeout=8)
+        self.wait_for_element_to_be_clickable(self.RIGHTS_ADD_BTN, timeout=8)
+        self.logger.info(
+            "Clicked 'Unit Rights Allocation(s)' and waiting for Add button to be clickable."
+        )
+        for i in range(4):
+            self.wait_for_element_to_be_clickable(self.RIGHTS_ADD_BTN, timeout=6)
+            self.click(self.RIGHTS_ADD_BTN, timeout=6)
+            self.logger.info(
+                "Clicked 'Add' button %d/4 under Unit Rights Allocation(s).", i + 1
+            )
+            self.sleep(0.2)
+
+            # Unit Rights Allocation(s) (CGM,TAMS,Payroll) - Executive and Admin Role
+
+            # FIRST ROW OF UNIT RIGHTS ALLOCATION(S)
+
+        self.click(self.SELECT_USER_NAME_DROPDOWN_ONE, timeout=6)
+        self.enter_text(self.SEARCH_UNIT_RIGHTS, self.cgm_exe)
+        self.find_element(self.SEARCH_UNIT_RIGHTS).send_keys(Keys.ENTER)
+        self.sleep(0.2)
+        self.click(self.SELECT_MODULE_NAME_ONE, timeout=6)
+        self.enter_text(self.SEARCH_UNIT_RIGHTS, self.cgm_module)
+        self.find_element(self.SEARCH_UNIT_RIGHTS).send_keys(Keys.ENTER)
+        self.sleep(0.2)
+        self.click(self.SELECT_ROLE_ONE, timeout=6)
+        self.enter_text(self.SEARCH_UNIT_RIGHTS, self.executive_role)
+        self.find_element(self.SEARCH_UNIT_RIGHTS).send_keys(Keys.ENTER)
+        self.sleep(0.2)
+        self.logger.info(
+            "Assigned Unit Rights Allocation: User Name='%s', Module='%s', Role='%s'",
+            self.cgm_exe,
+            self.cgm_module,
+            self.executive_role,
+        )
+
+            # SECOND ROW OF UNIT RIGHTS ALLOCATION(S)
+
+        self.click(self.SELECT_USER_NAME_DROPDOWN_ONE, timeout=6)
+        self.enter_text(self.SEARCH_UNIT_RIGHTS, self.tams_exe)
+        self.find_element(self.SEARCH_UNIT_RIGHTS).send_keys(Keys.ENTER)
+        self.sleep(0.2)
+        self.click(self.SELECT_MODULE_NAME_ONE, timeout=6)
+        self.enter_text(self.SEARCH_UNIT_RIGHTS, self.tams_module)
+        self.find_element(self.SEARCH_UNIT_RIGHTS).send_keys(Keys.ENTER)
+        self.sleep(0.2)
+        self.click(self.SELECT_ROLE_ONE, timeout=6)
+        self.enter_text(self.SEARCH_UNIT_RIGHTS, self.executive_role)
+        self.find_element(self.SEARCH_UNIT_RIGHTS).send_keys(Keys.ENTER)
+        self.sleep(0.2)
+
+            # THIRD ROW OF UNIT RIGHTS ALLOCATION(S)
+
+        self.click(self.SELECT_USER_NAME_DROPDOWN_ONE, timeout=6)
+        self.enter_text(self.SEARCH_UNIT_RIGHTS, self.payroll_exe)
+        self.find_element(self.SEARCH_UNIT_RIGHTS).send_keys(Keys.ENTER)
+        self.sleep(0.2)
+        self.click(self.SELECT_MODULE_NAME_ONE, timeout=6)
+        self.enter_text(self.SEARCH_UNIT_RIGHTS, self.payroll_module)
+        self.find_element(self.SEARCH_UNIT_RIGHTS).send_keys(Keys.ENTER)
+        self.sleep(0.2)
+        self.click(self.SELECT_ROLE_ONE, timeout=6)
+        self.enter_text(self.SEARCH_UNIT_RIGHTS, self.executive_role)
+        self.find_element(self.SEARCH_UNIT_RIGHTS).send_keys(Keys.ENTER)
+        self.sleep(0.2)
+
+            # FOURTH ROW OF UNIT RIGHTS ALLOCATION(S)
+
+        self.click(self.SELECT_USER_NAME_DROPDOWN_ONE, timeout=6)
+        self.enter_text(self.SEARCH_UNIT_RIGHTS, self.cgm_admin)
+        self.find_element(self.SEARCH_UNIT_RIGHTS).send_keys(Keys.ENTER)
+        self.sleep(0.2)
+        self.click(self.SELECT_MODULE_NAME_ONE, timeout=6)
+        self.enter_text(self.SEARCH_UNIT_RIGHTS, self.cgm_module)
+        self.find_element(self.SEARCH_UNIT_RIGHTS).send_keys(Keys.ENTER)
+        self.sleep(0.2)
+        self.click(self.SELECT_ROLE_ONE, timeout=6)
+        self.enter_text(self.SEARCH_UNIT_RIGHTS, self.admin_role)
+        self.find_element(self.SEARCH_UNIT_RIGHTS).send_keys(Keys.ENTER)
+        self.sleep(0.5)
+
+            # Moved to SCOPE INFORMATION page
+
+        self.click(self.SELECT_SCOPE_INFORMATION, timeout=6)
+        self.sleep(0.5)
+        self.click(self.SCOPE_INFORMATION_DROPDOWN, timeout=6)
+        self.wait_for_element_to_be_clickable(self.DOMAIN_DROPDOWN, timeout=6)
+        self.click(self.DOMAIN_DROPDOWN, timeout=6)
+        self.enter_text(self.SEARCH, self.domain)
+        self.click(self.SELECT_DATA, timeout=6)
+        self.click(self.ORGANIZATION_DROPDOWN, timeout=6)
+        self.enter_text(self.SEARCH, self.organization_type)
+        self.click(self.SELECT_DATA, timeout=6)
+        self.click(self.SCOPE_STATE, timeout=6)
+        self.sleep(0.5)
+        self.enter_text(self.SEARCH, self.state)
+        self.sleep(0.5)
+        self.click(self.SELECT_DATA, timeout=6)
+        self.sleep(0.5)
+        self.click(self.ACT_DROPDOWN, timeout=6)
+        self.sleep(0.5)
+        self.enter_text(self.SEARCH, self.act)
+        self.sleep(0.5)
+        self.click(self.SELECT_DATA, timeout=6)
+        self.sleep(0.5)
+        self.find_element(self.ACT_DROPDOWN).send_keys(Keys.ESCAPE)
+        self.logger.info(
+            "Filled Scope Information: Domain='%s', Organization Type='%s', State='%s', Act='%s'",
+            self.domain,
+            self.organization_type,
+            self.state,
+            self.act
+        )
+        self.sleep(0.5)
+        self.scroll_to_element(self.UNIT_MASTER_SAVE_BUTTON)
+        self.wait_for_element_to_be_clickable(self.UNIT_MASTER_SAVE_BUTTON, timeout=8)
+        self.driver.execute_script(
+            "arguments[0].click();",
+            self.find_element(self.UNIT_MASTER_SAVE_BUTTON),
+        )
+        self.logger.info("Clicked 'Submit as save' button to save the new unit master.")
+
+        SUCCESS_TOAST = (
+            By.XPATH,
+            "//div[contains(@class,'compfie-toast-notification-message') and normalize-space()='Successfully Created']",
+        )
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located(SUCCESS_TOAST)
+            )
+            self.logger.info("Unit master created successfully — toast message verified.")
+        except TimeoutException:
+            self.logger.error("Success toast not visible after saving unit master.")
+            raise RuntimeError("Unit master save confirmation toast was not displayed.")
+        
+        self.sleep(1)
+

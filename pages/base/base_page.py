@@ -5,7 +5,7 @@ import string
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException, WebDriverException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, WebDriverException, StaleElementReferenceException, ElementClickInterceptedException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 import sys
@@ -106,16 +106,32 @@ class BasePage:
             timeout (int, optional): Wait timeout in seconds
         """
         wait_time = timeout or EXPLICIT_WAIT
-        try:
-            element = WebDriverWait(self.driver, wait_time).until(EC.element_to_be_clickable(locator))
-            element.click()
-        except (TimeoutException, WebDriverException):
-            element = self.find_element(locator)
-            self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", element)
+
+        def try_click(driver):
             try:
-                ActionChains(self.driver).move_to_element(element).click().perform()
-            except WebDriverException:
-                self.driver.execute_script("arguments[0].click();", element)
+                el = driver.find_element(*locator)
+                if el.is_displayed() and el.is_enabled():
+                    el.click()
+                    return True
+            except ElementClickInterceptedException:
+                # Overlay is covering the element — JS click bypasses hit-testing
+                try:
+                    driver.execute_script("arguments[0].click();", el)
+                    return True
+                except Exception:
+                    pass
+            except (StaleElementReferenceException, NoSuchElementException):
+                pass
+            return False
+
+        try:
+            WebDriverWait(self.driver, wait_time).until(try_click)
+        except TimeoutException:
+            element = self.driver.find_element(*locator)
+            self.driver.execute_script(
+                "arguments[0].scrollIntoView({block:'center'}); arguments[0].click();",
+                element,
+            )
         self.logger.info(f"Clicked on element: {locator}")
     
     def enter_text(self, locator, text):

@@ -24,12 +24,9 @@ Both helpers are pure functions — they take the driver (and an optional
 logger) as arguments so they can be imported and called from anywhere.
 """
 
-import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-
-from conftest import driver
 
 # JavaScript injected before page load
 _INTERCEPTOR_JS = """
@@ -128,19 +125,17 @@ def read_captcha_from_canvas(driver, logger=None, locator=None,
         #     "return window._captchaText ? window._captchaText.trim() : '';"
         # )
 
-        time.sleep(settle_sleep)  # short start sleep
-        deadline = time.monotonic() + 3.0
-        text = ""
-
-        while time.monotonic() < deadline:
-            text = driver.execute_script(
+        def _captcha_text_ready(d):
+            return d.execute_script(
                 "return window._captchaText ? window._captchaText.trim() : '';"
+            ) or False
+
+        try:
+            text = WebDriverWait(driver, settle_sleep + 3.0, poll_frequency=0.1).until(
+                _captcha_text_ready
             )
-
-            if text:
-                break
-
-            time.sleep(0.1)
+        except TimeoutException:
+            text = ""
 
         if text:
             # De-duplicate: if the same string appears twice (shadow rendering),

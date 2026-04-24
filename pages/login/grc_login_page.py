@@ -7,7 +7,6 @@ CAPTCHA strategy:
 """
 
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 import sys
 import os
 import re
@@ -16,42 +15,45 @@ from time import perf_counter
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pages.base.base_page import BasePage
-from utilities.captcha_helper import inject_captcha_interceptor, read_captcha_from_canvas
+from utilities.captcha_helper import (
+    inject_captcha_interceptor,
+    read_captcha_from_canvas,
+)
 from utilities.json_config import get_path, get_str
 
 # ── module-level constants ────────────────────────────────────────────────────
 SCREENSHOT_DIR = get_path("paths", "captcha_image_dir", "reports/captchas")
-LOGIN_URL      = get_str("app", "login_url", "http://13.203.6.58:5009/#/login")
-REPORTS_DIR    = get_path("paths", "reports_dir", "reports")
+LOGIN_URL = get_str("app", "login_url", "http://13.203.6.58:5009/#/login")
+REPORTS_DIR = get_path("paths", "reports_dir", "reports")
 
 
 class GRCLoginPage(BasePage):
     """Login page — handles credentials, CAPTCHA reading, and form submission."""
 
     # ── locators ──────────────────────────────────────────────────────────────
-    USERNAME_INPUT       = (By.ID,    "Username")
-    PASSWORD_INPUT       = (By.ID,    "password")
-    GROUP_INPUT          = (By.ID,    "group_short_name")
-    CAPTCHA_TEXTBOX      = (By.NAME,  "captcha")
-    CAPTCHA_CANVAS       = (By.ID,    "captchaCanvas")
-    CAPTCHA_BUTTONS      = (By.CLASS_NAME, "captcha-buttons")
-    CAPTCHA_INPUT_XPATH  = (
+    USERNAME_INPUT = (By.ID, "Username")
+    PASSWORD_INPUT = (By.ID, "password")
+    GROUP_INPUT = (By.ID, "group_short_name")
+    CAPTCHA_TEXTBOX = (By.NAME, "captcha")
+    CAPTCHA_CANVAS = (By.ID, "captchaCanvas")
+    CAPTCHA_BUTTONS = (By.CLASS_NAME, "captcha-buttons")
+    CAPTCHA_INPUT_XPATH = (
         By.XPATH,
         "//input[@formcontrolname='captcha' or "
         "@placeholder[contains(translate(.,'CAPTCHA','captcha'),'captcha')]]",
     )
     # fallback locator list tried in order when CAPTCHA_CANVAS is not visible
     CAPTCHA_CANVAS_LOCATORS = [
-        (By.ID,           "captchaCanvas"),
+        (By.ID, "captchaCanvas"),
         (By.CSS_SELECTOR, "canvas[id*='captcha']"),
-        (By.XPATH,
-         "//input[@name='captcha']/ancestor::div[1]/following::canvas[1]"),
+        (By.XPATH, "//input[@name='captcha']/ancestor::div[1]/following::canvas[1]"),
     ]
     INVALID_CAPTCHA_ERROR = (
-        By.XPATH, "//mat-error[contains(text(),'Invalid Captcha')]"
+        By.XPATH,
+        "//mat-error[contains(text(),'Invalid Captcha')]",
     )
-    CLOSE_POPUP_BUTTON   = (By.XPATH, "//button[normalize-space()='✕']")
-    LOGIN_BUTTON         = (By.XPATH, "//button[@id='Sign In']")
+    CLOSE_POPUP_BUTTON = (By.XPATH, "//button[normalize-space()='✕']")
+    LOGIN_BUTTON = (By.XPATH, "//button[@id='Sign In']")
 
     # ── init ──────────────────────────────────────────────────────────────────
     def __init__(self, driver):
@@ -64,7 +66,6 @@ class GRCLoginPage(BasePage):
         # Inject BEFORE get() so the script runs on document creation
         inject_captcha_interceptor(driver, self.logger)
         self.driver.get(LOGIN_URL)
-        # self.wait_for_page_load()
 
     # ── page lifecycle ────────────────────────────────────────────────────────
     def wait_for_page_load(self):
@@ -81,6 +82,30 @@ class GRCLoginPage(BasePage):
 
     def enter_group_name(self, group_name):
         self.enter_text(self.GROUP_INPUT, group_name)
+
+    def _fill_credentials(self, username: str, password: str, group_name: str):
+        """Set all three credential fields in a single JS round trip."""
+        self.driver.execute_script(
+            """
+            function setVal(id, val) {
+                var el = document.getElementById(id);
+                if (!el) return;
+                var setter = Object.getOwnPropertyDescriptor(
+                    window.HTMLInputElement.prototype, 'value').set;
+                setter.call(el, val);
+                ['input','change','blur'].forEach(function(e) {
+                    el.dispatchEvent(new Event(e, {bubbles: true}));
+                });
+            }
+            setVal('Username',         arguments[0]);
+            setVal('password',         arguments[1]);
+            setVal('group_short_name', arguments[2]);
+            """,
+            username,
+            password,
+            group_name,
+        )
+        self.logger.info("Credentials filled via single JS call.")
 
     def close_initial_popup(self):
         """Dismiss any modal that appears before login fields are usable."""
@@ -111,6 +136,7 @@ class GRCLoginPage(BasePage):
         self.driver.execute_script(
             """
             var el     = arguments[0];
+            el.scrollIntoView({block:'center'});
             var setter = Object.getOwnPropertyDescriptor(
                 window.HTMLInputElement.prototype, 'value').set;
             setter.call(el, arguments[1]);
@@ -128,8 +154,7 @@ class GRCLoginPage(BasePage):
         Clear the interceptor buffer so repeated CAPTCHA renders do not reuse stale text.
         """
         try:
-            self.driver.execute_script("window._captchaText = '';"
-            )
+            self.driver.execute_script("window._captchaText = '';")
         except Exception:
             pass
 
@@ -174,8 +199,8 @@ class GRCLoginPage(BasePage):
     def enter_captcha(self, captcha_text: str):
         """
         Types the CAPTCHA value into the input field.
-        Tries native send_keys first; falls back to the Angular native-setter
-        injection when the field value does not match after send_keys.
+        Tries the Angular native-setter first (1 JS round trip); falls back
+        to send_keys if the setter does not register the value.
         """
         if not captcha_text or not str(captcha_text).strip():
             raise ValueError("Captcha text is empty.")
@@ -185,36 +210,29 @@ class GRCLoginPage(BasePage):
 
         for attempt in range(1, 4):
             field = self.driver.find_element(*self.CAPTCHA_TEXTBOX)
-            self.driver.execute_script(
-                "arguments[0].scrollIntoView({block:'center'});", field
-            )
 
-            # try regular keyboard input first
+            # Angular native-setter: single JS call — fastest path
+            if self._write_captcha_via_angular_setter(field, captcha_text):
+                self.logger.info(f"Captcha entered (Angular setter): '{captcha_text}'")
+                return
+
+            # Fallback: keyboard input
             try:
                 field.click()
                 field.clear()
-                field.send_keys(Keys.CONTROL, "a")
-                field.send_keys(Keys.DELETE)
                 field.send_keys(captcha_text)
+                if (field.get_attribute("value") or "").strip() == captcha_text:
+                    self.logger.info(f"Captcha entered (send_keys): '{captcha_text}'")
+                    return
             except Exception:
                 pass
 
-            if (field.get_attribute("value") or "").strip() == captcha_text:
-                self.logger.info(f"Captcha entered (send_keys): '{captcha_text}'")
-                return
-
-            # Angular native-setter fallback
-            if self._write_captcha_via_angular_setter(field, captcha_text):
-                self.logger.info(
-                    f"Captcha entered (Angular setter): '{captcha_text}'"
-                )
-                return
-
             self.logger.warning(
                 "Captcha input attempt %d/3 failed (expected '%s')",
-                attempt, captcha_text,
+                attempt,
+                captcha_text,
             )
-            self.sleep(0.2)
+            
 
         raise RuntimeError(
             f"Could not enter captcha '{captcha_text}' after 3 attempts."
@@ -222,103 +240,90 @@ class GRCLoginPage(BasePage):
 
     # ── login orchestration ───────────────────────────────────────────────────
     def click_login_button(self):
-        # self.wait_for_element(self.CAPTCHA_TEXTBOX, timeout=5)
-        # self.wait.until(
-        #     lambda d: d.find_element(
-        #         *self.CAPTCHA_TEXTBOX
-        #     ).get_attribute("value").strip()
-        # )
+
         self.wait_for_element_to_be_clickable(self.LOGIN_BUTTON, timeout=10)
         self.scroll_to_element(self.LOGIN_BUTTON)
         self.click(self.LOGIN_BUTTON, timeout=10)
 
-    def _is_invalid_captcha_displayed(self, timeout: int = 3) -> bool:
-        end = datetime.now().timestamp() + timeout
-        while datetime.now().timestamp() < end:
-            for el in self.driver.find_elements(*self.INVALID_CAPTCHA_ERROR):
-                try:
-                    if el.is_displayed():
-                        return True
-                except Exception:
-                    pass
-            self.sleep(0.2)
-        return False
+    def _is_invalid_captcha_displayed(self, timeout: int = 1.5) -> bool:
+        from selenium.webdriver.support.ui import WebDriverWait
+        from selenium.webdriver.support import expected_conditions as EC
+        from selenium.common.exceptions import TimeoutException
 
-    def login(self, username: str, password: str, group_name: str,
-              captcha_text: str = None):
+        try:
+            WebDriverWait(self.driver, timeout, poll_frequency=0.2).until(
+                EC.visibility_of_element_located(self.INVALID_CAPTCHA_ERROR)
+            )
+            return True
+        except TimeoutException:
+            return False
+
+    def login(
+        self, username: str, password: str, group_name: str, captcha_text: str = None
+    ):
         """
         Full login sequence.  Retries up to 5 times on Invalid-Captcha errors.
         """
         self.logger.info(f"Logging in as: {username}")
         self.close_initial_popup()
-        self.enter_username(username)
-        self.enter_password(password)
-        self.enter_group_name(group_name)
 
-        max_attempts    = 5
-        current_captcha = captcha_text
+        # Read captcha before typing credentials — the canvas interceptor captures
+        # fillText at page load, so _captchaText is already set here. This eliminates
+        # any wait after enter_group_name.
+        current_captcha = captcha_text or self.get_captcha_text(
+            popup_already_closed=True
+        )
 
-        for attempt in range(1, max_attempts + 1):
-            if not current_captcha:
-                current_captcha = self.get_captcha_text(popup_already_closed=True)
+        self._fill_credentials(username, password, group_name)
 
-            self.logger.info(
-                "Login attempt %d/%d — captcha: '%s'",
-                attempt, max_attempts, current_captcha,
-            )
-            self.enter_captcha(current_captcha)
-            self.wait.until(
-                lambda d: d.find_element(
-                    *self.CAPTCHA_TEXTBOX
-                ).get_attribute("value").strip() == current_captcha
-            )
-            # self.sleep(1)
-            self.click_login_button()
-            # self.sleep(1)
+        self.logger.info("Login attempt — captcha: '%s'", current_captcha)
+        self.enter_captcha(current_captcha)
+        self.click_login_button()
 
-            if self._is_invalid_captcha_displayed(timeout=3):
-                self.logger.warning(
-                    "Invalid Captcha on attempt %d/%d — retrying.",
-                    attempt, max_attempts,
-                )
-                if attempt == max_attempts:
-                    raise RuntimeError(
-                        f"Login failed after {max_attempts} attempts "
-                        "(repeated Invalid Captcha)."
-                    )
-                self._reset_captcha_interceptor()
-                current_captcha = None
-                continue
+        if self._is_invalid_captcha_displayed(timeout=3):
+            raise RuntimeError(f"Login failed: Invalid Captcha '{current_captcha}'.")
 
-            self.logger.info("Login successful.")
-            return
+        self.logger.info("Login successful.")
 
     def _is_valid_captcha(self, text: str) -> bool:
-        return (bool(text)
-                and 4 <= len(text) <= 8
-                and text.isascii()
-                and all(c.isalnum() for c in text))
+        return (
+            bool(text)
+            and 4 <= len(text) <= 8
+            and text.isascii()
+            and all(c.isalnum() for c in text)
+        )
 
     # ── captcha element locator ───────────────────────────────────────────────
-    def _locate_captcha_element(self, timeout: int = 4):
-        end = datetime.now().timestamp() + timeout
-        while datetime.now().timestamp() < end:
+    def _locate_captcha_element(self, timeout: int = 3):
+        from selenium.webdriver.support.ui import WebDriverWait
+        from selenium.common.exceptions import TimeoutException
+
+        def _find_visible(driver):
             for loc in self.CAPTCHA_CANVAS_LOCATORS:
-                for el in self.driver.find_elements(*loc):
+                for el in driver.find_elements(*loc):
                     try:
                         size = el.size or {}
-                        if (el.is_displayed()
-                                and size.get("width", 0) > 0
-                                and size.get("height", 0) > 0):
-                            self.logger.info(f"CAPTCHA element found via: {loc}")
+                        if (
+                            el.is_displayed()
+                            and size.get("width", 0) > 0
+                            and size.get("height", 0) > 0
+                        ):
                             return el, loc
                     except Exception:
                         pass
-            self.sleep(0.2)
-        raise RuntimeError(
-            "CAPTCHA canvas element not found. "
-            f"Tried: {self.CAPTCHA_CANVAS_LOCATORS}"
-        )
+            return False
+
+        try:
+            result = WebDriverWait(self.driver, timeout, poll_frequency=0.1).until(
+                _find_visible
+            )
+            self.logger.info(f"CAPTCHA element found via: {result[1]}")
+            return result
+        except TimeoutException:
+            raise RuntimeError(
+                "CAPTCHA canvas element not found. "
+                f"Tried: {self.CAPTCHA_CANVAS_LOCATORS}"
+            )
 
     # ── file helpers ──────────────────────────────────────────────────────────
     def _ensure_captcha_dir(self) -> str:
@@ -327,7 +332,7 @@ class GRCLoginPage(BasePage):
 
     def _save_captcha_text(self, text: str, prefix: str = "captcha_text") -> str:
         captcha_dir = self._ensure_captcha_dir()
-        ts       = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
         filepath = os.path.join(captcha_dir, f"{prefix}_{ts}.txt")
         with open(filepath, "w", encoding="utf-8") as fh:
             fh.write(text)

@@ -37,8 +37,12 @@ class DriverFactory:
     # ── Chrome option builder ─────────────────────────────────────────────────
     @staticmethod
     def _build_chrome_options(force_headless: bool = False) -> ChromeOptions:
+
+
         """Build Chrome options with sensible defaults for local/CI runs."""
         opts = ChromeOptions()
+        
+        opts.page_load_strategy = 'eager'  # or 'none'
         if HEADLESS or force_headless:
             opts.add_argument("--headless=new")
         opts.add_argument("--start-maximized")
