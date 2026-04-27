@@ -1,0 +1,11 @@
+2026-04-27 12:53:50 - unit_Master - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[text()='apps']]")
+2026-04-27 12:53:50 - unit_Master - INFO - Clicked on element: ('xpath', "//mat-card[span[text()='General Master-Executive']]")
+2026-04-27 12:53:50 - unit_Master - INFO - Switched to new browser window/tab: 2D9026173AEF3C992F5043A6D0E1E123
+2026-04-27 12:53:51 - unit_Master - INFO - Switched to General Master-Executive tab and verified URL http://13.203.6.58:5002/#/home/welcome
+2026-04-27 12:53:52 - unit_Master - INFO - Element found: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-04-27 12:53:52 - unit_Master - INFO - Entered text 'Microsoft Pure Value' in element: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-04-27 12:53:53 - unit_Master - INFO - Element found: ('xpath', '//table//tbody//tr[1]//td')
+2026-04-27 12:53:53 - unit_Master - INFO - Element found: ('xpath', '//table//tbody//tr[1]//td')
+2026-04-27 12:53:53 - unit_Master - INFO - Legal entity row selected successfully.
+2026-04-27 12:53:53 - unit_Master - INFO - Element found: ('xpath', "//button[contains(@class, 'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-04-27 12:53:54 - unit_Master - INFO - Clicked on element: ('xpath', "//button[contains(@class, 'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")

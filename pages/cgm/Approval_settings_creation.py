@@ -43,8 +43,15 @@ class ApprovalSettingsCreation(BasePage):
     SELECT_MODULE = (By.XPATH, "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Module')]]")
     TYPE_OF_APPROVAL_DROPDOWN = (By.XPATH, "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Type of Approval(s)')]]")
     SELECT_ALL_CHECKBOX = (By.XPATH, "//label[contains(@class,'mat-checkbox-layout') and .//span[text()='Select All']]")
-    CLICK_SEND_FOR_APPROVAL_BUTTON = (By.XPATH, "//button[.//text()[contains(.,'Send for Approval')]]")
+    CLICK_SEND_FOR_APPROVAL_BUTTON = (By.XPATH, "//span[contains(normalize-space(),'Send for Approval')]")
     SAVE_BUTTON = (By.XPATH, "//button[contains(., 'Save') or contains(., 'Submit')]")
+
+    # Other Settings locators
+
+    CLICK_OTHER_SETTINGS = (By.XPATH, "//div[@role='tab']//span[normalize-space()='Other Setting(s)']")
+    CRITERIA_MISMATCH = (By.XPATH, "//mat-select[@placeholder='For Criteria Mismatch']")
+    NO_APPROVER = (By.XPATH, "//mat-select[@placeholder='In case of no Approver']")
+    SELECT_AUTOAPPROVE = (By.XPATH, "//mat-option//span[normalize-space()='Auto Approve']")
 
     # Success notification locators
     SUCCESS_NOTIFICATION_CONTENT = (By.XPATH, "//div[contains(@class, 'compfie-toast-notification-content')]")
@@ -61,15 +68,21 @@ class ApprovalSettingsCreation(BasePage):
         self.wait_for_element(self.GENERAL_SETTINGS_MENU, timeout=10)
         self.logger.info("Approval Settings page loaded successfully")
 
-    def create_approval_settings(self, data):
-        """Create approval settings with the provided data"""
+    def create_approval_settings(self, _data=None):
+        """Navigate to Approval Settings and create entries for CGM, TAMS, and Payroll."""
         self.logger.info("Starting approval settings creation process.")
         self.click(self.GENERAL_SETTINGS_MENU, timeout=6)
         self.wait_for_element(self.SELECT_APPROVAL_SETTINGS_MENU, timeout=6)
         self.click(self.SELECT_APPROVAL_SETTINGS_MENU, timeout=6)
 
-        # CGM APPROVAL SETTINGS CREATION
+        self._setup_module(CGM_MODULE, has_other_settings=False)
+        self._setup_module(TAMS_MODULE, has_other_settings=True)
+        self._setup_module(PAYROLL_MODULE, has_other_settings=True)
 
+        self.verify_success_notification()
+
+    def _setup_module(self, module_name, has_other_settings=False):
+        """Creates approval settings for a single module."""
         self.wait_for_element(self.ADD_APPROVAL_SETTINGS_BUTTON, timeout=6)
         self.click(self.ADD_APPROVAL_SETTINGS_BUTTON, timeout=6)
         self.logger.info("Clicked Add Approval Settings button")
@@ -79,11 +92,9 @@ class ApprovalSettingsCreation(BasePage):
         self.logger.info("Selected 'Based On' as 'Unit'")
         self.sleep(0.5)
 
-        # Select a unit from the dropdown
-       
+        # Select Unit
         self.click(self.SELECT_UNIT_DROPDOWN, timeout=6)
         self.wait_for_element(self.SEARCH, timeout=6)
-        # Clear and enter unit name
         search_element = self.find_element(self.SEARCH)
         search_element.clear()
         self.enter_text(self.SEARCH, UNIT_NAME)
@@ -92,31 +103,45 @@ class ApprovalSettingsCreation(BasePage):
         self.click(self.SELECT_DROPDOWN_VALUE, timeout=6)
         self.logger.info(f"Selected unit: {UNIT_NAME}")
         self.sleep(2)
+
+        # Select Module
         self.click(self.SELECT_MODULE, timeout=6)
         self.sleep(2)
-        # Clear and enter module name
         search_element = self.find_element(self.SEARCH)
         search_element.clear()
-        self.enter_text(self.SEARCH, CGM_MODULE)
-        self.logger.info(f"Searched for module: {CGM_MODULE}")
+        self.enter_text(self.SEARCH, module_name)
+        self.logger.info(f"Searched for module: {module_name}")
         self.sleep(0.3)
         self.click(self.SELECT_DROPDOWN_VALUE, timeout=6)
+
+        # Type of Approval
         self.click(self.TYPE_OF_APPROVAL_DROPDOWN, timeout=6)
         self.click(self.SELECT_ALL_CHECKBOX, timeout=6)
         self.sleep(0.5)
         search_element = self.find_element(self.SEARCH)
         search_element.send_keys(Keys.ESCAPE)
         self.sleep(0.5)
+
+        # Other Settings (only for TAMS and Payroll)
+        if has_other_settings:
+            self.click(self.CLICK_OTHER_SETTINGS, timeout=6)
+            self.sleep(0.5)
+            self.click(self.CRITERIA_MISMATCH, timeout=6)
+            self.sleep(1)
+            self.click(self.SELECT_AUTOAPPROVE, timeout=6)
+            self.sleep(1)
+            self.scroll_to_element(self.NO_APPROVER)
+            self.click(self.NO_APPROVER, timeout=6)
+            self.sleep(1)
+            self.click(self.SELECT_AUTOAPPROVE, timeout=6)
+            self.sleep(1)
+
+        # Send for Approval
         self.click(self.CLICK_SEND_FOR_APPROVAL_BUTTON, timeout=6)
         self.sleep(1)
-        self.logger.info("Clicked 'Send for Approval' button")
-
-        #TAMS APPROVAL SETTINGS CREATION
-        
-
-
-        # Verify success notification and wait for processing (2 minutes)
-        self.verify_success_notification()
+        self.click(self.CLICK_SEND_FOR_APPROVAL_BUTTON, timeout=6)
+        self.sleep(1)
+        self.logger.info(f"Clicked 'Send for Approval' button for {module_name} module")
 
     def verify_success_notification(self, timeout=6):
         """Verify success notification appears after sending for approval and wait for processing

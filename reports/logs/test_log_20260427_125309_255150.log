@@ -1,0 +1,13 @@
+2026-04-27 12:53:09 - tests.conftest - INFO - ================================================================================
+2026-04-27 12:53:09 - tests.conftest - INFO - TEST SESSION STARTED - GRC Automation
+2026-04-27 12:53:09 - tests.conftest - INFO - ================================================================================
+2026-04-27 12:53:09 - tests.conftest - INFO - Cleared screenshots folder: E:\AutomationTask\GRC Payroll\reports\screenshots
+2026-04-27 12:53:09 - tests.conftest - INFO - ================================================================================
+2026-04-27 12:53:09 - tests.conftest - INFO - Initializing WebDriver
+2026-04-27 12:54:35 - tests.conftest - ERROR - Test failed: test_create_approval_settings
+2026-04-27 12:54:35 - tests.conftest - INFO - Screenshot saved: E:\AutomationTask\GRC Payroll\reports\screenshots\test_create_approval_settings_20260427_125434.png
+2026-04-27 12:54:35 - tests.conftest - INFO - Quitting WebDriver
+2026-04-27 12:54:37 - tests.conftest - INFO - ================================================================================
+2026-04-27 12:54:37 - tests.conftest - INFO - ================================================================================
+2026-04-27 12:54:37 - tests.conftest - INFO - TEST SESSION COMPLETED
+2026-04-27 12:54:37 - tests.conftest - INFO - ================================================================================
