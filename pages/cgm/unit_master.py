@@ -634,6 +634,10 @@ class unit_Master(BasePage):
             By.XPATH,
             "//div[contains(@class,'compfie-toast-notification-message') and normalize-space()='Successfully Created']",
         )
+        TOAST_CLOSE_BUTTON = (
+            By.XPATH,
+            "//mat-icon[@data-mat-icon-name='x']",
+        )
         try:
             WebDriverWait(self.driver, 10).until(
                 EC.visibility_of_element_located(SUCCESS_TOAST)
@@ -642,6 +646,15 @@ class unit_Master(BasePage):
         except TimeoutException:
             self.logger.error("Success toast not visible after saving unit master.")
             raise RuntimeError("Unit master save confirmation toast was not displayed.")
-        
+
+        try:
+            close_btn = WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(TOAST_CLOSE_BUTTON)
+            )
+            close_btn.click()
+            self.logger.info("Closed success toast notification.")
+        except TimeoutException:
+            pass
+
         self.sleep(1)
 

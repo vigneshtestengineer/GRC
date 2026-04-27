@@ -29,35 +29,54 @@ SCREENSHOT_DIR = get_path("paths", "screenshot_dir", "reports/screenshots")
 _failed_tests: set = set()
 
 
-def pytest_collection_modifyitems(config, items):
-    """Run unit_master tests first; exclude test_login when unit_master tests are collected."""
-    unit_master = [i for i in items if "unitmaster" in i.nodeid.lower()]
-    if unit_master:
-        items[:] = unit_master
-    else:
-        items[:] = items[:]
+TEST_ORDER = [
+    "unitmaster",
+    "approval_settings",
+    # add next test module keywords here in execution order
+]
 
-@pytest.fixture(scope="function")
+
+def pytest_collection_modifyitems(config, items):
+    """Run tests in the order defined by TEST_ORDER; unmatched tests run last."""
+    def sort_key(item):
+        nodeid = item.nodeid.lower()
+        for index, keyword in enumerate(TEST_ORDER):
+            if keyword in nodeid:
+                return index
+        return len(TEST_ORDER)
+
+    items.sort(key=sort_key)
+
+@pytest.fixture(scope="session")
 def driver(request):
     """
-    WebDriver fixture - creates and quits driver for each test
+    WebDriver fixture - single browser session shared across all tests
     """
-    logger.info("=" * 80)
-    logger.info("Initializing WebDriver")
+    try:
+        logger.info("=" * 80)
+        logger.info("Initializing WebDriver")
+    except Exception:
+        pass
     driver = DriverFactory.get_driver()
     yield driver
-    logger.info("Quitting WebDriver")
-    driver.quit()
-    logger.info("=" * 80)
+    try:
+        logger.info("Quitting WebDriver")
+        driver.quit()
+        logger.info("=" * 80)
+    except Exception:
+        pass
 
 @pytest.fixture(scope="session", autouse=True)
 def setup_teardown():
     """
     Session-level setup and teardown
     """
-    logger.info("=" * 80)
-    logger.info("TEST SESSION STARTED - GRC Automation")
-    logger.info("=" * 80)
+    try:
+        logger.info("=" * 80)
+        logger.info("TEST SESSION STARTED - GRC Automation")
+        logger.info("=" * 80)
+    except Exception:
+        pass
 
     screenshot_dir = SCREENSHOT_DIR
     if os.path.exists(screenshot_dir):
@@ -74,9 +93,12 @@ def setup_teardown():
         os.makedirs(screenshot_dir, exist_ok=True)
 
     yield
-    logger.info("=" * 80)
-    logger.info("TEST SESSION COMPLETED")
-    logger.info("=" * 80)
+    try:
+        logger.info("=" * 80)
+        logger.info("TEST SESSION COMPLETED")
+        logger.info("=" * 80)
+    except Exception:
+        pass
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
@@ -98,6 +120,12 @@ def pytest_runtest_makereport(item, call):
                     logger.info(f"Screenshot saved: {screenshot_path}")
         elif report.passed:
             logger.info(f"Test passed: {item.name}")
+
+
+def pytest_runtest_logreport(report):
+    """Stop execution immediately after any test failure."""
+    if report.when == "call" and report.failed:
+        pytest.exit(f"Stopping execution: {report.nodeid} failed", returncode=1)
 
 
 @pytest.fixture(autouse=True)

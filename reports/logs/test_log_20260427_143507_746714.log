@@ -1,0 +1,88 @@
+2026-04-27 14:35:07 - ApprovalSettingsCreation - INFO - ApprovalSettingsCreation page initialized.
+2026-04-27 14:35:07 - ApprovalSettingsCreation - INFO - Approval Settings page loaded successfully
+2026-04-27 14:35:07 - ApprovalSettingsCreation - INFO - Starting approval settings creation process.
+2026-04-27 14:35:07 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//span[normalize-space()='General Setting(s)']")
+2026-04-27 14:35:08 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//span[normalize-space()='General Setting(s)']")
+2026-04-27 14:35:15 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Approval Setting(s)']")
+2026-04-27 14:35:17 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//button[contains(., 'Add')]")
+2026-04-27 14:35:17 - ApprovalSettingsCreation - INFO - Clicked Add Approval Settings button
+2026-04-27 14:35:19 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//label[contains(@class, 'mat-radio-label') and contains(., 'Unit')]")
+2026-04-27 14:35:19 - ApprovalSettingsCreation - INFO - Selected 'Based On' as 'Unit'
+2026-04-27 14:35:19 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Unit')]]")
+2026-04-27 14:35:19 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:19 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:20 - ApprovalSettingsCreation - INFO - Entered text 'Gamma Systems 907' in element: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:20 - ApprovalSettingsCreation - INFO - Searched for unit: Gamma Systems 907
+2026-04-27 14:35:20 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "(//span[contains(@class,'mat-option-text')])[2]")
+2026-04-27 14:35:20 - ApprovalSettingsCreation - INFO - Selected unit: Gamma Systems 907
+2026-04-27 14:35:22 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Module')]]")
+2026-04-27 14:35:24 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:24 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:25 - ApprovalSettingsCreation - INFO - Entered text 'General Masters Module' in element: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:25 - ApprovalSettingsCreation - INFO - Searched for module: General Masters Module
+2026-04-27 14:35:25 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "(//span[contains(@class,'mat-option-text')])[2]")
+2026-04-27 14:35:25 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Type of Approval(s)')]]")
+2026-04-27 14:35:26 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//label[contains(@class,'mat-checkbox-layout') and .//span[text()='Select All']]")
+2026-04-27 14:35:26 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:27 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//span[contains(normalize-space(),'Send for Approval')]")
+2026-04-27 14:35:29 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//span[contains(normalize-space(),'Send for Approval')]")
+2026-04-27 14:35:30 - ApprovalSettingsCreation - INFO - Clicked 'Send for Approval' button for General Masters Module module
+2026-04-27 14:35:31 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//button[contains(., 'Add')]")
+2026-04-27 14:35:31 - ApprovalSettingsCreation - INFO - Clicked Add Approval Settings button
+2026-04-27 14:35:33 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//label[contains(@class, 'mat-radio-label') and contains(., 'Unit')]")
+2026-04-27 14:35:33 - ApprovalSettingsCreation - INFO - Selected 'Based On' as 'Unit'
+2026-04-27 14:35:35 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Unit')]]")
+2026-04-27 14:35:35 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:35 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:36 - ApprovalSettingsCreation - INFO - Entered text 'Gamma Systems 907' in element: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:36 - ApprovalSettingsCreation - INFO - Searched for unit: Gamma Systems 907
+2026-04-27 14:35:36 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "(//span[contains(@class,'mat-option-text')])[2]")
+2026-04-27 14:35:36 - ApprovalSettingsCreation - INFO - Selected unit: Gamma Systems 907
+2026-04-27 14:35:40 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Module')]]")
+2026-04-27 14:35:42 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:42 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:43 - ApprovalSettingsCreation - INFO - Entered text 'Time Office Module' in element: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:43 - ApprovalSettingsCreation - INFO - Searched for module: Time Office Module
+2026-04-27 14:35:44 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "(//span[contains(@class,'mat-option-text')])[2]")
+2026-04-27 14:35:44 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Type of Approval(s)')]]")
+2026-04-27 14:35:44 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//label[contains(@class,'mat-checkbox-layout') and .//span[text()='Select All']]")
+2026-04-27 14:35:45 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:45 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[@role='tab']//span[normalize-space()='Other Setting(s)']")
+2026-04-27 14:35:46 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-select[@placeholder='For Criteria Mismatch']")
+2026-04-27 14:35:47 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='Auto Approve']")
+2026-04-27 14:35:48 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//mat-select[@placeholder='In case of no Approver']")
+2026-04-27 14:35:49 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-select[@placeholder='In case of no Approver']")
+2026-04-27 14:35:50 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='Auto Approve']")
+2026-04-27 14:35:51 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//span[contains(normalize-space(),'Send for Approval')]")
+2026-04-27 14:35:52 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//span[contains(normalize-space(),'Send for Approval')]")
+2026-04-27 14:35:53 - ApprovalSettingsCreation - INFO - Clicked 'Send for Approval' button for Time Office Module module
+2026-04-27 14:35:55 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//button[contains(., 'Add')]")
+2026-04-27 14:35:55 - ApprovalSettingsCreation - INFO - Clicked Add Approval Settings button
+2026-04-27 14:35:56 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//label[contains(@class, 'mat-radio-label') and contains(., 'Unit')]")
+2026-04-27 14:35:56 - ApprovalSettingsCreation - INFO - Selected 'Based On' as 'Unit'
+2026-04-27 14:35:56 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Unit')]]")
+2026-04-27 14:35:56 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:56 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:57 - ApprovalSettingsCreation - INFO - Entered text 'Gamma Systems 907' in element: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:35:57 - ApprovalSettingsCreation - INFO - Searched for unit: Gamma Systems 907
+2026-04-27 14:35:57 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "(//span[contains(@class,'mat-option-text')])[2]")
+2026-04-27 14:35:57 - ApprovalSettingsCreation - INFO - Selected unit: Gamma Systems 907
+2026-04-27 14:35:59 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Module')]]")
+2026-04-27 14:36:01 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:36:01 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:36:02 - ApprovalSettingsCreation - INFO - Entered text 'Payroll Module' in element: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:36:02 - ApprovalSettingsCreation - INFO - Searched for module: Payroll Module
+2026-04-27 14:36:02 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "(//span[contains(@class,'mat-option-text')])[2]")
+2026-04-27 14:36:03 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Type of Approval(s)')]]")
+2026-04-27 14:36:03 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//label[contains(@class,'mat-checkbox-layout') and .//span[text()='Select All']]")
+2026-04-27 14:36:03 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-04-27 14:36:04 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[@role='tab']//span[normalize-space()='Other Setting(s)']")
+2026-04-27 14:36:05 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-select[@placeholder='For Criteria Mismatch']")
+2026-04-27 14:36:06 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='Auto Approve']")
+2026-04-27 14:36:07 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//mat-select[@placeholder='In case of no Approver']")
+2026-04-27 14:36:07 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-select[@placeholder='In case of no Approver']")
+2026-04-27 14:36:08 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='Auto Approve']")
+2026-04-27 14:36:10 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//span[contains(normalize-space(),'Send for Approval')]")
+2026-04-27 14:36:11 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//span[contains(normalize-space(),'Send for Approval')]")
+2026-04-27 14:36:12 - ApprovalSettingsCreation - INFO - Clicked 'Send for Approval' button for Payroll Module module
+2026-04-27 14:36:12 - ApprovalSettingsCreation - INFO - ✓ Success notification appeared: 'Successfully Queued'

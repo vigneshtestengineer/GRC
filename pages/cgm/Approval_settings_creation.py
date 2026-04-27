@@ -65,12 +65,14 @@ class ApprovalSettingsCreation(BasePage):
 
     def wait_for_page_load(self):
         """Wait for the approval settings page to load"""
+
         self.wait_for_element(self.GENERAL_SETTINGS_MENU, timeout=10)
         self.logger.info("Approval Settings page loaded successfully")
 
     def create_approval_settings(self, _data=None):
         """Navigate to Approval Settings and create entries for CGM, TAMS, and Payroll."""
         self.logger.info("Starting approval settings creation process.")
+        self.scroll_to_element(self.GENERAL_SETTINGS_MENU)
         self.click(self.GENERAL_SETTINGS_MENU, timeout=6)
         self.wait_for_element(self.SELECT_APPROVAL_SETTINGS_MENU, timeout=6)
         self.click(self.SELECT_APPROVAL_SETTINGS_MENU, timeout=6)
@@ -81,8 +83,18 @@ class ApprovalSettingsCreation(BasePage):
 
         self.verify_success_notification()
 
+    def _get_unit_name(self):
+        """Read unit name from JSON at runtime to pick up the value saved by unit_master."""
+        try:
+            with open(UNIT_MASTER_DATA_FILE, "r", encoding="utf-8") as f:
+                return json.load(f).get("Unit_Details", {}).get("unit_name", UNIT_NAME)
+        except Exception:
+            return UNIT_NAME
+
     def _setup_module(self, module_name, has_other_settings=False):
         """Creates approval settings for a single module."""
+        unit_name = self._get_unit_name()
+
         self.wait_for_element(self.ADD_APPROVAL_SETTINGS_BUTTON, timeout=6)
         self.click(self.ADD_APPROVAL_SETTINGS_BUTTON, timeout=6)
         self.logger.info("Clicked Add Approval Settings button")
@@ -97,11 +109,11 @@ class ApprovalSettingsCreation(BasePage):
         self.wait_for_element(self.SEARCH, timeout=6)
         search_element = self.find_element(self.SEARCH)
         search_element.clear()
-        self.enter_text(self.SEARCH, UNIT_NAME)
-        self.logger.info(f"Searched for unit: {UNIT_NAME}")
+        self.enter_text(self.SEARCH, unit_name)
+        self.logger.info(f"Searched for unit: {unit_name}")
         self.sleep(0.3)
         self.click(self.SELECT_DROPDOWN_VALUE, timeout=6)
-        self.logger.info(f"Selected unit: {UNIT_NAME}")
+        self.logger.info(f"Selected unit: {unit_name}")
         self.sleep(2)
 
         # Select Module
@@ -149,22 +161,36 @@ class ApprovalSettingsCreation(BasePage):
         Args:
             timeout (int): Maximum time to wait in seconds (default: 6)
         """
-        try:
-            # Wait for success notification to appear
-            self.wait_for_element(self.SUCCESS_NOTIFICATION_MESSAGE, timeout=10)
-            self.logger.info("✓ Success notification appeared: 'Successfully Queued'")
+        from selenium.webdriver.support.ui import WebDriverWait
+        from selenium.webdriver.support import expected_conditions as EC
+        from selenium.common.exceptions import TimeoutException
 
-            # Take screenshot of the success message
+        TOAST_CLOSE_BUTTON = (By.XPATH, "//mat-icon[@data-mat-icon-name='x']")
+
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located(self.SUCCESS_NOTIFICATION_CONTENT)
+            )
+            self.logger.info("✓ Success notification appeared: 'Successfully Queued'")
             self.driver.save_screenshot("success_notification.png")
 
-            # Wait for processing to complete (2 minutes)
-            self.logger.info(f"Waiting for {timeout} seconds for processing to complete...")
-            self.sleep(timeout)
-            self.logger.info("✓ Processing completed after 2 minutes")
+            try:
+                close_btn = WebDriverWait(self.driver, 5).until(
+                    EC.element_to_be_clickable(TOAST_CLOSE_BUTTON)
+                )
+                close_btn.click()
+                self.logger.info("Closed success toast notification.")
+            except TimeoutException:
+                pass
 
-        except Exception as e:
-            self.logger.error(f"Failed to verify success notification: {str(e)}")
-            raise RuntimeError(f"Success notification not found or timeout occurred: {str(e)}")
+            self.logger.info(f"Waiting {timeout} seconds for processing to complete...")
+            self.sleep(timeout)
+            self.logger.info("✓ Processing completed")
+
+        except TimeoutException:
+            self.logger.error("Success notification did not appear within 10 seconds")
+            self.driver.save_screenshot("missing_notification.png")
+            raise RuntimeError("Success notification not found after Send for Approval")
 
     def save_approval_settings(self):
         """Save the approval settings"""
