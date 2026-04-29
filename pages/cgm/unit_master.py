@@ -648,13 +648,16 @@ class unit_Master(BasePage):
             raise RuntimeError("Unit master save confirmation toast was not displayed.")
 
         try:
-            close_btn = WebDriverWait(self.driver, 5).until(
+            WebDriverWait(self.driver, 5).until(
                 EC.element_to_be_clickable(TOAST_CLOSE_BUTTON)
             )
-            close_btn.click()
+            self.wait_for_element_to_disappear(self.SPLASH_SCREEN_OVERLAY, timeout=15)
+            self.click(TOAST_CLOSE_BUTTON, timeout=5)
             self.logger.info("Closed success toast notification.")
-        except TimeoutException:
-            pass
+            self.wait_for_element_to_disappear(SUCCESS_TOAST, timeout=10)
+            self.logger.info("✓ Toast fully dismissed.")
+        except (TimeoutException, Exception):
+            self.wait_for_element_to_disappear(SUCCESS_TOAST, timeout=10)
 
         self.sleep(1)
 

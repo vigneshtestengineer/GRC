@@ -13,7 +13,8 @@ Changes vs original
 
 import os
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from webdriver_manager.chrome import ChromeDriverManager
@@ -79,12 +80,12 @@ class DriverFactory:
         chromedriver_path = os.getenv("CHROMEDRIVER_PATH")
         if chromedriver_path:
             return webdriver.Chrome(
-                service=Service(chromedriver_path), options=chrome_options
+                service=ChromeService(chromedriver_path), options=chrome_options
             )
 
         os.environ.setdefault("WDM_LOCAL", "1")
         try:
-            service = Service(ChromeDriverManager().install())
+            service = ChromeService(ChromeDriverManager().install())
             return webdriver.Chrome(service=service, options=chrome_options)
         except Exception:
             return webdriver.Chrome(options=chrome_options)
@@ -157,8 +158,9 @@ class DriverFactory:
             firefox_options = FirefoxOptions()
             if HEADLESS:
                 firefox_options.add_argument("--headless")
-            service = Service(GeckoDriverManager().install())
+            service = FirefoxService(GeckoDriverManager().install())
             driver  = webdriver.Firefox(service=service, options=firefox_options)
+            # Note: captcha hook is injected post-load inside captcha_helper for Firefox
 
         else:
             raise ValueError(f"Unsupported browser: {browser!r}")

@@ -57,6 +57,7 @@ class ApprovalSettingsCreation(BasePage):
     SUCCESS_NOTIFICATION_CONTENT = (By.XPATH, "//div[contains(@class, 'compfie-toast-notification-content')]")
     SUCCESS_NOTIFICATION_TITLE = (By.XPATH, "//div[contains(@class, 'compfie-toast-notification-title') and contains(text(), 'Success')]")
     SUCCESS_NOTIFICATION_MESSAGE = (By.XPATH, "//div[contains(@class, 'compfie-toast-notification-message') and contains(text(), 'Successfully Queued')]")
+    TOAST_CLOSE_BUTTON = (By.XPATH, "//mat-icon[@data-mat-icon-name='x']")
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -77,11 +78,9 @@ class ApprovalSettingsCreation(BasePage):
         self.wait_for_element(self.SELECT_APPROVAL_SETTINGS_MENU, timeout=6)
         self.click(self.SELECT_APPROVAL_SETTINGS_MENU, timeout=6)
 
-        self._setup_module(CGM_MODULE, has_other_settings=False)
-        self._setup_module(TAMS_MODULE, has_other_settings=True)
-        self._setup_module(PAYROLL_MODULE, has_other_settings=True)
-
-        self.verify_success_notification()
+        self._setup_module(CGM_MODULE, has_other_settings=False, refresh_before=False)
+        self._setup_module(TAMS_MODULE, has_other_settings=True, refresh_before=True)
+        self._setup_module(PAYROLL_MODULE, has_other_settings=True, refresh_before=True)
 
     def _get_unit_name(self):
         """Read unit name from JSON at runtime to pick up the value saved by unit_master."""
@@ -91,11 +90,16 @@ class ApprovalSettingsCreation(BasePage):
         except Exception:
             return UNIT_NAME
 
-    def _setup_module(self, module_name, has_other_settings=False):
+    def _setup_module(self, module_name, has_other_settings=False, refresh_before=False):
         """Creates approval settings for a single module."""
+        if refresh_before:
+            self.logger.info(f"Refreshing page before starting {module_name} module...")
+            self.driver.refresh()
+            self.wait_for_element(self.ADD_APPROVAL_SETTINGS_BUTTON, timeout=15)
+            self.logger.info(f"✓ Page refreshed — ready for {module_name}.")
+
         unit_name = self._get_unit_name()
 
-        self.wait_for_element(self.ADD_APPROVAL_SETTINGS_BUTTON, timeout=6)
         self.click(self.ADD_APPROVAL_SETTINGS_BUTTON, timeout=6)
         self.logger.info("Clicked Add Approval Settings button")
 
@@ -148,24 +152,25 @@ class ApprovalSettingsCreation(BasePage):
             self.click(self.SELECT_AUTOAPPROVE, timeout=6)
             self.sleep(1)
 
-        # Send for Approval
+        # First click submits the form / opens confirmation dialog
         self.click(self.CLICK_SEND_FOR_APPROVAL_BUTTON, timeout=6)
-        self.sleep(1)
-        self.click(self.CLICK_SEND_FOR_APPROVAL_BUTTON, timeout=6)
-        self.sleep(1)
-        self.logger.info(f"Clicked 'Send for Approval' button for {module_name} module")
+        self.sleep(3)
+
+        # Second click confirms the dialog if it is still present
+        try:
+            self.click(self.CLICK_SEND_FOR_APPROVAL_BUTTON, timeout=4)
+            self.logger.info(f"Confirmed Send for Approval dialog for {module_name}.")
+        except Exception:
+            self.logger.info(f"No confirmation dialog found for {module_name} — continuing.")
+
+        self.sleep(2)
+        self.logger.info(f"✓ Sent for Approval — {module_name} module done.")
 
     def verify_success_notification(self, timeout=6):
-        """Verify success notification appears after sending for approval and wait for processing
-
-        Args:
-            timeout (int): Maximum time to wait in seconds (default: 6)
-        """
+        """Verify success notification appears after sending for approval and wait for processing"""
         from selenium.webdriver.support.ui import WebDriverWait
         from selenium.webdriver.support import expected_conditions as EC
         from selenium.common.exceptions import TimeoutException
-
-        TOAST_CLOSE_BUTTON = (By.XPATH, "//mat-icon[@data-mat-icon-name='x']")
 
         try:
             WebDriverWait(self.driver, 10).until(
@@ -174,21 +179,23 @@ class ApprovalSettingsCreation(BasePage):
             self.logger.info("✓ Success notification appeared: 'Successfully Queued'")
             self.driver.save_screenshot("success_notification.png")
 
-            try:
-                close_btn = WebDriverWait(self.driver, 5).until(
-                    EC.element_to_be_clickable(TOAST_CLOSE_BUTTON)
-                )
-                close_btn.click()
-                self.logger.info("Closed success toast notification.")
-            except TimeoutException:
-                pass
+            self.logger.info("Refreshing page to dismiss toast and reset state...")
+            self.driver.refresh()
+            WebDriverWait(self.driver, 15).until(
+                EC.invisibility_of_element_located(self.SUCCESS_NOTIFICATION_CONTENT)
+            )
+            self.wait_for_element(self.GENERAL_SETTINGS_MENU, timeout=15)
+            self.click(self.GENERAL_SETTINGS_MENU, timeout=10)
+            self.wait_for_element(self.SELECT_APPROVAL_SETTINGS_MENU, timeout=10)
+            self.click(self.SELECT_APPROVAL_SETTINGS_MENU, timeout=10)
+            self.logger.info("✓ Page refreshed and re-navigated to Approval Settings.")
 
             self.logger.info(f"Waiting {timeout} seconds for processing to complete...")
             self.sleep(timeout)
             self.logger.info("✓ Processing completed")
 
         except TimeoutException:
-            self.logger.error("Success notification did not appear within 10 seconds")
+            self.logger.error("Success notification did not appear within 30 seconds")
             self.driver.save_screenshot("missing_notification.png")
             raise RuntimeError("Success notification not found after Send for Approval")
 

@@ -32,6 +32,7 @@ _failed_tests: set = set()
 TEST_ORDER = [
     "unitmaster",
     "approval_settings",
+    "approve_approval_settings",
     # add next test module keywords here in execution order
 ]
 

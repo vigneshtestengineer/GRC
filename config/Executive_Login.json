@@ -26,6 +26,9 @@
     "group": "MSO",
     "legal_entity": "Microsoft Pure Value"
   },
+  "contractor_pattern": {
+    "custom_pattern": "AUTOMATE-"
+  },
   "features": {
     "take_screenshot_on_failure": true
   },

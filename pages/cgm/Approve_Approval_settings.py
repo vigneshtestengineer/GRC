@@ -1,11 +1,9 @@
 from pages.base.base_page import BasePage
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from utilities.driver_factory import DriverFactory
-from utilities.json_config import get_str
 import json
 import sys
 import os
@@ -14,281 +12,251 @@ from pathlib import Path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # ── Data loading ─────────────────────────────────────────────────────────────
-UNIT_MASTER_DATA_FILE = (
-    Path(__file__).resolve().parents[2] / "config" / "Unit_Master_Data.json"
-)
 APPROVER_LOGIN_FILE = (
     Path(__file__).resolve().parents[2] / "config" / "Approver_Login.json"
 )
 
-# Load Unit Master Data
-try:
-    with open(UNIT_MASTER_DATA_FILE, "r", encoding="utf-8") as file:
-        UNIT_MASTER_DATA = json.load(file)
-except (FileNotFoundError, json.JSONDecodeError):
-    UNIT_MASTER_DATA = {}
-
-# Load Approver Login Data
 try:
     with open(APPROVER_LOGIN_FILE, "r", encoding="utf-8") as file:
         APPROVER_LOGIN_DATA = json.load(file)
 except (FileNotFoundError, json.JSONDecodeError):
     APPROVER_LOGIN_DATA = {}
 
-UNIT_DETAILS    = UNIT_MASTER_DATA.get("Unit_Details", {})
-APPROVAL_MODULE = UNIT_MASTER_DATA.get("Approval_Module", {})   # ✅ fixed: was Approver_Login.get(...)
-
-UNIT_NAME      = UNIT_DETAILS.get("unit_name", "")
-CGM_MODULE_VAL = APPROVAL_MODULE.get("CGM_MODULE", "")
-TAMS_MODULE    = APPROVAL_MODULE.get("TAMS_MODULE", "")
-PAYROLL_MODULE = APPROVAL_MODULE.get("PAYROLL_MODULE", "")
-
 # ── Approver credentials (from Approver_Login.json) ──────────────────────────
-APPROVER_LOGIN    = APPROVER_LOGIN_DATA.get("approver_login", {})
-APPROVER_USERNAME = APPROVER_LOGIN.get("username", "")
-APPROVER_PASSWORD = APPROVER_LOGIN.get("password", "")
-APPROVER_GROUP    = APPROVER_LOGIN.get("group", "")
+APPROVER_LOGIN        = APPROVER_LOGIN_DATA.get("approver_login", {})
+APPROVER_USERNAME     = APPROVER_LOGIN.get("username", "")
+APPROVER_PASSWORD     = APPROVER_LOGIN.get("password", "")
+APPROVER_GROUP        = APPROVER_LOGIN.get("group", "")
 APPROVER_LEGAL_ENTITY = APPROVER_LOGIN.get("legal_entity", "")
 
-# ── Auth / Login credentials (existing session browser) ──────────────────────
-LOGIN_URL    = get_str("auth", "login_url", "")
-LEGAL_ENTITY = get_str("auth", "legal_entity", "")
-
-CGM_EXECUTIVE_URL = "http://13.203.6.58:5002/#/home/welcome"
+CGM_ADMIN_URL = "http://13.203.6.58:5002/#/home/welcome"
 
 
 class Approve_Approval_Settings(BasePage):
     """
-    Handles:
-      1. Waiting until ApprovalSettingsCreation finishes (queue confirmed).
-      2. Spawning a fresh Firefox browser.
-      3. Logging in as the Approver (from Approver_Login.json).
-      4. Navigating to the CGM module.
+    Opens its own Firefox browser and runs this exact sequence:
+      1. Login (CAPTCHA handled by GRCLoginPage)
+      2. Open CGM Admin via app-switcher
+      3. Switch to new tab → redirected to CGM Admin URL
+      4. Select Legal Entity
+      5. Click General Settings → Approval Settings
     """
 
-    # ── Approval-list page locators ──────────────────────────────────────────
-    GENERAL_SETTINGS_MENU         = (By.XPATH, "//span[normalize-space()='General Setting(s)']")
-    SELECT_APPROVAL_SETTINGS_MENU = (By.XPATH, "//span[normalize-space()='Approval Setting(s)']")
-    APPROVAL_LIST_ROW             = (By.XPATH, "//table//tbody//tr[1]//td | //mat-row[1]")
-
-    # Success toast
-    SUCCESS_NOTIFICATION_CONTENT = (
-        By.XPATH,
-        "//div[contains(@class,'compfie-toast-notification-content')]",
-    )
-    TOAST_CLOSE_BUTTON = (By.XPATH, "//mat-icon[@data-mat-icon-name='x']")
-
-    # ── Login page locators ──────────────────────────────────────────────────
-    USERNAME_INPUT = (By.XPATH, "//input[@placeholder='Username' or @id='username' or @name='username']")
-    PASSWORD_INPUT = (By.XPATH, "//input[@type='password']")
-    LOGIN_BUTTON   = (By.XPATH, "//button[contains(normalize-space(),'Login') or contains(normalize-space(),'Sign In')]")
-
-    # Legal-entity selection
+    # ── Legal-entity selection ────────────────────────────────────────────────
     SEARCH_LEGALENTITY        = (By.XPATH, "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
     SELECT_LEGALENTITY        = (By.XPATH, "//table//tbody//tr[1]//td")
     SELECT_LEGALENTITY_BUTTON = (By.XPATH, "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
 
-    # Menu / CGM navigation
+    # ── Menu / CGM navigation ─────────────────────────────────────────────────
+    SPLASH_SCREEN                 = (By.TAG_NAME, "compfie-splash-screen")
     MENU_BUTTON                   = (By.XPATH, "//button[.//mat-icon[text()='apps']]")
     GENERAL_MASTER_EXECUTIVE_CARD = (By.XPATH, "//mat-card[span[text()='General Master-Executive']]")
-    OPEN_CGM_MENU                 = (By.XPATH, "//span[normalize-space()='Compliances']")
-    CGM_MODULE_LINK               = (By.XPATH, "//span[normalize-space()='CGM']")
+    SELECT_ADMIN_ROLE             = (By.XPATH, "//span[@class='group-name' and normalize-space()='admin']")
+    GENERAL_SETTINGS_MENU         = (By.XPATH, "//span[normalize-space()='General Setting(s)']")
+    SELECT_APPROVAL_SETTINGS_MENU = (By.XPATH, "//span[normalize-space()='Approval Setting(s)']")
+    SELECT_ALL_CHECKBOX           = (By.XPATH, "(//span[contains(@class,'mat-checkbox-inner-container')])[1]")
+    CLICK_APPROVE_BUTTON          = (By.XPATH, "//span[normalize-space()='Approve']")
+    # ── Constructor ───────────────────────────────────────────────────────────
+    def __init__(self):
+        firefox_driver = DriverFactory.get_driver(browser="firefox")
+        super().__init__(firefox_driver)
+        firefox_driver.maximize_window()
+        self.logger.info("Approve_Approval_Settings: Firefox browser opened.")
 
-    # ── Constructor ──────────────────────────────────────────────────────────
-    def __init__(self, driver):
-        super().__init__(driver)
-        self.logger.info("Approve_Approval_Settings page initialized.")
-        self.cgm_driver = None
-        self.wait_for_page_load()
-
-    # ── 1. Wait for approval settings page to be ready ───────────────────────
-    def wait_for_page_load(self):
-        """Wait until the Approval Settings menu is visible (current browser)."""
-        self.wait_for_element(self.GENERAL_SETTINGS_MENU, timeout=10)
-        self.logger.info("Approve_Approval_Settings: page loaded successfully.")
-
-    # ── 2. Poll until all three module rows appear in the queue ──────────────
-    def wait_for_approval_queue_completion(self, timeout: int = 60):
-        """Block until ≥ 3 rows appear in the approval-settings list."""
-        self.logger.info("Waiting for approval queue to be fully populated …")
-
-        self.scroll_to_element(self.GENERAL_SETTINGS_MENU)
-        self.click(self.GENERAL_SETTINGS_MENU, timeout=6)
-        self.wait_for_element(self.SELECT_APPROVAL_SETTINGS_MENU, timeout=6)
-        self.click(self.SELECT_APPROVAL_SETTINGS_MENU, timeout=6)
-
-        all_rows_locator = (By.XPATH, "//table//tbody//tr | //mat-row")
-
-        try:
-            WebDriverWait(self.driver, timeout).until(
-                lambda d: len(d.find_elements(*all_rows_locator)) >= 3
-            )
-            row_count = len(self.driver.find_elements(*all_rows_locator))
-            self.logger.info(
-                "Approval queue confirmed: %d row(s) found (expected ≥ 3).", row_count
-            )
-        except TimeoutException:
-            self.logger.error(
-                "Approval queue did not reach 3 rows within %d seconds.", timeout
-            )
-            raise RuntimeError(
-                "Approval Settings queue incomplete — fewer than 3 module rows found."
-            )
-
-    # ── 3. Spawn a new Firefox browser ───────────────────────────────────────
-    def _open_new_firefox_browser(self):
-        """Launch a second independent Firefox WebDriver instance."""
-        self.logger.info("Spawning new Firefox browser for CGM approval …")
-        self.cgm_driver = DriverFactory.get_driver(browser="firefox")
-        self.logger.info("New Firefox browser launched successfully.")
-        return self.cgm_driver
-
-    # ── 4. Log in as Approver on the new browser ─────────────────────────────
-    def _login_on_new_browser(self, new_driver):
+    # ── Step 1: Login ─────────────────────────────────────────────────────────
+    def _login_as_approver(self):
         """
-        Log in using Approver credentials from Approver_Login.json
-        (username, password, legal_entity).
+        Login via GRCLoginPage (handles CAPTCHA automatically).
+        No legal entity selection here — that happens AFTER CGM redirect.
         """
-        self.logger.info(
-            "Logging in as approver '%s' on new browser …", APPROVER_USERNAME
-        )
-        new_driver.get(LOGIN_URL)
-        new_driver.maximize_window()
+        from pages.login.grc_login_page import GRCLoginPage
 
-        wait = WebDriverWait(new_driver, 15)
+        self.logger.info("Logging in as approver '%s' …", APPROVER_USERNAME)
+        login_page = GRCLoginPage(self.driver)
+        login_page.login(APPROVER_USERNAME, APPROVER_PASSWORD, APPROVER_GROUP)
+        self.logger.info("✓ Approver login submitted via GRCLoginPage.")
 
-        # Enter approver username
-        username_el = wait.until(EC.visibility_of_element_located(self.USERNAME_INPUT))
-        username_el.clear()
-        username_el.send_keys(APPROVER_USERNAME)           # ✅ approver username
-        self.logger.info("Entered approver username: %s", APPROVER_USERNAME)
+    # ── Step 2: Open CGM Admin via app-switcher ───────────────────────────────
+    def _open_cgm_admin(self):
+        """
+        Click the 9-dot app-switcher → General Master-Admin card →
+        Select Admin role → wait for the new CGM Admin tab to open
+        and switch to it → verify the CGM Admin URL.
+        """
+        previous_windows = self.driver.window_handles
 
-        # Enter approver password
-        password_el = new_driver.find_element(*self.PASSWORD_INPUT)
-        password_el.clear()
-        password_el.send_keys(APPROVER_PASSWORD)           # ✅ approver password
-        self.logger.info("Entered approver password.")
-
-        # Click login
-        new_driver.find_element(*self.LOGIN_BUTTON).click()
-        self.logger.info("Clicked login button.")
-
-        # Wait for legal-entity search to appear
-        wait.until(EC.visibility_of_element_located(self.SEARCH_LEGALENTITY))
-
-        # Search for approver's legal entity
-        le_input = new_driver.find_element(*self.SEARCH_LEGALENTITY)
-        le_input.clear()
-        le_input.send_keys(APPROVER_LEGAL_ENTITY)          # ✅ approver legal entity
-        self.logger.info(
-            "Searched for approver legal entity: %s", APPROVER_LEGAL_ENTITY
-        )
-
-        wait.until(
-            lambda d: d.find_element(*self.SEARCH_LEGALENTITY)
-            .get_attribute("value")
-            .strip() == APPROVER_LEGAL_ENTITY
-        )
-
-        # Select the first matching row
-        wait.until(EC.element_to_be_clickable(self.SELECT_LEGALENTITY))
-        new_driver.find_element(*self.SELECT_LEGALENTITY).click()
-
-        # Wait until the select button is enabled, then click it
-        select_btn = wait.until(
-            lambda d: d.find_element(*self.SELECT_LEGALENTITY_BUTTON)
-            if not d.find_element(*self.SELECT_LEGALENTITY_BUTTON)
-            .get_attribute("disabled")
-            else False
-        )
-        select_btn.click()
-        self.logger.info(
-            "Legal entity '%s' selected for approver.", APPROVER_LEGAL_ENTITY
-        )
-
-    # ── 5. Open the CGM module on the new browser ────────────────────────────
-    def _open_cgm_module(self, new_driver):
-        """Navigate via app-switcher → General Master-Executive → CGM module."""
-        wait = WebDriverWait(new_driver, 15)
-
-        # Click the 9-dot app-switcher menu
-        wait.until(EC.element_to_be_clickable(self.MENU_BUTTON))
-        new_driver.find_element(*self.MENU_BUTTON).click()
+        # Wait for any loading splash screen to clear before interacting
+        self.wait_for_element_to_disappear(self.SPLASH_SCREEN, timeout=30)
+        self.click(self.MENU_BUTTON, timeout=15)
         self.logger.info("Clicked app-switcher menu.")
 
-        previous_windows = new_driver.window_handles
+        self.sleep(1)
+        self.click(self.GENERAL_MASTER_EXECUTIVE_CARD, timeout=15)
+        self.logger.info("Clicked 'General Master-Admin' card.")
 
-        # Click General Master-Executive card
-        wait.until(EC.element_to_be_clickable(self.GENERAL_MASTER_EXECUTIVE_CARD))
-        new_driver.find_element(*self.GENERAL_MASTER_EXECUTIVE_CARD).click()
-        self.logger.info("Clicked 'General Master-Executive' card.")
+        self.click(self.SELECT_ADMIN_ROLE, timeout=15)
+        self.logger.info("Selected admin role.")
 
-        # Switch to new tab if one opened
-        current_windows = new_driver.window_handles
-        if len(current_windows) > len(previous_windows):
-            new_win = [h for h in current_windows if h not in previous_windows]
-            if new_win:
-                new_driver.switch_to.window(new_win[-1])
-                self.logger.info("Switched to new browser tab for CGM Executive.")
+        # Wait for the new CGM Admin tab to open then switch to it
+        WebDriverWait(self.driver, 15).until(
+            lambda d: len(d.window_handles) > len(previous_windows)
+        )
+        new_win = [h for h in self.driver.window_handles if h not in previous_windows]
+        if new_win:
+            self.driver.switch_to.window(new_win[-1])
+            self.logger.info("Switched to new CGM Admin tab.")
 
-        # Verify correct URL
-        wait.until(EC.url_contains(CGM_EXECUTIVE_URL))
-        self.logger.info("Verified CGM Executive URL: %s", CGM_EXECUTIVE_URL)
+        # Confirm we are on the correct CGM Admin URL
+        WebDriverWait(self.driver, 15).until(EC.url_contains(CGM_ADMIN_URL))
+        self.logger.info("✓ Redirected and verified CGM Admin URL: %s", CGM_ADMIN_URL)
 
-        # Expand CGM menu and click module link
-        wait.until(EC.element_to_be_clickable(self.OPEN_CGM_MENU))
-        new_driver.find_element(*self.OPEN_CGM_MENU).click()
-        self.logger.info("Expanded CGM menu.")
+        # Wait for the CGM Admin splash screen to clear before any further clicks
+        self.wait_for_element_to_disappear(self.SPLASH_SCREEN, timeout=30)
 
-        wait.until(EC.element_to_be_clickable(self.CGM_MODULE_LINK))
-        new_driver.find_element(*self.CGM_MODULE_LINK).click()
-        self.logger.info("CGM module opened successfully.")
-
-    # ── Public orchestration method ──────────────────────────────────────────
-    def approve_and_open_cgm(self):
+    # ── Step 3: Select Legal Entity (after CGM redirect) ─────────────────────
+    def _select_legal_entity(self):
         """
-        Full flow:
-          1. Confirm ≥ 3 approval rows exist in the queue.
-          2. Open a new Firefox browser.
-          3. Log in as Approver (Approver_Login.json credentials).
-          4. Navigate to the CGM module.
-
-        Returns:
-            new_driver: the secondary WebDriver so the caller can continue.
+        After the CGM Admin tab opens, search for and select the
+        approver's legal entity before navigating further.
+        Skipped gracefully if the selection page is not shown.
         """
-        # Step 1 — confirm queue is populated
-        self.wait_for_approval_queue_completion(timeout=60)
-        self.logger.info("✓ Approval queue verified.")
-
-        # Step 2 — new browser
-        new_driver = self._open_new_firefox_browser()
-
         try:
-            # Step 3 — login as approver
-            self._login_on_new_browser(new_driver)
-            self.logger.info("✓ Approver login successful on new Firefox browser.")
+            wait = WebDriverWait(self.driver, 10)
+            wait.until(EC.visibility_of_element_located(self.SEARCH_LEGALENTITY))
 
-            # Step 4 — open CGM module
-            self._open_cgm_module(new_driver)
-            self.logger.info("✓ CGM module opened in new Firefox browser.")
+            le_input = self.driver.find_element(*self.SEARCH_LEGALENTITY)
+            le_input.clear()
+            le_input.send_keys(APPROVER_LEGAL_ENTITY)
+            self.logger.info("Searched for legal entity: '%s'.", APPROVER_LEGAL_ENTITY)
 
-        except Exception as exc:
-            self.logger.error(
-                "Failed during approver CGM flow: %s", exc, exc_info=True
+            # Wait until the typed value is exactly what we want
+            wait.until(
+                lambda d: d.find_element(*self.SEARCH_LEGALENTITY)
+                .get_attribute("value")
+                .strip() == APPROVER_LEGAL_ENTITY
             )
-            new_driver.save_screenshot("cgm_approver_failure.png")
-            raise
 
-        return new_driver
+            # Click the first matching row (JS fallback handles any overlay)
+            self.click(self.SELECT_LEGALENTITY, timeout=10)
+            self.logger.info("Clicked first legal entity row.")
 
-    # ── Cleanup ──────────────────────────────────────────────────────────────
-    def quit_cgm_browser(self):
-        """Quit the secondary Firefox browser if still open."""
-        if self.cgm_driver:
+            # Click the Select button once it becomes enabled
+            self.click(self.SELECT_LEGALENTITY_BUTTON, timeout=10)
+            self.logger.info("✓ Legal entity '%s' selected.", APPROVER_LEGAL_ENTITY)
+
+        except TimeoutException:
+            self.logger.info(
+                "Legal entity selection page not shown — "
+                "account redirected directly to home."
+            )
+
+    # ── Step 4: Navigate to Approval Settings ────────────────────────────────
+    def _navigate_to_approval_settings(self):
+        """
+        Click General Setting(s) → Approval Setting(s) in the CGM Admin sidebar.
+        Called only after the legal entity has been confirmed. And Approve the Approval settings
+        """
+        self.click(self.GENERAL_SETTINGS_MENU, timeout=15)
+        self.logger.info("Expanded 'General Setting(s)' menu.")
+        self.click(self.SELECT_APPROVAL_SETTINGS_MENU, timeout=15)
+        self.logger.info("✓ Navigated to 'Approval Setting(s)' page.")
+        self.sleep(2)
+        self.click(self.SELECT_ALL_CHECKBOX, timeout=15)
+        self.click(self.CLICK_APPROVE_BUTTON, timeout=15)
+        self.logger.info("Clicked Approve button — waiting for success notification …")
+
+        self._wait_for_approval_success()
+
+    # ── Step 5: Poll until success or error toast appears ────────────────────
+    def _wait_for_approval_success(self):
+        """Poll every second until success or error toast appears.
+        Closes the browser and raises immediately if an error toast is detected.
+        """
+        SUCCESS_TOAST = (
+            By.XPATH,
+            "//div[contains(@class,'compfie-toast-notification-message')"
+            " and normalize-space()='Approved Successfully']",
+        )
+        ERROR_TOAST = (
+            By.XPATH,
+            "//div[contains(@class,'compfie-toast-notification-container')]",
+        )
+        TOAST_CLOSE = (By.XPATH, "//mat-icon[@data-mat-icon-name='x']")
+
+        self.logger.info("Polling for approval toast …")
+        while True:
+            # Check for success
             try:
-                self.cgm_driver.quit()
-                self.logger.info("Secondary Firefox browser closed.")
+                el = self.driver.find_element(*SUCCESS_TOAST)
+                if el.is_displayed():
+                    self.logger.info("✓ 'Approved Successfully' notification received.")
+                    break
             except Exception:
                 pass
-            finally:
-                self.cgm_driver = None
+
+            # Check for error — close browser immediately and raise
+            try:
+                err_el = self.driver.find_element(*ERROR_TOAST)
+                if err_el.is_displayed():
+                    error_msg = err_el.text.strip() or "Unknown error"
+                    self.logger.error("Error toast appeared: '%s'. Closing browser.", error_msg)
+                    self.quit_cgm_browser()
+                    raise RuntimeError(f"Approval failed — error toast: '{error_msg}'")
+            except RuntimeError:
+                raise
+            except Exception:
+                pass
+
+            self.sleep(1)
+
+        # Dismiss the success toast if the close button is present
+        try:
+            WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(TOAST_CLOSE)
+            )
+            self.wait_for_element_to_disappear(self.SPLASH_SCREEN, timeout=15)
+            self.click(TOAST_CLOSE, timeout=5)
+            self.logger.info("Closed success toast.")
+        except TimeoutException:
+            pass
+
+    # ── Public orchestration ──────────────────────────────────────────────────
+    def approve_and_open_cgm(self):
+        """
+        Runs the full sequence in the correct order:
+
+          Step 1 → Login as Approver (CAPTCHA handled internally)
+          Step 2 → Open CGM Admin via app-switcher (new tab opens + switched)
+          Step 3 → Select Legal Entity (on the CGM Admin tab)
+          Step 4 → Click General Settings → Approval Settings
+        """
+        try:
+            # Step 1
+            self._login_as_approver()
+
+            # Step 2
+            self._open_cgm_admin()
+
+            # Step 3 — legal entity selected AFTER redirect to CGM Admin tab
+            self._select_legal_entity()
+
+            # Step 4 — navigate to Approval Settings only after entity confirmed
+            self._navigate_to_approval_settings()
+
+            self.logger.info(
+                "✓ Full approver flow complete — Approval Settings page is open."
+            )
+
+        except Exception as exc:
+            self.logger.error("Approver flow failed: %s", exc, exc_info=True)
+            self.driver.save_screenshot("cgm_approver_failure.png")
+            raise
+
+    # ── Cleanup ───────────────────────────────────────────────────────────────
+    def quit_cgm_browser(self):
+        """Quit the Firefox browser when the approver flow is fully complete."""
+        try:
+            self.driver.quit()
+            self.logger.info("Firefox browser closed.")
+        except Exception:
+            pass

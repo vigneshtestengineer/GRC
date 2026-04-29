@@ -4,9 +4,9 @@
         "Country": "India"
     },
     "Unit_Details": {
-        "unit_name": "Gamma Systems 907",
-        "unit_code": "OAZ51",
-        "unit_address": "No. 856, MG Road, Hyderabad, Karnataka - 492641",
+        "unit_name": "Sigma Manufacturing 859",
+        "unit_code": "LJL68",
+        "unit_address": "No. 526, Park Street, Bangalore, Kerala - 716050",
         "State": "Meghalaya",
         "Pin_Code": "558559",
         "Mobile_Number": "9876543210",
@@ -34,7 +34,7 @@
         "Domain": "air lines",
         "Organization_type": "Organization--Airlines",
         "State": "Meghalaya",
-        "Act": "2021 Notifications"
+        "Act": "2021 Final Clause"
     },
     "Approval_Module": {
         "CGM_MODULE": "General Masters Module",
