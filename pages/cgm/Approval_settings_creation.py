@@ -154,7 +154,7 @@ class ApprovalSettingsCreation(BasePage):
 
         # First click submits the form / opens confirmation dialog
         self.click(self.CLICK_SEND_FOR_APPROVAL_BUTTON, timeout=6)
-        self.sleep(3)
+        self.sleep(1)
 
         # Second click confirms the dialog if it is still present
         try:

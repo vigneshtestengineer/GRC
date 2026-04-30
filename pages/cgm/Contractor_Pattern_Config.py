@@ -10,9 +10,9 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utilities.json_config import get_str
 
-LEGAL_ENTITY    = get_str("auth", "legal_entity", "")
-CUSTOM_PATTERN  = get_str("contractor_pattern", "custom_pattern", "")
-EXECUTIVE_URL = "http://13.203.6.58:5002/#/home/welcome"
+LEGAL_ENTITY   = get_str("auth", "legal_entity", "")
+CUSTOM_PATTERN = get_str("contractor_pattern", "custom_pattern", "")
+EXECUTIVE_URL  = "http://13.203.6.58:5002/#/home/welcome"
 
 UNIT_MASTER_DATA_FILE = (
     Path(__file__).resolve().parents[2] / "config" / "Unit_Master_Data.json"
@@ -20,10 +20,10 @@ UNIT_MASTER_DATA_FILE = (
 
 try:
     with open(UNIT_MASTER_DATA_FILE, "r", encoding="utf-8") as _f:
-        _data = json.load(_f)
-    UNIT_NAME = _data.get("Unit_Details", {}).get("unit_name", "")
+        UNIT_NAME = json.load(_f).get("Unit_Details", {}).get("unit_name", "")
 except (FileNotFoundError, json.JSONDecodeError):
     UNIT_NAME = ""
+
 
 
 class ContractorPatternConfig(BasePage):
@@ -63,7 +63,6 @@ class ContractorPatternConfig(BasePage):
 
         self.click(self.MENU_BUTTON, timeout=15)
         self.logger.info("Clicked app-switcher menu.")
-
         self.wait_for_element_to_be_clickable(self.GENERAL_MASTER_EXECUTIVE_CARD, timeout=10)
         self.click(self.GENERAL_MASTER_EXECUTIVE_CARD, timeout=10)
         self.logger.info("Clicked 'General Master-Executive' card.")
@@ -130,12 +129,11 @@ class ContractorPatternConfig(BasePage):
         self.sleep(0.5)
         self.click((By.XPATH, f"//mat-option//span[contains(text(),'{unit_name}')]"), timeout=8)
         self.logger.info("Selected unit: %s", unit_name)
-        self.click(self.CONFIG_PATTERN, timeout=8)
         self.click(self.CONTRACTOR_BASED_CODE_PATTERN, timeout=8)
         self.click(self.CONTRACTOR_BASED_SUBCONTRACTOR_PATTERN, timeout=8)
         self.click(self.PATTERN_CONFIG_SAVE, timeout=8)
         self.logger.info("✓ Contractor pattern configuration created and saved.")
-
+        self.sleep(2)
     # ── Public orchestration ──────────────────────────────────────────────────
     def navigate_to_contractor_config(self):
         """Full sequence: CGM login → legal entity → General Master → Contractor."""
@@ -144,7 +142,6 @@ class ContractorPatternConfig(BasePage):
         username = get_str("auth", "username", "")
         password = get_str("auth", "password", "")
         group    = get_str("auth", "group", "")
-
         self.logger.info("Logging in as '%s' …", username)
         GRCLoginPage(self.driver).login(username, password, group)
         self.logger.info("✓ Login complete.")

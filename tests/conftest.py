@@ -33,6 +33,7 @@ TEST_ORDER = [
     "unitmaster",
     "approval_settings",
     "approve_approval_settings",
+    "contractor_pattern_config",
     # add next test module keywords here in execution order
 ]
 

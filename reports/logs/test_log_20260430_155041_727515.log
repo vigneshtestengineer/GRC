@@ -1,0 +1,41 @@
+2026-04-30 15:50:41 - Approve_Approval_Settings - INFO - Approve_Approval_Settings: Firefox browser opened.
+2026-04-30 15:50:41 - Approve_Approval_Settings - INFO - Logging in as approver 'qc.test100@aparajitha.net' …
+2026-04-30 15:51:14 - Approve_Approval_Settings - INFO - ✓ Approver login submitted via GRCLoginPage.
+2026-04-30 15:51:24 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[text()='apps']]")
+2026-04-30 15:51:24 - Approve_Approval_Settings - INFO - Clicked app-switcher menu.
+2026-04-30 15:51:25 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "//mat-card[span[text()='General Master-Executive']]")
+2026-04-30 15:51:25 - Approve_Approval_Settings - INFO - Clicked 'General Master-Admin' card.
+2026-04-30 15:51:25 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "//span[@class='group-name' and normalize-space()='admin']")
+2026-04-30 15:51:25 - Approve_Approval_Settings - INFO - Selected admin role.
+2026-04-30 15:51:25 - Approve_Approval_Settings - INFO - Switched to new CGM Admin tab.
+2026-04-30 15:51:25 - Approve_Approval_Settings - INFO - ✓ Redirected and verified CGM Admin URL: http://13.203.6.58:5002/#/home/welcome
+2026-04-30 15:51:27 - Approve_Approval_Settings - INFO - Searched for legal entity: 'Microsoft Pure Value'.
+2026-04-30 15:51:27 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', '//table//tbody//tr[1]//td')
+2026-04-30 15:51:27 - Approve_Approval_Settings - INFO - Clicked first legal entity row.
+2026-04-30 15:51:27 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-04-30 15:51:27 - Approve_Approval_Settings - INFO - ✓ Legal entity 'Microsoft Pure Value' selected.
+2026-04-30 15:51:27 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "//span[normalize-space()='General Setting(s)']")
+2026-04-30 15:51:27 - Approve_Approval_Settings - INFO - Expanded 'General Setting(s)' menu.
+2026-04-30 15:51:28 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Approval Setting(s)']")
+2026-04-30 15:51:28 - Approve_Approval_Settings - INFO - ✓ Navigated to 'Approval Setting(s)' page.
+2026-04-30 15:51:30 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "(//span[contains(@class,'mat-checkbox-inner-container')])[1]")
+2026-04-30 15:51:30 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Approve']")
+2026-04-30 15:51:30 - Approve_Approval_Settings - INFO - Clicked Approve button — waiting for success notification …
+2026-04-30 15:51:30 - Approve_Approval_Settings - INFO - Polling for approval toast …
+2026-04-30 16:07:05 - Approve_Approval_Settings - ERROR - Error toast appeared: 'Success
+Approved Successfully'. Closing browser.
+2026-04-30 16:07:08 - Approve_Approval_Settings - INFO - Firefox browser closed.
+2026-04-30 16:07:08 - Approve_Approval_Settings - ERROR - Approver flow failed: Approval failed — error toast: 'Success
+Approved Successfully'
+Traceback (most recent call last):
+  File "E:\AutomationTask\GRC Payroll\pages\cgm\Approve_Approval_settings.py", line 244, in approve_and_open_cgm
+    self._navigate_to_approval_settings()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\AutomationTask\GRC Payroll\pages\cgm\Approve_Approval_settings.py", line 168, in _navigate_to_approval_settings
+    self._wait_for_approval_success()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\AutomationTask\GRC Payroll\pages\cgm\Approve_Approval_settings.py", line 204, in _wait_for_approval_success
+    raise RuntimeError(f"Approval failed — error toast: '{error_msg}'")
+RuntimeError: Approval failed — error toast: 'Success
+Approved Successfully'
+2026-04-30 16:07:41 - Approve_Approval_Settings - INFO - Firefox browser closed.
