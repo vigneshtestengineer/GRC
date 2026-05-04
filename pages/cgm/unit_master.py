@@ -240,10 +240,16 @@ class unit_Master(BasePage):
         self.act = self.Scope_Information.get("Act", "")
 
 
+
     def open_general_master_executive(self):
 
+        self.wait_for_element_to_be_clickable(self.MENU_BUTTON, timeout=30)
         self.click(self.MENU_BUTTON)
+        self.logger.info("✓ Clicked MENU_BUTTON.")
+    
         previous_windows = self.driver.window_handles
+
+        self.logger.info("Clicked app-switcher menu.")
 
         self.wait_for_element_to_be_clickable(
             self.GENERAL_MASTER_EXECUTIVE_CARD, timeout=8

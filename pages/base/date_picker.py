@@ -4,6 +4,7 @@ from datetime import datetime
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pages.base.base_page import BasePage
@@ -17,14 +18,18 @@ class DatePicker(BasePage):
 
     def _wait_overlay_gone(self):
         try:
-            self.wait.until(EC.invisibility_of_element_located(self.CALENDAR_OVERLAY))
-            self.logger.info("Calendar closed.")
+            WebDriverWait(self.driver, 5).until(  # ✅ Reduced to 5s
+                EC.invisibility_of_element_located(self.CALENDAR_OVERLAY)
+            )
         except TimeoutException:
             self.logger.warning("Calendar did not close in time.")
+            pass  # ✅ Don't block, continue anyway
 
     def _wait_overlay_open(self):
         try:
-            self.wait.until(EC.presence_of_element_located(self.CALENDAR_OVERLAY))
+            WebDriverWait(self.driver, 5).until(  # ✅ Reduced to 5s
+                EC.presence_of_element_located(self.CALENDAR_OVERLAY)
+            )
             self.logger.info("Calendar opened.")
         except TimeoutException:
             self.logger.warning("Calendar did not open in time.")
@@ -48,10 +53,14 @@ class DatePicker(BasePage):
 
         # Step 2 - click the calendar icon
         calendar_btn = (By.XPATH, calendar_xpath)
-        self.wait_for_element_to_be_clickable(calendar_btn, timeout=15)
-        self.driver.execute_script(
-            "arguments[0].click();", self.find_element(calendar_btn)
-        )
+        self.wait_for_element_to_be_clickable(calendar_btn, timeout=10)  # ✅ 15 → 10
+        element = self.find_element(calendar_btn)
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+        self.sleep(0.3)  # ✅ Let scroll settle
+        try:
+            element.click()  # ✅ Normal click first (faster)
+        except Exception:
+            self.driver.execute_script("arguments[0].click();", element)  # fallback
         self.logger.info("Clicked calendar icon.")
 
         # Step 3 - wait for calendar to open

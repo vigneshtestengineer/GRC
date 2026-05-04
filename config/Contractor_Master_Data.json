@@ -1,0 +1,21 @@
+{
+    "Contractor_Information": {
+        "Contractor_Code": "XGP890",
+        "Contractor_Name": "Vega Global Services 185",
+        "Contactor_Addreess_1": "450 Industrial Parkway, Suite 300",
+        "Contractor_Address_2": "Meghalaya",
+        "State": "Meghalaya",
+        "City": "Meghalaya Zone",
+        "Pin_Code": "657889",
+        "Mobile_Number": "9876554433",
+        "Email": "vignesh.kv@aparajitha.com",
+        "Contractor_Short_Name": "DAOI",
+        "Establishment_Name": "Food",
+        "Establishment_Type": "Food"
+    },
+    "Statutory_Information": {
+        "Nature_of_Work": "Food",
+        "PF_CODE": "FYWER4928R",
+        "ESI_CODE": "76431834140815104"
+    }
+}

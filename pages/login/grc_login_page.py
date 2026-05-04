@@ -168,7 +168,7 @@ class GRCLoginPage(BasePage):
             self.close_initial_popup()
 
         try:
-            captcha_element, captcha_locator = self._locate_captcha_element(timeout=10)
+            captcha_element, captcha_locator = self._locate_captcha_element(timeout=5)
         except RuntimeError as exc:
             self.logger.warning(
                 "CAPTCHA element did not appear in time; cannot resolve CAPTCHA via canvas interceptor. %s",
@@ -206,7 +206,11 @@ class GRCLoginPage(BasePage):
             raise ValueError("Captcha text is empty.")
 
         captcha_text = str(captcha_text).strip()
-        self.wait_for_element(self.CAPTCHA_TEXTBOX, timeout=5)
+        # self.wait_for_element(self.CAPTCHA_TEXTBOX, timeout=2)
+
+        field = self.driver.find_element(*self.CAPTCHA_TEXTBOX)
+        if not field:
+            self.wait_for_element(self.CAPTCHA_TEXTBOX, timeout=2)
 
         for attempt in range(1, 4):
             field = self.driver.find_element(*self.CAPTCHA_TEXTBOX)
@@ -241,7 +245,7 @@ class GRCLoginPage(BasePage):
     # ── login orchestration ───────────────────────────────────────────────────
     def click_login_button(self):
 
-        self.wait_for_element_to_be_clickable(self.LOGIN_BUTTON, timeout=10)
+        self.wait_for_element_to_be_clickable(self.LOGIN_BUTTON, timeout=2)
         self.scroll_to_element(self.LOGIN_BUTTON)
         self.click(self.LOGIN_BUTTON, timeout=10)
 
@@ -265,19 +269,25 @@ class GRCLoginPage(BasePage):
         Full login sequence.  Retries up to 5 times on Invalid-Captcha errors.
         """
         self.logger.info(f"Logging in as: {username}")
+
+        # Step 1: Close any initial popup that may block interactions
         self.close_initial_popup()
 
-        # Read captcha before typing credentials — the canvas interceptor captures
-        # fillText at page load, so _captchaText is already set here. This eliminates
-        # any wait after enter_group_name.
-        current_captcha = captcha_text or self.get_captcha_text(
-            popup_already_closed=True
-        )
-
+        # Step 2: Fill credentials
         self._fill_credentials(username, password, group_name)
+
+        # Step 3: Get CAPTCHA text from canvas interceptor
+
+        current_captcha = captcha_text or self.driver.execute_script(
+        "return window._captchaText || '';"
+        ).strip()
+        self.logger.info("Captcha read instantly from interceptor: '%s'", current_captcha)
 
         self.logger.info("Login attempt — captcha: '%s'", current_captcha)
         self.enter_captcha(current_captcha)
+
+        # Step 4: Click login
+
         self.click_login_button()
 
         if self._is_invalid_captcha_displayed(timeout=3):
@@ -314,7 +324,7 @@ class GRCLoginPage(BasePage):
             return False
 
         try:
-            result = WebDriverWait(self.driver, timeout, poll_frequency=0.1).until(
+            result = WebDriverWait(self.driver, timeout, poll_frequency=0.05).until(
                 _find_visible
             )
             self.logger.info(f"CAPTCHA element found via: {result[1]}")

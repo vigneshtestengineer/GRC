@@ -25,6 +25,15 @@ FACTORY_NAMES = [
 ]
 FACTORY_SUFFIXES = ["Industries", "Works", "Manufacturing", "Fabricators", "Systems"]
 
+CONTRACTOR_PREFIXES = [
+    "Apex", "Nova", "Titan", "Orion", "Nexus", "Vega", "Atlas",
+    "Delta", "Sigma", "Prime", "Global", "Sterling", "Summit", "Crest",
+]
+CONTRACTOR_SUFFIXES = [
+    "Construction", "Builders", "Contractors", "Infrastructure",
+    "Projects", "Services", "Works", "Associates", "Enterprises",
+]
+
 STREET_NAMES = [
     "MG Road", "Brigade Road", "Anna Salai", "Park Street", "Ring Road",
     "Nehru Street", "Gandhi Nagar", "Lake View Road", "Temple Road"
@@ -141,52 +150,63 @@ class BasePage:
             locator (tuple): Element locator
             text (str): Text to enter
         """
-        element = self.find_element(locator)
-        self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", element)
+        for attempt in range(3):
+            try:
+                element = self.find_element(locator)
+                self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", element)
 
-        try:
-            element.click()
-        except WebDriverException:
-            self.driver.execute_script("arguments[0].click();", element)
+                try:
+                    element.click()
+                except WebDriverException:
+                    self.driver.execute_script("arguments[0].click();", element)
 
-        try:
-            element.clear()
-        except WebDriverException:
-            pass
+                try:
+                    element.clear()
+                except WebDriverException:
+                    pass
 
-        try:
-            element.send_keys(Keys.CONTROL, "a")
-            element.send_keys(Keys.DELETE)
-        except WebDriverException:
-            pass
+                try:
+                    element.send_keys(Keys.CONTROL, "a")
+                    element.send_keys(Keys.DELETE)
+                except WebDriverException:
+                    pass
 
-        try:
-            element.send_keys(text)
-        except WebDriverException:
-            self.driver.execute_script(
-                """
-                arguments[0].value = arguments[1];
-                arguments[0].dispatchEvent(new Event('input', {bubbles: true}));
-                arguments[0].dispatchEvent(new Event('change', {bubbles: true}));
-                """,
-                element,
-                text,
-            )
+                try:
+                    element.send_keys(text)
+                except WebDriverException:
+                    self.driver.execute_script(
+                        """
+                        arguments[0].value = arguments[1];
+                        arguments[0].dispatchEvent(new Event('input', {bubbles: true}));
+                        arguments[0].dispatchEvent(new Event('change', {bubbles: true}));
+                        """,
+                        element,
+                        text,
+                    )
 
-        entered_value = element.get_attribute("value") or ""
-        if entered_value.strip() != str(text).strip():
-            self.driver.execute_script(
-                """
-                arguments[0].focus();
-                arguments[0].value = arguments[1];
-                arguments[0].dispatchEvent(new Event('input', {bubbles: true}));
-                arguments[0].dispatchEvent(new Event('change', {bubbles: true}));
-                arguments[0].dispatchEvent(new Event('blur', {bubbles: true}));
-                """,
-                element,
-                text,
-            )
-        self.logger.info(f"Entered text '{text}' in element: {locator}")
+                entered_value = element.get_attribute("value") or ""
+                if entered_value.strip() != str(text).strip():
+                    self.driver.execute_script(
+                        """
+                        arguments[0].focus();
+                        arguments[0].value = arguments[1];
+                        arguments[0].dispatchEvent(new Event('input', {bubbles: true}));
+                        arguments[0].dispatchEvent(new Event('change', {bubbles: true}));
+                        arguments[0].dispatchEvent(new Event('blur', {bubbles: true}));
+                        """,
+                        element,
+                        text,
+                    )
+                self.logger.info(f"Entered text '{text}' in element: {locator}")
+                return
+
+            except StaleElementReferenceException:
+                if attempt == 2:
+                    raise
+                self.logger.warning(
+                    f"Stale element on enter_text attempt {attempt + 1}/3 for {locator}, retrying..."
+                )
+                time.sleep(0.4)
     
     def get_text(self, locator):
         """
@@ -316,6 +336,78 @@ class BasePage:
      pincode = random.randint(100000, 999999)
 
      address = f"No. {house_no}, {street}, {city}, {state} - {pincode}"
-    
+
      self.logger.info(f"Generated address: {address}")
      return address
+
+    def generate_contractor_name(self) -> str:
+        name = (
+            f"{random.choice(CONTRACTOR_PREFIXES)} {random.choice(CONTRACTOR_PREFIXES)} "
+            f"{random.choice(CONTRACTOR_SUFFIXES)} {random.randint(100, 999)}"
+        )
+        self.logger.info(f"Generated contractor name: {name}")
+        return name
+
+    def generate_contractor_code(self) -> str:
+        """
+        Generates a unique contractor code: 3 uppercase letters + 3 digits.
+        Returns:
+            str: e.g. 'ABC123'
+        """
+        while True:
+            code = (
+                ''.join(random.choices(string.ascii_uppercase, k=3)) +
+                ''.join(random.choices(string.digits, k=3))
+            )
+            if code not in self.generated_codes:
+                self.generated_codes.add(code)
+                self.logger.info(f"Generated contractor code: {code}")
+                return code
+
+    def generate_contractor_short_name(self) -> str:
+        """
+        Generates a unique 4-character uppercase short name.
+        Returns:
+            str: e.g. 'APEX'
+        """
+        while True:
+            short_name = ''.join(random.choices(string.ascii_uppercase, k=4))
+            if short_name not in self.generated_codes:
+                self.generated_codes.add(short_name)
+                self.logger.info(f"Generated contractor short name: {short_name}")
+                return short_name
+            
+    def generate_contractor_PF_code(self) -> str:
+    # """
+    # Generates a unique PF code in the format: ABCDE1234F
+    # (5 uppercase letters + 4 digits + 1 uppercase letter)
+    # Returns:
+    #     str: e.g. 'KARBN0012A'
+    # """
+        while True:
+            pf_code = (
+            ''.join(random.choices(string.ascii_uppercase, k=5)) +
+            ''.join(random.choices(string.digits, k=4)) +
+            random.choice(string.ascii_uppercase)
+            )
+            if pf_code not in self.generated_codes:
+                self.generated_codes.add(pf_code)
+                self.logger.info(f"Generated contractor PF code: {pf_code}")
+                return pf_code
+            
+    def generate_contractor_ESI_code(self) -> str:
+    # """
+    # Generates a unique ESI code in the format: 12345678901000001
+    # (17 digits: 11-digit employer code + 6-digit serial number)
+    # Returns:
+    #     str: e.g. '12345678901000001'
+    # """
+        while True:
+            esi_code = (
+            ''.join(random.choices(string.digits, k=11)) +
+            ''.join(random.choices(string.digits, k=6))
+            )
+            if esi_code not in self.generated_codes:
+                self.generated_codes.add(esi_code)
+                self.logger.info(f"Generated contractor ESI code: {esi_code}")
+                return esi_code

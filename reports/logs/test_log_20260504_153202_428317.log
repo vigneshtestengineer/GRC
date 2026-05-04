@@ -1,0 +1,12 @@
+2026-05-04 15:32:02 - tests.conftest - INFO - ================================================================================
+2026-05-04 15:32:02 - tests.conftest - INFO - TEST SESSION STARTED - GRC Automation
+2026-05-04 15:32:02 - tests.conftest - INFO - ================================================================================
+2026-05-04 15:32:02 - tests.conftest - INFO - Cleared screenshots folder: E:\AutomationTask\GRC Payroll\reports\screenshots
+2026-05-04 15:32:02 - tests.conftest - INFO - ================================================================================
+2026-05-04 15:32:02 - tests.conftest - INFO - Initializing WebDriver
+2026-05-04 15:33:44 - tests.conftest - INFO - Test passed: test_add_contractor_master
+2026-05-04 15:33:44 - tests.conftest - INFO - Quitting WebDriver
+2026-05-04 15:33:47 - tests.conftest - INFO - ================================================================================
+2026-05-04 15:33:47 - tests.conftest - INFO - ================================================================================
+2026-05-04 15:33:47 - tests.conftest - INFO - TEST SESSION COMPLETED
+2026-05-04 15:33:47 - tests.conftest - INFO - ================================================================================
