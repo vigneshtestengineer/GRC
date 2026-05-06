@@ -1,21 +1,21 @@
 {
     "Contractor_Information": {
-        "Contractor_Code": "ABI399",
-        "Contractor_Name": "Sigma Atlas Contractors 912",
+        "Contractor_Code": "IWO966",
+        "Contractor_Name": "Global Prime Contractors 927",
         "Contactor_Addreess_1": "450 Industrial Parkway, Suite 300",
-        "Contractor_Address_2": "Meghalaya",
-        "State": "Meghalaya",
-        "City": "Meghalaya Zone",
+        "Contractor_Address_2": "Tamil Nadu",
+        "State": "Tamil Nadu",
+        "City": "BB",
         "Pin_Code": "657889",
         "Mobile_Number": "9876554433",
         "Email": "vignesh.kv@aparajitha.com",
-        "Contractor_Short_Name": "EZHP",
+        "Contractor_Short_Name": "FRQU",
         "Establishment_Name": "Food",
         "Establishment_Type": "Food"
     },
     "Statutory_Information": {
         "Nature_of_Work": "Food",
-        "PF_CODE": "ZDSNG2006O",
-        "ESI_CODE": "94352295675123307"
+        "PF_CODE": "PCCOT1555G",
+        "ESI_CODE": "26617130499479250"
     }
 }

@@ -1,0 +1,20 @@
+2026-05-06 17:48:14 - ContractorPatternConfig - INFO - ContractorPatternConfig page initialized.
+2026-05-06 17:48:24 - ContractorPatternConfig - INFO - Clicked on element: ('xpath', "//span[normalize-space()='General Master(s)']")
+2026-05-06 17:48:24 - ContractorPatternConfig - INFO - General Master menu expanded.
+2026-05-06 17:48:24 - ContractorPatternConfig - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Pattern Configuration']")
+2026-05-06 17:48:24 - ContractorPatternConfig - INFO - Clicked 'Pattern Configuration' menu.
+2026-05-06 17:48:25 - ContractorPatternConfig - INFO - Clicked on element: ('xpath', "//a[.//span[normalize-space()='Contractor(s)']]")
+2026-05-06 17:48:25 - ContractorPatternConfig - INFO - ✓ 'Contractor' menu selected.
+2026-05-06 17:48:27 - ContractorPatternConfig - INFO - Clicked on element: ('xpath', "//button[contains(.,'Add')]")
+2026-05-06 17:48:27 - ContractorPatternConfig - INFO - Clicked 'Add Pattern Configuration' button.
+2026-05-06 17:48:28 - ContractorPatternConfig - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Choose Unit']")
+2026-05-06 17:48:28 - ContractorPatternConfig - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-06 17:48:28 - ContractorPatternConfig - INFO - Entered text 'Apex Works 396' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-06 17:48:28 - ContractorPatternConfig - INFO - Searched for unit: Apex Works 396
+2026-05-06 17:48:29 - ContractorPatternConfig - INFO - Clicked on element: ('xpath', "//mat-option//span[contains(text(),'Apex Works 396')]")
+2026-05-06 17:48:29 - ContractorPatternConfig - INFO - Selected unit: Apex Works 396
+2026-05-06 17:48:29 - ContractorPatternConfig - INFO - Clicked on element: ('xpath', "(//mat-radio-button[.//input[@value='M']])[1]")
+2026-05-06 17:48:37 - ContractorPatternConfig - INFO - Clicked on element: ('xpath', "((//mat-radio-button)[6]//input[@type='radio'])[1]")
+2026-05-06 17:48:37 - ContractorPatternConfig - INFO - Clicked on element: ('xpath', "(//button[.//span[contains(.,'Submit as save')]])[1]")
+2026-05-06 17:48:37 - ContractorPatternConfig - INFO - ✓ Contractor pattern configuration created and saved.
+2026-05-06 17:48:39 - ContractorPatternConfig - INFO - ✓ Contractor Pattern Configuration completed.

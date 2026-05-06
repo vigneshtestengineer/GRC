@@ -1,0 +1,22 @@
+2026-05-06 17:34:08 - GRCLoginPage - INFO - CAPTCHA canvas interceptor injected via CDP (Chrome).
+2026-05-06 17:34:09 - GRCLoginPage - INFO - Logging in as: vignesh.kv@aparajitha.com
+2026-05-06 17:34:09 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[normalize-space()='✕']")
+2026-05-06 17:34:09 - GRCLoginPage - INFO - Closed initial popup before login
+2026-05-06 17:34:09 - GRCLoginPage - INFO - Credentials filled via single JS call.
+2026-05-06 17:34:09 - GRCLoginPage - INFO - Login attempt — captcha: '9G01CP'
+2026-05-06 17:34:09 - GRCLoginPage - INFO - Captcha entered (Angular setter): '9G01CP'
+2026-05-06 17:34:09 - GRCLoginPage - INFO - Element found: ('xpath', "//button[@id='Sign In']")
+2026-05-06 17:34:10 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[@id='Sign In']")
+2026-05-06 17:34:20 - GRCLoginPage - INFO - Login successful.
+2026-05-06 17:37:29 - GRCLoginPage - INFO - Logging in as: qc.test100@aparajitha.net
+2026-05-06 17:37:30 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[normalize-space()='✕']")
+2026-05-06 17:37:30 - GRCLoginPage - INFO - Closed initial popup before login
+2026-05-06 17:37:30 - GRCLoginPage - INFO - Credentials filled via single JS call.
+2026-05-06 17:37:30 - GRCLoginPage - INFO - Firefox: canvas hook injected into current document.
+2026-05-06 17:37:30 - GRCLoginPage - INFO - Firefox: JS-clicked CAPTCHA refresh button (.captcha-buttons button).
+2026-05-06 17:37:31 - GRCLoginPage - INFO - Firefox: CAPTCHA captured: '7AQAZT'
+2026-05-06 17:37:31 - GRCLoginPage - INFO - Login attempt — captcha: '7AQAZT'
+2026-05-06 17:37:31 - GRCLoginPage - INFO - Captcha entered (Angular setter): '7AQAZT'
+2026-05-06 17:37:31 - GRCLoginPage - INFO - Element found: ('xpath', "//button[@id='Sign In']")
+2026-05-06 17:37:31 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[@id='Sign In']")
+2026-05-06 17:37:41 - GRCLoginPage - INFO - Login successful.

@@ -1,0 +1,8 @@
+2026-05-06 17:48:40 - AddContractorMaster - INFO - Generated contractor name: Global Prime Contractors 927
+2026-05-06 17:48:40 - AddContractorMaster - INFO - Generated contractor code: IWO966
+2026-05-06 17:48:40 - AddContractorMaster - INFO - Generated contractor short name: FRQU
+2026-05-06 17:48:40 - AddContractorMaster - INFO - Generated contractor PF code: PCCOT1555G
+2026-05-06 17:48:40 - AddContractorMaster - INFO - Generated contractor ESI code: 26617130499479250
+2026-05-06 17:48:40 - AddContractorMaster - INFO - Saved to E:\AutomationTask\GRC Payroll\config\Contractor_Master_Data.json — name: 'nt', code: 'IWO966', short: 'FRQU', PF: 'PCCOT1555G', ESI: '26617130499479250'
+2026-05-06 17:48:40 - AddContractorMaster - INFO - AddContractorMaster initialized — unit: 'Apex Works 396', name: 'Global Prime Contractors 927', code: 'IWO966', short: 'FRQU'
+2026-05-06 17:48:40 - AddContractorMaster - INFO - === Add Contractor Master flow started ===

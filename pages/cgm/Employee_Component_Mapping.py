@@ -38,14 +38,14 @@ except (FileNotFoundError, json.JSONDecodeError):
 class EmployeeComponentMapping(BasePage):
     """Page object for Employee Component Mapping under General Component(s)."""
 
-    # ── CGM Executive navigation ──────────────────────────────────────────────
-    MENU_BUTTON                = (By.XPATH, "//button[.//mat-icon[text()='apps']]")
-    GENERAL_MASTER_EXEC_CARD   = (By.XPATH, "//mat-card[span[text()='General Master-Executive']]")
-    EXECUTIVE_URL              = "http://13.203.6.58:5002/#/home/welcome"
-    SPLASH_SCREEN              = (By.TAG_NAME, "compfie-splash-screen")
-    SEARCH_LEGAL_ENTITY        = (By.XPATH, "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
-    SELECT_LEGAL_ENTITY_ROW    = (By.XPATH, "//table//tbody//tr[1]//td")
-    SELECT_LEGAL_ENTITY_BUTTON = (By.XPATH, "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+    # # ── CGM Executive navigation ──────────────────────────────────────────────
+    # MENU_BUTTON                = (By.XPATH, "//button[.//mat-icon[text()='apps']]")
+    # GENERAL_MASTER_EXEC_CARD   = (By.XPATH, "//mat-card[span[text()='General Master-Executive']]")
+    # EXECUTIVE_URL              = "http://13.203.6.58:5002/#/home/welcome"
+    # SPLASH_SCREEN              = (By.TAG_NAME, "compfie-splash-screen")
+    # SEARCH_LEGAL_ENTITY        = (By.XPATH, "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+    # SELECT_LEGAL_ENTITY_ROW    = (By.XPATH, "//table//tbody//tr[1]//td")
+    # SELECT_LEGAL_ENTITY_BUTTON = (By.XPATH, "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
 
     # ── Sidebar navigation ────────────────────────────────────────────────────
     OPEN_GENERAL_MASTER_MENU    = (By.XPATH, "//span[normalize-space()='General Master(s)']")

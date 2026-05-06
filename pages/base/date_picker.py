@@ -49,7 +49,7 @@ class DatePicker(BasePage):
         day_clean = str(int(day))  # strip leading zero e.g. "1"
 
         # Step 1 - make sure no calendar is already open
-        self._wait_overlay_gone()
+        # self._wait_overlay_gone()
 
         # Step 2 - click the calendar icon
         calendar_btn = (By.XPATH, calendar_xpath)

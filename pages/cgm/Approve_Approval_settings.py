@@ -177,9 +177,8 @@ class Approve_Approval_Settings(BasePage):
             "//div[contains(@class,'compfie-toast-notification-message')"
             " and normalize-space()='Approved Successfully']",
         )
-        ERROR_TOAST = (
-            By.XPATH,
-            "//div[contains(@class,'compfie-toast-notification-container')]",
+        ERROR_TOAST = (By.XPATH,"//div[contains(@class,'compfie-toast-notification-container')"
+                       " and not(.//div[normalize-space()='Approved Successfully'])]",
         )
         TOAST_CLOSE = (By.XPATH, "//mat-icon[@data-mat-icon-name='x']")
 
@@ -199,6 +198,9 @@ class Approve_Approval_Settings(BasePage):
                 err_el = self.driver.find_element(*ERROR_TOAST)
                 if err_el.is_displayed():
                     error_msg = err_el.text.strip() or "Unknown error"
+                    if "Approved Successfully" in error_msg:
+                        self.logger.info("✓ 'Approved Successfully' notification received.")
+                        break
                     self.logger.error("Error toast appeared: '%s'. Closing browser.", error_msg)
                     self.quit_cgm_browser()
                     raise RuntimeError(f"Approval failed — error toast: '{error_msg}'")

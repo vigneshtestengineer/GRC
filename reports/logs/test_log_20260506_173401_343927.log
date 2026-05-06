@@ -1,0 +1,17 @@
+2026-05-06 17:34:01 - tests.conftest - INFO - ================================================================================
+2026-05-06 17:34:01 - tests.conftest - INFO - TEST SESSION STARTED - GRC Automation
+2026-05-06 17:34:01 - tests.conftest - INFO - ================================================================================
+2026-05-06 17:34:01 - tests.conftest - INFO - Cleared screenshots folder: E:\AutomationTask\GRC Payroll\reports\screenshots
+2026-05-06 17:34:01 - tests.conftest - INFO - ================================================================================
+2026-05-06 17:34:01 - tests.conftest - INFO - Initializing WebDriver
+2026-05-06 17:36:01 - tests.conftest - INFO - Test passed: test_open_general_master_executive
+2026-05-06 17:37:18 - tests.conftest - INFO - Test passed: test_create_approval_settings
+2026-05-06 17:48:14 - tests.conftest - INFO - Test passed: test_approve_approval_settings
+2026-05-06 17:48:40 - tests.conftest - INFO - Test passed: test_contractor_pattern_config
+2026-05-06 17:48:40 - tests.conftest - ERROR - Test failed: test_add_contractor_master
+2026-05-06 17:48:40 - tests.conftest - INFO - Screenshot saved: E:\AutomationTask\GRC Payroll\reports\screenshots\test_add_contractor_master_20260506_174840.png
+2026-05-06 17:48:40 - tests.conftest - INFO - Quitting WebDriver
+2026-05-06 17:48:42 - tests.conftest - INFO - ================================================================================
+2026-05-06 17:48:42 - tests.conftest - INFO - ================================================================================
+2026-05-06 17:48:42 - tests.conftest - INFO - TEST SESSION COMPLETED
+2026-05-06 17:48:42 - tests.conftest - INFO - ================================================================================

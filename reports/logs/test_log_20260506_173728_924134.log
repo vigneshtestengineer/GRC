@@ -1,0 +1,29 @@
+2026-05-06 17:37:28 - Approve_Approval_Settings - INFO - Approve_Approval_Settings: Firefox browser opened.
+2026-05-06 17:37:28 - Approve_Approval_Settings - INFO - Logging in as approver 'qc.test100@aparajitha.net' …
+2026-05-06 17:37:41 - Approve_Approval_Settings - INFO - ✓ Approver login submitted via GRCLoginPage.
+2026-05-06 17:37:51 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[text()='apps']]")
+2026-05-06 17:37:51 - Approve_Approval_Settings - INFO - Clicked app-switcher menu.
+2026-05-06 17:37:53 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "//mat-card[span[text()='General Master-Executive']]")
+2026-05-06 17:37:53 - Approve_Approval_Settings - INFO - Clicked 'General Master-Admin' card.
+2026-05-06 17:37:53 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "//span[@class='group-name' and normalize-space()='admin']")
+2026-05-06 17:37:53 - Approve_Approval_Settings - INFO - Selected admin role.
+2026-05-06 17:37:53 - Approve_Approval_Settings - INFO - Switched to new CGM Admin tab.
+2026-05-06 17:37:53 - Approve_Approval_Settings - INFO - ✓ Redirected and verified CGM Admin URL: http://13.203.6.58:5002/#/home/welcome
+2026-05-06 17:37:54 - Approve_Approval_Settings - INFO - Searched for legal entity: 'Microsoft Focused'.
+2026-05-06 17:37:54 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', '//table//tbody//tr[1]//td')
+2026-05-06 17:37:54 - Approve_Approval_Settings - INFO - Clicked first legal entity row.
+2026-05-06 17:37:54 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-05-06 17:37:54 - Approve_Approval_Settings - INFO - ✓ Legal entity 'Microsoft Focused' selected.
+2026-05-06 17:37:55 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "//span[normalize-space()='General Setting(s)']")
+2026-05-06 17:37:55 - Approve_Approval_Settings - INFO - Expanded 'General Setting(s)' menu.
+2026-05-06 17:37:55 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Approval Setting(s)']")
+2026-05-06 17:37:55 - Approve_Approval_Settings - INFO - ✓ Navigated to 'Approval Setting(s)' page.
+2026-05-06 17:37:57 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "(//span[contains(@class,'mat-checkbox-inner-container')])[1]")
+2026-05-06 17:37:57 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Approve']")
+2026-05-06 17:37:57 - Approve_Approval_Settings - INFO - Clicked Approve button — waiting for success notification …
+2026-05-06 17:37:57 - Approve_Approval_Settings - INFO - Polling for approval toast …
+2026-05-06 17:48:07 - Approve_Approval_Settings - INFO - ✓ 'Approved Successfully' notification received.
+2026-05-06 17:48:07 - Approve_Approval_Settings - INFO - Clicked on element: ('xpath', "//mat-icon[@data-mat-icon-name='x']")
+2026-05-06 17:48:07 - Approve_Approval_Settings - INFO - Closed success toast.
+2026-05-06 17:48:07 - Approve_Approval_Settings - INFO - ✓ Full approver flow complete — Approval Settings page is open.
+2026-05-06 17:48:12 - Approve_Approval_Settings - INFO - Firefox browser closed.

@@ -4,7 +4,7 @@
         "binary_path": "E:\\AutomationTask\\GRC Payroll\\.wdm\\drivers\\chromedriver\\win64\\114.0.5735.90\\chromedriver.exe"
     },
     "win64_geckodriver_v0.36.0_for_": {
-        "timestamp": "04/05/2026",
+        "timestamp": "06/05/2026",
         "binary_path": "E:\\AutomationTask\\GRC Payroll\\.wdm\\drivers\\geckodriver\\win64\\v0.36.0\\geckodriver.exe"
     }
 }
