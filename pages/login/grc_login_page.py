@@ -14,6 +14,7 @@ from datetime import datetime
 from time import perf_counter
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from conftest import driver
 from pages.base.base_page import BasePage
 from utilities.captcha_helper import (
     inject_captcha_interceptor,
@@ -35,7 +36,7 @@ class GRCLoginPage(BasePage):
     PASSWORD_INPUT = (By.ID, "password")
     GROUP_INPUT = (By.ID, "group_short_name")
     CAPTCHA_TEXTBOX = (By.NAME, "captcha")
-    CAPTCHA_CANVAS = (By.ID, "captchaCanvas")
+    CAPTCHA_CANVAS = (By.ID, "captcahCanvas")   # NB: app HTML has typo "captcah" not "captcha"
     CAPTCHA_BUTTONS = (By.CLASS_NAME, "captcha-buttons")
     CAPTCHA_INPUT_XPATH = (
         By.XPATH,
@@ -44,8 +45,10 @@ class GRCLoginPage(BasePage):
     )
     # fallback locator list tried in order when CAPTCHA_CANVAS is not visible
     CAPTCHA_CANVAS_LOCATORS = [
-        (By.ID, "captchaCanvas"),
+        (By.ID, "captcahCanvas"),          # actual app ID (typo in app HTML)
+        (By.CSS_SELECTOR, "canvas[id*='captcah']"),
         (By.CSS_SELECTOR, "canvas[id*='captcha']"),
+        (By.TAG_NAME, "canvas"),
         (By.XPATH, "//input[@name='captcha']/ancestor::div[1]/following::canvas[1]"),
     ]
     INVALID_CAPTCHA_ERROR = (
@@ -63,8 +66,10 @@ class GRCLoginPage(BasePage):
         fillText / strokeText call made while rendering the CAPTCHA.
         """
         super().__init__(driver)
-        # Inject BEFORE get() so the script runs on document creation
-        inject_captcha_interceptor(driver, self.logger)
+
+        is_firefox = driver.capabilities.get("browserName", "").lower() == "firefox"
+        if not is_firefox:
+            inject_captcha_interceptor(driver, self.logger)
         self.driver.get(LOGIN_URL)
 
     # ── page lifecycle ────────────────────────────────────────────────────────
@@ -278,16 +283,39 @@ class GRCLoginPage(BasePage):
 
         # Step 3: Get CAPTCHA text from canvas interceptor
 
-        current_captcha = captcha_text or self.driver.execute_script(
-        "return window._captchaText || '';"
-        ).strip()
-        self.logger.info("Captcha read instantly from interceptor: '%s'", current_captcha)
+        # current_captcha = captcha_text or self.driver.execute_script(
+        # "return window._captchaText || '';"
+        # ).strip()
+        # self.logger.info("Captcha read instantly from interceptor: '%s'", current_captcha)
+
+        # self.logger.info("Login attempt — captcha: '%s'", current_captcha)
+        # self.enter_captcha(current_captcha)
+
+        # # Step 4: Click login
+
+        # self.click_login_button()
+
+        # if self._is_invalid_captcha_displayed(timeout=3):
+        #     raise RuntimeError(f"Login failed: Invalid Captcha '{current_captcha}'.")
+
+        # self.logger.info("Login successful.")
+
+        is_firefox = self.driver.capabilities.get("browserName", "").lower() == "firefox"
+
+        if is_firefox:
+            # Firefox: inject hook post-load, click CAPTCHA refresh, capture fillText output
+            current_captcha = self._get_captcha_from_canvas_interceptor()
+        else:
+            # Chrome: hook was pre-injected via CDP; just read the captured text
+            current_captcha = captcha_text or self.driver.execute_script(
+                "return window._captchaText || '';"
+            ).strip()
+
+        if not current_captcha:
+            raise RuntimeError("Captcha text is empty.")
 
         self.logger.info("Login attempt — captcha: '%s'", current_captcha)
         self.enter_captcha(current_captcha)
-
-        # Step 4: Click login
-
         self.click_login_button()
 
         if self._is_invalid_captcha_displayed(timeout=3):

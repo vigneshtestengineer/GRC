@@ -34,6 +34,10 @@ TEST_ORDER = [
     "approval_settings",
     "approve_approval_settings",
     "contractor_pattern_config",
+    "add_contractor_master",
+    "employee_pattern_config",
+    "employee_component_creation",
+    "employee_component_mapping",
     # add next test module keywords here in execution order
 ]
 

@@ -1,0 +1,10 @@
+2026-05-06 16:05:12 - GRCLoginPage - INFO - CAPTCHA canvas interceptor injected via CDP (Chrome).
+2026-05-06 16:05:13 - GRCLoginPage - INFO - Logging in as: vignesh.kv@aparajitha.com
+2026-05-06 16:05:13 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[normalize-space()='✕']")
+2026-05-06 16:05:13 - GRCLoginPage - INFO - Closed initial popup before login
+2026-05-06 16:05:13 - GRCLoginPage - INFO - Credentials filled via single JS call.
+2026-05-06 16:05:13 - GRCLoginPage - INFO - Login attempt — captcha: 'RSQS1Y'
+2026-05-06 16:05:13 - GRCLoginPage - INFO - Captcha entered (Angular setter): 'RSQS1Y'
+2026-05-06 16:05:13 - GRCLoginPage - INFO - Element found: ('xpath', "//button[@id='Sign In']")
+2026-05-06 16:05:14 - GRCLoginPage - INFO - Clicked on element: ('xpath', "//button[@id='Sign In']")
+2026-05-06 16:05:24 - GRCLoginPage - INFO - Login successful.

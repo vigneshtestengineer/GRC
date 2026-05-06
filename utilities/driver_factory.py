@@ -160,7 +160,8 @@ class DriverFactory:
                 firefox_options.add_argument("--headless")
             service = FirefoxService(GeckoDriverManager().install())
             driver  = webdriver.Firefox(service=service, options=firefox_options)
-            # Note: captcha hook is injected post-load inside captcha_helper for Firefox
+            # Note: CAPTCHA hook is injected post-load inside captcha_helper for Firefox
+            # (neither CDP nor BiDi pre-load injection is available in geckodriver)
 
         else:
             raise ValueError(f"Unsupported browser: {browser!r}")

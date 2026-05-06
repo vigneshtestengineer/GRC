@@ -1,0 +1,35 @@
+2026-05-06 16:05:24 - EmployeeComponentMapping - INFO - EmployeeComponentMapping page initialized.
+2026-05-06 16:05:24 - EmployeeComponentMapping - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[text()='apps']]")
+2026-05-06 16:05:24 - EmployeeComponentMapping - INFO - Clicked app-switcher menu.
+2026-05-06 16:05:24 - EmployeeComponentMapping - INFO - Clicked on element: ('xpath', "//mat-card[span[text()='General Master-Executive']]")
+2026-05-06 16:05:24 - EmployeeComponentMapping - INFO - Switched to new CGM Executive window.
+2026-05-06 16:05:25 - EmployeeComponentMapping - INFO - CGM Executive tab active.
+2026-05-06 16:05:26 - EmployeeComponentMapping - INFO - Element found: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-05-06 16:05:27 - EmployeeComponentMapping - INFO - Entered text 'Microsoft Pure Value' in element: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-05-06 16:05:27 - EmployeeComponentMapping - INFO - Element found: ('xpath', '//table//tbody//tr[1]//td')
+2026-05-06 16:05:28 - EmployeeComponentMapping - INFO - Element found: ('xpath', '//table//tbody//tr[1]//td')
+2026-05-06 16:05:29 - EmployeeComponentMapping - INFO - Legal entity row selected (attempt 1).
+2026-05-06 16:05:29 - EmployeeComponentMapping - INFO - Element found: ('xpath', "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-05-06 16:05:30 - EmployeeComponentMapping - INFO - Clicked on element: ('xpath', "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-05-06 16:05:31 - EmployeeComponentMapping - INFO - Legal entity selected — CGM Executive ready.
+2026-05-06 16:05:41 - EmployeeComponentMapping - INFO - Clicked on element: ('xpath', "//span[normalize-space()='General Master(s)']")
+2026-05-06 16:05:41 - EmployeeComponentMapping - INFO - General Master menu expanded.
+2026-05-06 16:05:42 - EmployeeComponentMapping - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Component Mapping']")
+2026-05-06 16:05:42 - EmployeeComponentMapping - INFO - Clicked 'Component Mapping' menu.
+2026-05-06 16:05:43 - EmployeeComponentMapping - INFO - Clicked on element: ('xpath', "//button[contains(.,'Add')]")
+2026-05-06 16:05:43 - EmployeeComponentMapping - INFO - Clicked 'Add' button.
+2026-05-06 16:05:44 - EmployeeComponentMapping - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Choose Unit']")
+2026-05-06 16:05:44 - EmployeeComponentMapping - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-06 16:05:44 - EmployeeComponentMapping - INFO - Entered text 'Delta Works 477' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-06 16:05:44 - EmployeeComponentMapping - INFO - Clicked on element: ('xpath', "//mat-option//span[contains(text(),'Delta Works 477')]")
+2026-05-06 16:05:44 - EmployeeComponentMapping - INFO - Selected unit: Delta Works 477
+2026-05-06 16:05:45 - EmployeeComponentMapping - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Contractor']")
+2026-05-06 16:05:45 - EmployeeComponentMapping - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-06 16:05:46 - EmployeeComponentMapping - INFO - Entered text 'Sigma Atlas Contractors 912' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-06 16:05:46 - EmployeeComponentMapping - INFO - Clicked on element: ('xpath', "(//mat-option[contains(@class,'mat-option')])[2]")
+2026-05-06 16:05:46 - EmployeeComponentMapping - INFO - Selected contractor: Sigma Atlas Contractors 912
+2026-05-06 16:05:47 - EmployeeComponentMapping - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[normalize-space()='sort'] and .//span[contains(normalize-space(.),'Show Detail')]]")
+2026-05-06 16:05:48 - EmployeeComponentMapping - INFO - Clicked on element: ('xpath', "(//button[.//span[contains(.,'Submit as save')]])[1]")
+2026-05-06 16:05:48 - EmployeeComponentMapping - INFO - ✓ Component mapping saved.
+2026-05-06 16:05:51 - EmployeeComponentMapping - INFO - Page refreshed after save.
+2026-05-06 16:05:51 - EmployeeComponentMapping - INFO - ✓ Employee Component Mapping completed.

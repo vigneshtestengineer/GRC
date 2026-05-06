@@ -65,26 +65,37 @@ _RESET_JS = "window.__captchaInterceptorInstalled = false; window._captchaText =
 # Selectors tried in order to find the CAPTCHA refresh/reload button
 _REFRESH_SELECTORS = [
     ".captcha-buttons button",
+    ".captcha-buttons i",
+    ".captcha-buttons mat-icon",
+    ".captcha-buttons span",
+    ".captcha-buttons a",
+    ".captcha-buttons",
     "button.captcha-refresh",
     "[class*='captcha'] button",
+    "[class*='captcha'] i",
+    "[class*='captcha'] mat-icon",
     "button[title*='refresh' i]",
     "button[aria-label*='refresh' i]",
     "button[title*='reload' i]",
-    ".captcha-buttons",
+    "[title*='refresh' i]",
+    "[class*='refresh']",
 ]
 
 
 # ── Chrome: pre-load injection via CDP ───────────────────────────────────────
 def inject_captcha_interceptor(driver, logger=None) -> None:
     """
-    Chrome  — injects hook via CDP before any page loads.
-    Firefox — no-op here; injection happens inside read_captcha_from_canvas.
+    Chrome — injects hook via CDP Page.addScriptToEvaluateOnNewDocument so
+    fillText/strokeText calls are captured before the CAPTCHA canvas draws.
+    Firefox — no-op; neither CDP nor BiDi pre-load injection is available in
+    the current geckodriver/Selenium build. The hook is injected post-load
+    inside _read_captcha_firefox after the CAPTCHA refresh button is clicked.
     """
     browser = (driver.capabilities or {}).get("browserName", "").lower()
 
     if browser == "firefox":
         if logger:
-            logger.info("Firefox: pre-load captcha injection skipped; will inject post-load.")
+            logger.info("Firefox: pre-load injection skipped (not supported); will inject post-load.")
         return
 
     try:
@@ -128,25 +139,55 @@ def _read_captcha_firefox(driver, locator, canvas_wait: int, logger=None) -> str
         logger.info("Firefox: canvas hook injected into current document.")
 
     # Click the CAPTCHA refresh button to trigger a new render
+    # Use JS click (bypasses interception) and try multiple selectors
     clicked = False
     for sel in _REFRESH_SELECTORS:
         try:
             btn = driver.find_element(By.CSS_SELECTOR, sel)
-            btn.click()
+            driver.execute_script("arguments[0].click();", btn)
             clicked = True
             if logger:
-                logger.info("Firefox: clicked CAPTCHA refresh button (%s).", sel)
+                logger.info("Firefox: JS-clicked CAPTCHA refresh button (%s).", sel)
             break
+        except Exception:
+            pass
+
+    # Fallback: JavaScript search for any CAPTCHA-related clickable element
+    if not clicked:
+        try:
+            result = driver.execute_script("""
+                var found = document.querySelector(
+                    '.captcha-buttons button, .captcha-buttons i, .captcha-buttons mat-icon, '
+                    + '.captcha-buttons span, .captcha-buttons a, .captcha-buttons, '
+                    + '[class*="captcha"] button, [class*="captcha"] i'
+                );
+                if (found) { found.click(); return found.className || found.tagName; }
+                return null;
+            """)
+            if result:
+                clicked = True
+                if logger:
+                    logger.info("Firefox: JS fallback clicked CAPTCHA element: %s", result)
         except Exception:
             pass
 
     if not clicked:
         if logger:
-            logger.warning("Firefox: no refresh button found — trying window resize to force redraw.")
-        size = driver.get_window_size()
-        driver.set_window_size(size["width"] - 1, size["height"])
-        time.sleep(0.3)
-        driver.set_window_size(size["width"], size["height"])
+            logger.warning("Firefox: no refresh button found — trying window resize.")
+        try:
+            size = driver.get_window_size()
+            driver.set_window_size(size["width"] - 1, size["height"])
+            time.sleep(0.3)
+            driver.set_window_size(size["width"], size["height"])
+        except Exception:
+            pass
+        try:
+            driver.execute_script("window.dispatchEvent(new Event('resize'));")
+        except Exception:
+            pass
+
+    # Give canvas time to redraw after the click
+    time.sleep(1.0)
 
     # Wait for the hook to capture text from the re-rendered CAPTCHA
     def _text_ready(d):
@@ -155,9 +196,28 @@ def _read_captcha_firefox(driver, locator, canvas_wait: int, logger=None) -> str
         ) or False
 
     try:
-        text = WebDriverWait(driver, 6.0, poll_frequency=0.1).until(_text_ready)
+        text = WebDriverWait(driver, 12.0, poll_frequency=0.1).until(_text_ready)
     except TimeoutException:
         text = ""
+
+    # Retry once more if first attempt yielded nothing
+    if not text and clicked:
+        if logger:
+            logger.info("Firefox: first refresh attempt yielded no text — retrying click.")
+        try:
+            driver.execute_script(_RESET_JS)
+            driver.execute_script(_INTERCEPTOR_JS)
+            for sel in _REFRESH_SELECTORS:
+                try:
+                    btn = driver.find_element(By.CSS_SELECTOR, sel)
+                    driver.execute_script("arguments[0].click();", btn)
+                    break
+                except Exception:
+                    pass
+            time.sleep(1.0)
+            text = WebDriverWait(driver, 8.0, poll_frequency=0.1).until(_text_ready) or ""
+        except Exception:
+            pass
 
     if text:
         half = len(text) // 2
@@ -176,7 +236,7 @@ def read_captcha_from_canvas(driver, logger=None, locator=None,
                               canvas_wait: int = 10,
                               settle_sleep: float = 0.3) -> str:
     if locator is None:
-        locator = (By.ID, "captchaCanvas")
+        locator = (By.ID, "captcahCanvas")  # app HTML has typo: "captcah" not "captcha"
 
     browser = (driver.capabilities or {}).get("browserName", "").lower()
 

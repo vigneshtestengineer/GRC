@@ -132,7 +132,7 @@ class AddContractorMaster(BasePage):
             CONTRACTOR_DATA_FILE, os.name, code, short_name, pf_code, esi_code,
     )
 
-    # ── Step 1: Open CGM Executive ────────────────────────────────────────────
+    # # ── Step 1: Open CGM Executive ────────────────────────────────────────────
     def open_cgm_executive(self):
         self.wait_for_element_to_be_clickable(self.MENU_BUTTON, timeout=30)
         self.click(self.MENU_BUTTON)
@@ -190,7 +190,7 @@ class AddContractorMaster(BasePage):
                 self.logger.warning("Legal entity click attempt %d did not enable button.", attempt)
         raise RuntimeError("Legal entity row was clicked but the select button did not become enabled.")
 
-    # ── Step 2: Navigate to Contractor Master ─────────────────────────────────
+    # ── Step 1: Navigate to Contractor Master ─────────────────────────────────
     def navigate_to_contractor_master(self):
         if not self.is_element_visible(self.CLICK_CONTRACTOR_MASTER_MENU, timeout=2):
             self.click(self.OPEN_GENERAL_MASTER_MENU, timeout=10)
@@ -294,6 +294,7 @@ class AddContractorMaster(BasePage):
         self.click(self.SAVE_BTN, timeout=10)
         self.sleep(2)
         self.driver.refresh()
+        self.sleep(2)
         self.wait_for_element_to_disappear(self.SPLASH_SCREEN_OVERLAY, timeout=15)
         self.logger.info("Page refreshed after save.")
         self.logger.info("=== Add Contractor Master flow completed ===")
