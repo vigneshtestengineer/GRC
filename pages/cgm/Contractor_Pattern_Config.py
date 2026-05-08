@@ -89,6 +89,8 @@ class ContractorPatternConfig(BasePage):
         self.click(self.PATTERN_CONFIG_SAVE, timeout=8)
         self.logger.info("✓ Contractor pattern configuration created and saved.")
         self.sleep(2)
+        self.driver.refresh()
+        self.sleep(2)
 
     # ── Public orchestration ──────────────────────────────────────────────────
     def navigate_to_contractor_config(self):

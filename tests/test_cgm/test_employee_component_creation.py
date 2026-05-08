@@ -22,5 +22,6 @@ def test_employee_component_creation(driver):
     # print("✓ Logged in successfully")
 
     page = EmployeeComponentCreation(driver)
-    page.navigate_to_component_creation()
+    page.open_general_component_menu()
+    page.create_employee_component()
     print("✓ Employee Component Creation completed successfully")

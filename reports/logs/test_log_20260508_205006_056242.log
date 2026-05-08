@@ -1,0 +1,13 @@
+2026-05-08 20:50:06 - tests.conftest - INFO - ================================================================================
+2026-05-08 20:50:06 - tests.conftest - INFO - TEST SESSION STARTED - GRC Automation
+2026-05-08 20:50:06 - tests.conftest - INFO - ================================================================================
+2026-05-08 20:50:06 - tests.conftest - INFO - Cleared screenshots folder: E:\AutomationTask\GRC Payroll\reports\screenshots
+2026-05-08 20:50:06 - tests.conftest - INFO - ================================================================================
+2026-05-08 20:50:06 - tests.conftest - INFO - Initializing WebDriver
+2026-05-08 20:51:03 - tests.conftest - ERROR - Test failed: test_open_general_master_executive
+2026-05-08 20:51:03 - tests.conftest - INFO - Screenshot saved: E:\AutomationTask\GRC Payroll\reports\screenshots\test_open_general_master_executive_20260508_205103.png
+2026-05-08 20:51:03 - tests.conftest - INFO - Quitting WebDriver
+2026-05-08 20:51:05 - tests.conftest - INFO - ================================================================================
+2026-05-08 20:51:05 - tests.conftest - INFO - ================================================================================
+2026-05-08 20:51:05 - tests.conftest - INFO - TEST SESSION COMPLETED
+2026-05-08 20:51:05 - tests.conftest - INFO - ================================================================================

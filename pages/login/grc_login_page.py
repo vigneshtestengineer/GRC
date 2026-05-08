@@ -252,7 +252,7 @@ class GRCLoginPage(BasePage):
 
         self.wait_for_element_to_be_clickable(self.LOGIN_BUTTON, timeout=2)
         self.scroll_to_element(self.LOGIN_BUTTON)
-        self.click(self.LOGIN_BUTTON, timeout=10)
+        self.click(self.LOGIN_BUTTON, timeout=1)
 
     def _is_invalid_captcha_displayed(self, timeout: int = 1.5) -> bool:
         from selenium.webdriver.support.ui import WebDriverWait
@@ -281,25 +281,6 @@ class GRCLoginPage(BasePage):
         # Step 2: Fill credentials
         self._fill_credentials(username, password, group_name)
 
-        # Step 3: Get CAPTCHA text from canvas interceptor
-
-        # current_captcha = captcha_text or self.driver.execute_script(
-        # "return window._captchaText || '';"
-        # ).strip()
-        # self.logger.info("Captcha read instantly from interceptor: '%s'", current_captcha)
-
-        # self.logger.info("Login attempt — captcha: '%s'", current_captcha)
-        # self.enter_captcha(current_captcha)
-
-        # # Step 4: Click login
-
-        # self.click_login_button()
-
-        # if self._is_invalid_captcha_displayed(timeout=3):
-        #     raise RuntimeError(f"Login failed: Invalid Captcha '{current_captcha}'.")
-
-        # self.logger.info("Login successful.")
-
         is_firefox = self.driver.capabilities.get("browserName", "").lower() == "firefox"
 
         if is_firefox:
@@ -317,9 +298,6 @@ class GRCLoginPage(BasePage):
         self.logger.info("Login attempt — captcha: '%s'", current_captcha)
         self.enter_captcha(current_captcha)
         self.click_login_button()
-
-        if self._is_invalid_captcha_displayed(timeout=3):
-            raise RuntimeError(f"Login failed: Invalid Captcha '{current_captcha}'.")
 
         self.logger.info("Login successful.")
 

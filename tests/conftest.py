@@ -38,6 +38,8 @@ TEST_ORDER = [
     "employee_pattern_config",
     "employee_component_creation",
     "employee_component_mapping",
+    "shift_master_creation",
+    "weekly_holiday_master",
     # add next test module keywords here in execution order
 ]
 

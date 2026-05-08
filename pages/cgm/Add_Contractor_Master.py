@@ -191,10 +191,16 @@ class AddContractorMaster(BasePage):
     #     raise RuntimeError("Legal entity row was clicked but the select button did not become enabled.")
 
     # ── Step 1: Navigate to Contractor Master ─────────────────────────────────
+    # def navigate_to_contractor_master(self):
+    #     if not self.is_element_visible(self.CLICK_CONTRACTOR_MASTER_MENU, timeout=2):
+    #         self.click(self.OPEN_GENERAL_MASTER_MENU, timeout=10)
+    #         self.wait_for_element_to_be_clickable(self.CLICK_CONTRACTOR_MASTER_MENU, timeout=8)
+    #     self.click(self.CLICK_CONTRACTOR_MASTER_MENU, timeout=10)
+    #     self.wait_for_element_to_disappear(self.SPLASH_SCREEN_OVERLAY, timeout=15)
+    #     self.logger.info("Navigated to Contractor Master.")
+
     def navigate_to_contractor_master(self):
-        if not self.is_element_visible(self.CLICK_CONTRACTOR_MASTER_MENU, timeout=2):
-            self.click(self.OPEN_GENERAL_MASTER_MENU, timeout=10)
-            self.wait_for_element_to_be_clickable(self.CLICK_CONTRACTOR_MASTER_MENU, timeout=8)
+
         self.click(self.CLICK_CONTRACTOR_MASTER_MENU, timeout=10)
         self.wait_for_element_to_disappear(self.SPLASH_SCREEN_OVERLAY, timeout=15)
         self.logger.info("Navigated to Contractor Master.")

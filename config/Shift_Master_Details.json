@@ -1,0 +1,14 @@
+{
+    "Shift_Master_Details": {
+        "Shift_Name": "Morning Shift",
+        "Shift_Start_From": "09:00",
+        "Shift_End_To": "18:00",
+        "Interval_start_From": "13:00",
+        "Interval_End_To": "14:00",
+        "Punch_Before_Shift" :"08:30",
+        "Punch_After_Shift": "18:30",
+        "Shift_Color": "#FF5733",
+        "Shift_Master_Remarks": "This is the morning shift for regular employees."
+
+    }
+}

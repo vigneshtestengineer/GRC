@@ -7,7 +7,7 @@ import json
 import sys
 import os
 from io import BytesIO
-from datetime import datetime
+from datetime import datetime, time
 from pages.base.date_picker import DatePicker
 from pathlib import Path
 
@@ -242,18 +242,14 @@ class unit_Master(BasePage):
 
 
     def open_general_master_executive(self):
-
-        self.wait_for_element_to_be_clickable(self.MENU_BUTTON, timeout=30)
+        # self.wait_for_element_to_disappear(self.SPLASH_SCREEN_OVERLAY, timeout=30)
+        self.wait_for_element_to_be_clickable(self.MENU_BUTTON, timeout=10)
         self.click(self.MENU_BUTTON)
         self.logger.info("✓ Clicked MENU_BUTTON.")
     
         previous_windows = self.driver.window_handles
 
         self.logger.info("Clicked app-switcher menu.")
-
-        self.wait_for_element_to_be_clickable(
-            self.GENERAL_MASTER_EXECUTIVE_CARD, timeout=8
-        )
         self.click(self.GENERAL_MASTER_EXECUTIVE_CARD)
         self._switch_to_new_window_if_opened(previous_windows)
 
@@ -366,15 +362,15 @@ class unit_Master(BasePage):
     # Click General master to create the unit creation
 
     def general_master_menu(self):
-        # If the menu is already open, clicking again would close it (toggle).
-        if self.is_element_visible(self.CLICK_ON_UNIT_MASTER, timeout=2):
-            self.logger.info("General Master menu already expanded.")
-            return
+        # # If the menu is already open, clicking again would close it (toggle).
+        # if self.is_element_visible(self.CLICK_ON_UNIT_MASTER, timeout=2):
+        #     self.logger.info("General Master menu already expanded.")
+        #     return
 
         for attempt in range(1, 3):
             try:
                 self.click(self.OPEN_GENERAL_MASTER_MENU, timeout=5)
-                self.wait_for_element_to_be_clickable(self.CLICK_ON_UNIT_MASTER, timeout=8)
+                # self.wait_for_element_to_be_clickable(self.CLICK_ON_UNIT_MASTER, timeout=8)
                 self.logger.info(
                     "General Master menu expanded successfully%s.",
                     " on retry" if attempt > 1 else "",
@@ -469,6 +465,7 @@ class unit_Master(BasePage):
         DatePicker(self.driver).set_date(
             "(//button[@aria-label='Open calendar'])[1]", self.date_of_creation
         )
+        self.sleep(0.5)
         # Date of Commitment  →  (//button[@aria-label='Open calendar'])[2]
         DatePicker(self.driver).set_date(
             "(//button[@aria-label='Open calendar'])[2]", self.date_of_commitment

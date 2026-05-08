@@ -18,7 +18,7 @@ class DatePicker(BasePage):
 
     def _wait_overlay_gone(self):
         try:
-            WebDriverWait(self.driver, 5).until(  # ✅ Reduced to 5s
+            WebDriverWait(self.driver, 1).until(
                 EC.invisibility_of_element_located(self.CALENDAR_OVERLAY)
             )
         except TimeoutException:
@@ -27,7 +27,7 @@ class DatePicker(BasePage):
 
     def _wait_overlay_open(self):
         try:
-            WebDriverWait(self.driver, 5).until(  # ✅ Reduced to 5s
+            WebDriverWait(self.driver, 1).until(
                 EC.presence_of_element_located(self.CALENDAR_OVERLAY)
             )
             self.logger.info("Calendar opened.")
@@ -53,7 +53,7 @@ class DatePicker(BasePage):
 
         # Step 2 - click the calendar icon
         calendar_btn = (By.XPATH, calendar_xpath)
-        self.wait_for_element_to_be_clickable(calendar_btn, timeout=10)  # ✅ 15 → 10
+        self.wait_for_element_to_be_clickable(calendar_btn, timeout=10)
         element = self.find_element(calendar_btn)
         self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
         self.sleep(0.3)  # ✅ Let scroll settle
@@ -102,6 +102,6 @@ class DatePicker(BasePage):
         self.logger.info("Clicked Apply button.")
 
         # Step 9 - wait for calendar to close
-        self._wait_overlay_gone()
+        # self._wait_overlay_gone()
 
         self.logger.info("Date '%s' set successfully.", date_string)

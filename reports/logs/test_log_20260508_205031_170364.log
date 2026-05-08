@@ -1,0 +1,5 @@
+2026-05-08 20:50:32 - unit_Master - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[text()='apps']]")
+2026-05-08 20:50:32 - unit_Master - INFO - ✓ Clicked MENU_BUTTON.
+2026-05-08 20:50:32 - unit_Master - INFO - Clicked app-switcher menu.
+2026-05-08 20:50:32 - unit_Master - INFO - Clicked on element: ('xpath', "//mat-card[span[text()='General Master-Executive']]")
+2026-05-08 20:50:32 - unit_Master - INFO - Switched to new browser window/tab: 401EA4C9442E784178F03C2FE35A9EF1

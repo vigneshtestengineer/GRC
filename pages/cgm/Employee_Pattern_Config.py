@@ -60,89 +60,89 @@ class EmployeePatternConfig(BasePage):
         super().__init__(driver)
         self.logger.info("EmployeePatternConfig page initialized.")
 
-    # ── CGM Executive: open via app-switcher ──────────────────────────────────
-    def open_cgm_executive(self):
-        """
-        From the portal home page, open CGM Executive in a new tab,
-        switch to it, then select the legal entity.
-        """
-        self.wait_for_element_to_be_clickable(self.MENU_BUTTON, timeout=30)
-        self.click(self.MENU_BUTTON)
-        self.logger.info("Clicked app-switcher menu.")
+    # # ── CGM Executive: open via app-switcher ──────────────────────────────────
+    # def open_cgm_executive(self):
+    #     """
+    #     From the portal home page, open CGM Executive in a new tab,
+    #     switch to it, then select the legal entity.
+    #     """
+    #     self.wait_for_element_to_be_clickable(self.MENU_BUTTON, timeout=30)
+    #     self.click(self.MENU_BUTTON)
+    #     self.logger.info("Clicked app-switcher menu.")
 
-        previous_windows = self.driver.window_handles
-        self.wait_for_element_to_be_clickable(self.GENERAL_MASTER_EXEC_CARD, timeout=10)
-        self.click(self.GENERAL_MASTER_EXEC_CARD)
-        self._switch_to_new_window(previous_windows)
+    #     previous_windows = self.driver.window_handles
+    #     self.wait_for_element_to_be_clickable(self.GENERAL_MASTER_EXEC_CARD, timeout=10)
+    #     self.click(self.GENERAL_MASTER_EXEC_CARD)
+    #     self._switch_to_new_window(previous_windows)
 
-        WebDriverWait(self.driver, 20).until(EC.url_contains(self.EXECUTIVE_URL))
-        self.logger.info("CGM Executive tab active.")
+    #     WebDriverWait(self.driver, 20).until(EC.url_contains(self.EXECUTIVE_URL))
+    #     self.logger.info("CGM Executive tab active.")
 
-        self.wait_for_element(self.SEARCH_LEGAL_ENTITY, timeout=10)
-        self.enter_text(self.SEARCH_LEGAL_ENTITY, LEGAL_ENTITY)
-        WebDriverWait(self.driver, 10).until(
-            lambda d: d.find_element(*self.SEARCH_LEGAL_ENTITY)
-                       .get_attribute("value").strip() == LEGAL_ENTITY
-        )
-        self._select_legal_entity()
+    #     self.wait_for_element(self.SEARCH_LEGAL_ENTITY, timeout=10)
+    #     self.enter_text(self.SEARCH_LEGAL_ENTITY, LEGAL_ENTITY)
+    #     WebDriverWait(self.driver, 10).until(
+    #         lambda d: d.find_element(*self.SEARCH_LEGAL_ENTITY)
+    #                    .get_attribute("value").strip() == LEGAL_ENTITY
+    #     )
+    #     self._select_legal_entity()
 
-        self.wait_for_element_to_be_clickable(self.SELECT_LEGAL_ENTITY_BUTTON, timeout=8)
-        self.scroll_to_element(self.SELECT_LEGAL_ENTITY_BUTTON)
-        self.click(self.SELECT_LEGAL_ENTITY_BUTTON)
-        self.wait_for_element_to_disappear(self.SPLASH_SCREEN, timeout=30)
-        self.logger.info("Legal entity selected — CGM Executive ready.")
+    #     self.wait_for_element_to_be_clickable(self.SELECT_LEGAL_ENTITY_BUTTON, timeout=8)
+    #     self.scroll_to_element(self.SELECT_LEGAL_ENTITY_BUTTON)
+    #     self.click(self.SELECT_LEGAL_ENTITY_BUTTON)
+    #     self.wait_for_element_to_disappear(self.SPLASH_SCREEN, timeout=30)
+    #     self.logger.info("Legal entity selected — CGM Executive ready.")
 
-    def _switch_to_new_window(self, previous_windows):
-        try:
-            WebDriverWait(self.driver, 10).until(
-                lambda d: len(d.window_handles) > len(previous_windows)
-            )
-            new = [h for h in self.driver.window_handles if h not in previous_windows]
-            if new:
-                self.driver.switch_to.window(new[-1])
-                self.logger.info("Switched to new CGM Executive window.")
-        except Exception:
-            self.logger.info("No new window opened — continuing in current window.")
+    # def _switch_to_new_window(self, previous_windows):
+    #     try:
+    #         WebDriverWait(self.driver, 10).until(
+    #             lambda d: len(d.window_handles) > len(previous_windows)
+    #         )
+    #         new = [h for h in self.driver.window_handles if h not in previous_windows]
+    #         if new:
+    #             self.driver.switch_to.window(new[-1])
+    #             self.logger.info("Switched to new CGM Executive window.")
+    #     except Exception:
+    #         self.logger.info("No new window opened — continuing in current window.")
 
-    def _select_legal_entity(self):
-        for attempt in range(1, 3):
-            self.wait_for_element(self.SELECT_LEGAL_ENTITY_ROW, timeout=8)
-            self.scroll_to_element(self.SELECT_LEGAL_ENTITY_ROW)
-            row = self.find_element(self.SELECT_LEGAL_ENTITY_ROW)
-            try:
-                row.click()
-            except Exception:
-                self.driver.execute_script("arguments[0].click();", row)
-            try:
-                WebDriverWait(self.driver, 5).until(
-                    lambda d: not d.find_element(*self.SELECT_LEGAL_ENTITY_BUTTON)
-                               .get_attribute("disabled")
-                )
-                self.logger.info("Legal entity row selected (attempt %d).", attempt)
-                return
-            except Exception:
-                self.logger.warning("Attempt %d: select button not yet enabled.", attempt)
-        raise RuntimeError("Legal entity row clicked but select button did not become enabled.")
+    # def _select_legal_entity(self):
+    #     for attempt in range(1, 3):
+    #         self.wait_for_element(self.SELECT_LEGAL_ENTITY_ROW, timeout=8)
+    #         self.scroll_to_element(self.SELECT_LEGAL_ENTITY_ROW)
+    #         row = self.find_element(self.SELECT_LEGAL_ENTITY_ROW)
+    #         try:
+    #             row.click()
+    #         except Exception:
+    #             self.driver.execute_script("arguments[0].click();", row)
+    #         try:
+    #             WebDriverWait(self.driver, 5).until(
+    #                 lambda d: not d.find_element(*self.SELECT_LEGAL_ENTITY_BUTTON)
+    #                            .get_attribute("disabled")
+    #             )
+    #             self.logger.info("Legal entity row selected (attempt %d).", attempt)
+    #             return
+    #         except Exception:
+    #             self.logger.warning("Attempt %d: select button not yet enabled.", attempt)
+    #     raise RuntimeError("Legal entity row clicked but select button did not become enabled.")
 
-    # ── Sidebar: General Master(s) → Pattern Configuration ───────────────────
-    def open_general_master_menu(self):
-        if self.is_element_visible(self.OPEN_PATTERN_CONFIG_MENU, timeout=2):
-            self.logger.info("General Master menu already expanded.")
-            return
+    # # ── Sidebar: General Master(s) → Pattern Configuration ───────────────────
+    # def open_general_master_menu(self):
+    #     if self.is_element_visible(self.OPEN_PATTERN_CONFIG_MENU, timeout=2):
+    #         self.logger.info("General Master menu already expanded.")
+    #         return
 
-        for attempt in range(1, 3):
-            try:
-                self.click(self.OPEN_GENERAL_MASTER_MENU, timeout=8)
-                self.wait_for_element_to_be_clickable(self.OPEN_PATTERN_CONFIG_MENU, timeout=8)
-                self.logger.info(
-                    "General Master menu expanded%s.",
-                    " on retry" if attempt > 1 else "",
-                )
-                return
-            except Exception as exc:
-                self.logger.debug("Attempt %d failed: %s", attempt, exc)
+    #     for attempt in range(1, 3):
+    #         try:
+    #             self.click(self.OPEN_GENERAL_MASTER_MENU, timeout=8)
+    #             self.wait_for_element_to_be_clickable(self.OPEN_PATTERN_CONFIG_MENU, timeout=8)
+    #             self.logger.info(
+    #                 "General Master menu expanded%s.",
+    #                 " on retry" if attempt > 1 else "",
+    #             )
+    #             return
+    #         except Exception as exc:
+    #             self.logger.debug("Attempt %d failed: %s", attempt, exc)
 
-        raise RuntimeError("Could not expand 'General Master(s)' menu after 2 attempts.")
+    #     raise RuntimeError("Could not expand 'General Master(s)' menu after 2 attempts.")
 
     def open_contract_labour_pattern_config(self):
         self.click(self.OPEN_PATTERN_CONFIG_MENU, timeout=8)
@@ -188,8 +188,6 @@ class EmployeePatternConfig(BasePage):
           2. General Master(s) → Pattern Configuration → Contract Labour(s)
           3. Add → select Unit & Contractor → select pattern → save
         """
-        self.open_cgm_executive()
-        self.open_general_master_menu()
         self.open_contract_labour_pattern_config()
         self.create_employee_pattern_config()
         self.logger.info("✓ Employee Pattern Configuration completed.")

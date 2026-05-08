@@ -26,7 +26,7 @@ except (FileNotFoundError, json.JSONDecodeError):
 class EmployeeComponentCreation(BasePage):
     """Page object for Employee Component Creation under General Component(s)."""
 
-    # # ── CGM Executive navigation ──────────────────────────────────────────────
+    # ── CGM Executive navigation ──────────────────────────────────────────────
     # MENU_BUTTON                = (By.XPATH, "//button[.//mat-icon[text()='apps']]")
     # GENERAL_MASTER_EXEC_CARD   = (By.XPATH, "//mat-card[span[text()='General Master-Executive']]")
     # EXECUTIVE_URL              = "http://13.203.6.58:5002/#/home/welcome"
@@ -36,9 +36,12 @@ class EmployeeComponentCreation(BasePage):
     # SELECT_LEGAL_ENTITY_BUTTON = (By.XPATH, "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
 
     # ── Sidebar navigation ────────────────────────────────────────────────────
-    OPEN_GENERAL_MASTER_MENU    = (By.XPATH, "//span[normalize-space()='General Master(s)']")
-    OPEN_GENERAL_COMPONENT_MENU = (By.XPATH, "//span[normalize-space()='General Component(s)']")
+    OPEN_GENERAL_MASTER_MENU     = (By.XPATH, "//span[normalize-space()='General Master(s)']")
+    OPEN_GENERAL_COMPONENT_MENU  = (By.XPATH, "//span[normalize-space()='General Component(s)']")
     OPEN_COMPONENT_CREATION_MENU = (By.XPATH, "//span[normalize-space()='Component Creation']")
+
+    # ── Splash screen ─────────────────────────────────────────────────────────
+    SPLASH_SCREEN = (By.TAG_NAME, "compfie-splash-screen")
 
     # ── Component Creation form ───────────────────────────────────────────────
     ADD_COMPONENT_CREATION_BUTTON  = (By.XPATH, "//button[contains(.,'Add')]")
@@ -110,34 +113,43 @@ class EmployeeComponentCreation(BasePage):
     #             self.logger.warning("Attempt %d: select button not yet enabled.", attempt)
     #     raise RuntimeError("Legal entity row clicked but select button did not become enabled.")
 
-    # ── Step 1: Expand General Master(s) ─────────────────────────────────────
-    def open_general_master_menu(self):
-        if self.is_element_visible(self.OPEN_GENERAL_COMPONENT_MENU, timeout=0.5):
-            self.logger.info("General Master menu already expanded.")
-            return
+    # # ── Step 1: Expand General Master(s) ─────────────────────────────────────
+    # def open_general_master_menu(self):
+    #     if self.is_element_visible(self.OPEN_GENERAL_COMPONENT_MENU, timeout=0.5):
+    #         self.logger.info("General Master menu already expanded.")
+    #         return
 
-        for attempt in range(1, 3):
-            try:
-                self.click(self.OPEN_GENERAL_MASTER_MENU, timeout=8)
-                self.wait_for_element_to_be_clickable(self.OPEN_GENERAL_COMPONENT_MENU, timeout=8)
-                self.logger.info(
-                    "General Master menu expanded%s.",
-                    " on retry" if attempt > 1 else "",
-                )
-                return
-            except Exception as exc:
-                self.logger.debug("Attempt %d failed: %s", attempt, exc)
+    #     for attempt in range(1, 3):
+    #         try:
+    #             self.click(self.OPEN_GENERAL_MASTER_MENU, timeout=8)
+    #             self.wait_for_element_to_be_clickable(self.OPEN_GENERAL_COMPONENT_MENU, timeout=8)
+    #             self.logger.info(
+    #                 "General Master menu expanded%s.",
+    #                 " on retry" if attempt > 1 else "",
+    #             )
+    #             return
+    #         except Exception as exc:
+    #             self.logger.debug("Attempt %d failed: %s", attempt, exc)
 
-        raise RuntimeError("Could not expand 'General Master(s)' menu after 2 attempts.")
+    #     raise RuntimeError("Could not expand 'General Master(s)' menu after 2 attempts.")
 
-    # ── Step 2: Expand General Component(s) ──────────────────────────────────
+    # ── Step 1: Expand General Component(s) ──────────────────────────────────
     def open_general_component_menu(self):
-        if self.is_element_visible(self.OPEN_COMPONENT_CREATION_MENU, timeout=0.5):
-            self.logger.info("General Component menu already expanded.")
+        if self.is_element_visible(self.OPEN_COMPONENT_CREATION_MENU, timeout=2):
+            self.logger.info("'General Component(s)' menu already expanded.")
             return
 
-        self.click(self.OPEN_GENERAL_COMPONENT_MENU, timeout=8)
-        self.wait_for_element_to_be_clickable(self.OPEN_COMPONENT_CREATION_MENU, timeout=8)
+    # Expand General Master(s) first if General Component(s) is not visible
+        if not self.is_element_visible(self.OPEN_GENERAL_COMPONENT_MENU, timeout=2):
+            self.wait_for_element_to_be_clickable(self.OPEN_GENERAL_MASTER_MENU, timeout=8)
+            self.click(self.OPEN_GENERAL_MASTER_MENU)
+            self.wait_for_element_to_be_clickable(self.OPEN_GENERAL_COMPONENT_MENU, timeout=8)
+            self.logger.info("'General Master(s)' menu expanded.")
+
+        self.wait_for_element_to_be_clickable(self.OPEN_GENERAL_COMPONENT_MENU, timeout=8)
+        self.click(self.OPEN_GENERAL_COMPONENT_MENU)
+        self.wait_for_element_to_be_clickable(self.OPEN_COMPONENT_CREATION_MENU, timeout=10)
+        self.scroll_to_element(self.OPEN_COMPONENT_CREATION_MENU)
         self.logger.info("'General Component(s)' menu expanded.")
 
     # ── Step 3: Navigate to Component Creation and save ───────────────────────
@@ -167,19 +179,6 @@ class EmployeeComponentCreation(BasePage):
         self.wait_for_element_to_disappear(self.SPLASH_SCREEN, timeout=15)
         self.logger.info("Page refreshed after save.")
 
-    # ── Public orchestration ──────────────────────────────────────────────────
-    def navigate_to_component_creation(self):
-        """
-        Full flow after login:
-          1. Open CGM Executive via app-switcher → select legal entity
-          2. Expand General Master(s) → General Component(s) → Component Creation
-          3. Add → select Unit → save
-        """
-        self.open_cgm_executive()
-        self.open_general_master_menu()
-        self.open_general_component_menu()
-        self.create_employee_component()
-        self.logger.info("✓ Employee Component Creation completed.")
 
     # ── Helper ────────────────────────────────────────────────────────────────
     def _get_unit_name(self) -> str:
