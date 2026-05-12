@@ -5,6 +5,8 @@ from utilities.json_config import get_str
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
+MODULE_NAME = "Login"
+
 @pytest.mark.smoke
 def test_valid_login(driver):
     """Test valid login"""

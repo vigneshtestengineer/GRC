@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRC Payroll – Test Report</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',Tahoma,Verdana,sans-serif;background:#f0f2f5;color:#333}
+  .header{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);color:#fff;padding:28px 40px}
+  .header h1{font-size:24px;font-weight:600;letter-spacing:.4px}
+  .header p{margin-top:6px;opacity:.65;font-size:13px}
+  .summary{display:flex;gap:18px;padding:28px 40px;flex-wrap:wrap}
+  .card{background:#fff;border-radius:10px;padding:18px 28px;min-width:140px;text-align:center;
+         box-shadow:0 2px 8px rgba(0,0,0,.08);border-top:4px solid}
+  .card.total{border-color:#4a90e2}.card.pass{border-color:#27ae60}.card.fail{border-color:#e74c3c}
+  .card.pass-pct{border-color:#1abc9c}.card.fail-pct{border-color:#e67e22}
+  .card .count{font-size:34px;font-weight:700;line-height:1}
+  .card.total .count{color:#4a90e2}.card.pass .count{color:#27ae60}.card.fail .count{color:#e74c3c}
+  .card.pass-pct .count{color:#1abc9c}.card.fail-pct .count{color:#e67e22}
+  .card .label{margin-top:7px;font-size:11px;color:#999;text-transform:uppercase;letter-spacing:1px}
+  tfoot tr{background:#f8f9fa;border-top:2px solid #eee}
+  tfoot td{padding:12px 15px;font-size:13px;font-weight:600;color:#555}
+  .tbl-wrap{margin:0 40px 40px;background:#fff;border-radius:10px;
+             box-shadow:0 2px 8px rgba(0,0,0,.08);overflow:hidden}
+  .tbl-head{padding:16px 22px;border-bottom:1px solid #eee;font-size:15px;font-weight:600}
+  table{width:100%;border-collapse:collapse}
+  thead th{background:#f8f9fa;padding:11px 15px;text-align:left;font-size:11px;font-weight:600;
+            text-transform:uppercase;letter-spacing:.8px;color:#777;border-bottom:2px solid #eee}
+  tbody tr{border-bottom:1px solid #f0f0f0;transition:background .12s}
+  tbody tr:hover{background:#fafbfc}
+  tbody tr:last-child{border-bottom:none}
+  td{padding:13px 15px;font-size:13.5px;vertical-align:middle}
+  td.num{color:#bbb;font-size:12px;width:40px}
+  td.tname{font-weight:500;color:#222}
+  .badge{display:inline-block;padding:3px 11px;border-radius:20px;
+          font-size:11.5px;font-weight:600;letter-spacing:.4px}
+  .badge.passed{background:#e8f5e9;color:#2e7d32}
+  .badge.failed{background:#fdecea;color:#c62828}
+  .ss-btn{background:#fff8e1;border:1px solid #ffc107;border-radius:6px;padding:5px 9px;
+           cursor:pointer;color:#e67e00;display:inline-flex;align-items:center;transition:all .18s}
+  .ss-btn:hover{background:#ffc107;color:#fff;border-color:#ffc107}
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);
+            z-index:999;align-items:center;justify-content:center}
+  .overlay.on{display:flex}
+  .modal{background:#fff;border-radius:12px;max-width:92vw;max-height:92vh;
+          overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .modal-hdr{padding:14px 18px;display:flex;justify-content:space-between;
+              align-items:center;border-bottom:1px solid #eee}
+  .modal-hdr h3{font-size:14px;color:#333;max-width:72vw;
+                overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .close-btn{background:none;border:none;font-size:20px;cursor:pointer;
+              color:#aaa;line-height:1;padding:0 3px}
+  .close-btn:hover{color:#333}
+  #modal-img{display:block;max-width:88vw;max-height:80vh;object-fit:contain}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>GRC Payroll &mdash; Test Execution Report</h1>
+  <p>Generated on 2026-05-12 17:23:34</p>
+</div>
+<div class="summary">
+  <div class="card total"><div class="count">1</div><div class="label">Total</div></div>
+  <div class="card pass"><div class="count">1</div><div class="label">Passed</div></div>
+  <div class="card fail"><div class="count">0</div><div class="label">Failed</div></div>
+  <div class="card pass-pct"><div class="count">100.0%</div><div class="label">Pass Rate</div></div>
+  <div class="card fail-pct"><div class="count">0.0%</div><div class="label">Fail Rate</div></div>
+</div>
+<div class="tbl-wrap">
+  <div class="tbl-head">Test Results</div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th><th>Test Name</th><th>Module</th>
+        <th>Status</th><th>Duration</th><th>Screenshot</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr><td class='num'>1</td><td class='tname'>test_esi_statutory_mapping</td><td>ESI Statutory Mapping</td><td><span class="badge passed">PASSED</span></td><td>00:31</td><td></td></tr>
+
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4" style="text-align:right;letter-spacing:.5px;text-transform:uppercase;font-size:11px;color:#777;">Total Duration</td>
+        <td>00:31</td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+<div class="overlay" id="overlay" onclick="closeOnBg(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h3 id="modal-title">Failure Screenshot</h3>
+      <button class="close-btn" onclick="closeModal()">&#x2715;</button>
+    </div>
+    <img id="modal-img" src="" alt="screenshot">
+  </div>
+</div>
+<script>
+  function openModal(src, name) {
+    document.getElementById('modal-img').src = src;
+    document.getElementById('modal-title').textContent = 'Failed: ' + name;
+    document.getElementById('overlay').classList.add('on');
+  }
+  function closeModal() {
+    document.getElementById('overlay').classList.remove('on');
+    document.getElementById('modal-img').src = '';
+  }
+  function closeOnBg(e) {
+    if (e.target === document.getElementById('overlay')) closeModal();
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
+</body>
+</html>

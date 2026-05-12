@@ -1,0 +1,12 @@
+{
+    "PF": {
+        "PF Primary settings": "Telgana Epff",
+        "Applied_From": "01/01/2025",
+        "Limit_Based" : "Full Wages"
+    },
+    "ESI" : {
+        "ESI Primary settings": "General ESI",
+        "Applied_From": "02/01/2025",
+        "Limit_Based" : "Statutory Limit"
+    }
+}

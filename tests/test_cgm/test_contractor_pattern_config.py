@@ -1,6 +1,7 @@
 import pytest
 from pages.cgm.Contractor_Pattern_Config import ContractorPatternConfig
 
+MODULE_NAME = "Contractor Pattern Config"
 
 @pytest.mark.e2e
 def test_contractor_pattern_config(driver):

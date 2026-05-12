@@ -99,77 +99,77 @@ class WeeklyHolidayMaster(BasePage):
         self.date_of_creation  = self.Unit_Details.get("Date_of_Creation", "")
 
     # ── CGM Executive: open via app-switcher ─────────────────────────────────
-    def open_cgm_executive(self):
-        self.wait_for_element_to_be_clickable(self.MENU_BUTTON, timeout=30)
-        self.click(self.MENU_BUTTON)
-        self.logger.info("Clicked app-switcher menu.")
+    # def open_cgm_executive(self):
+    #     self.wait_for_element_to_be_clickable(self.MENU_BUTTON, timeout=30)
+    #     self.click(self.MENU_BUTTON)
+    #     self.logger.info("Clicked app-switcher menu.")
 
-        # Capture existing windows BEFORE the click that opens the new one
-        previous_windows = self.driver.window_handles
-        self.wait_for_element_to_be_clickable(self.GENERAL_MASTER_EXEC_CARD, timeout=10)
-        self.click(self.GENERAL_MASTER_EXEC_CARD)
+    #     # Capture existing windows BEFORE the click that opens the new one
+    #     previous_windows = self.driver.window_handles
+    #     self.wait_for_element_to_be_clickable(self.GENERAL_MASTER_EXEC_CARD, timeout=10)
+    #     self.click(self.GENERAL_MASTER_EXEC_CARD)
 
-        # Switch to the newly opened window and wait for it to fully load
-        self._switch_to_new_window(previous_windows)
-        WebDriverWait(self.driver, 30).until(EC.url_contains(self.EXECUTIVE_URL))
-        self.logger.info("CGM Executive tab active.")
+    #     # Switch to the newly opened window and wait for it to fully load
+    #     self._switch_to_new_window(previous_windows)
+    #     WebDriverWait(self.driver, 30).until(EC.url_contains(self.EXECUTIVE_URL))
+    #     self.logger.info("CGM Executive tab active.")
 
-        self.wait_for_element(self.SEARCH_LEGAL_ENTITY, timeout=15)
-        self.enter_text(self.SEARCH_LEGAL_ENTITY, LEGAL_ENTITY)
-        WebDriverWait(self.driver, 10).until(
-            lambda d: d.find_element(*self.SEARCH_LEGAL_ENTITY)
-                       .get_attribute("value").strip() == LEGAL_ENTITY
-        )
-        self._select_legal_entity()
+    #     self.wait_for_element(self.SEARCH_LEGAL_ENTITY, timeout=15)
+    #     self.enter_text(self.SEARCH_LEGAL_ENTITY, LEGAL_ENTITY)
+    #     WebDriverWait(self.driver, 10).until(
+    #         lambda d: d.find_element(*self.SEARCH_LEGAL_ENTITY)
+    #                    .get_attribute("value").strip() == LEGAL_ENTITY
+    #     )
+    #     self._select_legal_entity()
 
-        self.wait_for_element_to_be_clickable(self.SELECT_LEGAL_ENTITY_BUTTON, timeout=8)
-        self.scroll_to_element(self.SELECT_LEGAL_ENTITY_BUTTON)
-        self.click(self.SELECT_LEGAL_ENTITY_BUTTON)
-        self.wait_for_element_to_disappear(self.SPLASH_SCREEN, timeout=30)
-        self.logger.info("Legal entity selected — CGM Executive ready.")
+    #     self.wait_for_element_to_be_clickable(self.SELECT_LEGAL_ENTITY_BUTTON, timeout=8)
+    #     self.scroll_to_element(self.SELECT_LEGAL_ENTITY_BUTTON)
+    #     self.click(self.SELECT_LEGAL_ENTITY_BUTTON)
+    #     self.wait_for_element_to_disappear(self.SPLASH_SCREEN, timeout=30)
+    #     self.logger.info("Legal entity selected — CGM Executive ready.")
 
-    def _switch_to_new_window(self, previous_windows):
-        try:
-            # Wait until a brand-new window handle appears
-            WebDriverWait(self.driver, 15).until(
-                lambda d: len(d.window_handles) > len(previous_windows)
-            )
-            new_handles = [h for h in self.driver.window_handles if h not in previous_windows]
-            if new_handles:
-                self.driver.switch_to.window(new_handles[-1])
-                self.logger.info("Switched to new CGM Executive window.")
-            else:
-                self.logger.warning("No new window found — staying in current window.")
-        except Exception as e:
-            self.logger.warning(f"Window switch failed: {e} — continuing in current window.")
+    # def _switch_to_new_window(self, previous_windows):
+    #     try:
+    #         # Wait until a brand-new window handle appears
+    #         WebDriverWait(self.driver, 15).until(
+    #             lambda d: len(d.window_handles) > len(previous_windows)
+    #         )
+    #         new_handles = [h for h in self.driver.window_handles if h not in previous_windows]
+    #         if new_handles:
+    #             self.driver.switch_to.window(new_handles[-1])
+    #             self.logger.info("Switched to new CGM Executive window.")
+    #         else:
+    #             self.logger.warning("No new window found — staying in current window.")
+    #     except Exception as e:
+    #         self.logger.warning(f"Window switch failed: {e} — continuing in current window.")
 
-    def _select_legal_entity(self):
-        for attempt in range(1, 3):
-            self.wait_for_element(self.SELECT_LEGAL_ENTITY_ROW, timeout=8)
-            self.scroll_to_element(self.SELECT_LEGAL_ENTITY_ROW)
-            row = self.find_element(self.SELECT_LEGAL_ENTITY_ROW)
-            try:
-                row.click()
-            except Exception:
-                self.driver.execute_script("arguments[0].click();", row)
-            try:
-                WebDriverWait(self.driver, 5).until(
-                    lambda d: not d.find_element(*self.SELECT_LEGAL_ENTITY_BUTTON)
-                               .get_attribute("disabled")
-                )
-                self.logger.info("Legal entity row selected (attempt %d).", attempt)
-                return
-            except Exception:
-                self.logger.warning("Attempt %d: select button not yet enabled.", attempt)
-        raise RuntimeError("Legal entity row clicked but select button did not become enabled.")
+    # def _select_legal_entity(self):
+    #     for attempt in range(1, 3):
+    #         self.wait_for_element(self.SELECT_LEGAL_ENTITY_ROW, timeout=8)
+    #         self.scroll_to_element(self.SELECT_LEGAL_ENTITY_ROW)
+    #         row = self.find_element(self.SELECT_LEGAL_ENTITY_ROW)
+    #         try:
+    #             row.click()
+    #         except Exception:
+    #             self.driver.execute_script("arguments[0].click();", row)
+    #         try:
+    #             WebDriverWait(self.driver, 5).until(
+    #                 lambda d: not d.find_element(*self.SELECT_LEGAL_ENTITY_BUTTON)
+    #                            .get_attribute("disabled")
+    #             )
+    #             self.logger.info("Legal entity row selected (attempt %d).", attempt)
+    #             return
+    #         except Exception:
+    #             self.logger.warning("Attempt %d: select button not yet enabled.", attempt)
+    #     raise RuntimeError("Legal entity row clicked but select button did not become enabled.")
 
-    # ── Step 1: Expand General Master(s) menu ────────────────────────────────
-    def general_master_menu(self):
-        self.scroll_to_element(self.OPEN_GENERAL_MASTER_MENU)
-        self.sleep(0.3)
-        parent_el = self.find_element(self.OPEN_GENERAL_MASTER_MENU)
-        self.driver.execute_script("arguments[0].click();", parent_el)
-        self.logger.info("Clicked General Master(s) menu.")
+    # # ── Step 1: Expand General Master(s) menu ────────────────────────────────
+    # def general_master_menu(self):
+    #     self.scroll_to_element(self.OPEN_GENERAL_MASTER_MENU)
+    #     self.sleep(0.3)
+    #     parent_el = self.find_element(self.OPEN_GENERAL_MASTER_MENU)
+    #     self.driver.execute_script("arguments[0].click();", parent_el)
+    #     self.logger.info("Clicked General Master(s) menu.")
 
 
     # ── Step 2: Fill and save Shift Master form ───────────────────────────────
@@ -181,30 +181,30 @@ class WeeklyHolidayMaster(BasePage):
         self.enter_text(self.DROPDOWN_SEARCH, self._get_unit_name())
         self.click(self.SELECT_DROPDOWN_DATA)
         self.click(self.CONTRACTOR_DROPDOWN)
-        self.enter_text(self.DROPDOWN_SEARCH, CONTRACTOR_NAME)
+        self.enter_text(self.DROPDOWN_SEARCH, self._get_contractor_name())
         self.click(self.SELECT_DROPDOWN_DATA)
-        self.driver.switch_to.active_element.send_keys(Keys.ESCAPE)
+        dropdown_search = self.find_element(self.DROPDOWN_SEARCH)
+        dropdown_search.send_keys(Keys.ESCAPE)
         self.click(self.SELECT_WEEKOFF_BASED)
         self.click(self.COMPONENT_DROPDOWN)
         self.click(self.SELECT_COMPONENT_DATA)
-        self.sleep(0.5)
-        DatePicker(self.driver).set_date(
-            "(//button[@aria-label='Open calendar'])[1]", self.date_of_creation
-        )
-        self.sleep(30)
         self.click(self.SELECT_COMP_OFF)
         self.enter_text(self.COMP_OFF_WITHIN, "5")
         self.click(self.CHOOSE_PERIODICITY)
         self.click(self.CHOOSE_PERIODICITY_DATA)
+        DatePicker(self.driver).set_date(
+            "(//button[@aria-label='Open calendar'])[1]", self.date_of_creation
+        )
         self.click(self.SAVE_WEEKLY_HOLIDAY_BUTTON)
         self.sleep(0.5)
         self.driver.refresh()
+        self.sleep(1)
         self.logger.info("Weekly Holiday Master form filled and submitted.")
 
     # ── Public orchestration ──────────────────────────────────────────────────
     def navigate_to_weekly_holiday_master(self):
-        self.open_cgm_executive()
-        self.general_master_menu()
+        # self.open_cgm_executive()
+        # self.general_master_menu()
         self.weekly_holiday_master()
         self.logger.info("✓ Weekly Holiday Master completed.")
 
@@ -215,3 +215,10 @@ class WeeklyHolidayMaster(BasePage):
                 return json.load(f).get("Unit_Details", {}).get("unit_name", UNIT_NAME)
         except Exception:
             return UNIT_NAME
+
+    def _get_contractor_name(self) -> str:
+        try:
+            with open(CONTRACTOR_DATA_FILE, "r", encoding="utf-8") as f:
+                return json.load(f).get("Contractor_Information", {}).get("Contractor_Name", CONTRACTOR_NAME)
+        except Exception:
+            return CONTRACTOR_NAME

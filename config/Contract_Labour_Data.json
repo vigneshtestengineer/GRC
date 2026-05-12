@@ -1,0 +1,21 @@
+{
+    "Personal_Details": {
+        "Ecode": "FMB496-1",
+        "Name": "Vivek Gupta",
+        "Gender": "Male",
+        "Date_of_Birth": "01/01/1990",
+        "Father_Name": "Robert Doe",
+        "Address": "123 Main Street, Cityville",
+        "State": "Meghalaya",
+        "City": "Meghalaya Zone",
+        "Pin_Code": "123456"
+    },
+    "Professional_Details": {
+        "Designation": "Manager",
+        "Department": "Admin",
+        "Skill": "Un Skilled",
+        "Category": "Contract Workers",
+        "Date_of_Joining": "01/04/2025",
+        "UAN_Number": "522856046426"
+    }
+}

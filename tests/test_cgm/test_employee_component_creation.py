@@ -3,6 +3,7 @@ from pages.login.grc_login_page import GRCLoginPage
 from pages.cgm.Employee_Component_Creation import EmployeeComponentCreation
 from utilities.json_config import get_str
 
+MODULE_NAME = "Employee Component Creation"
 
 @pytest.mark.e2e
 def test_employee_component_creation(driver):

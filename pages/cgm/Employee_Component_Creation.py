@@ -135,20 +135,9 @@ class EmployeeComponentCreation(BasePage):
 
     # ── Step 1: Expand General Component(s) ──────────────────────────────────
     def open_general_component_menu(self):
-        if self.is_element_visible(self.OPEN_COMPONENT_CREATION_MENU, timeout=2):
-            self.logger.info("'General Component(s)' menu already expanded.")
-            return
-
-    # Expand General Master(s) first if General Component(s) is not visible
-        if not self.is_element_visible(self.OPEN_GENERAL_COMPONENT_MENU, timeout=2):
-            self.wait_for_element_to_be_clickable(self.OPEN_GENERAL_MASTER_MENU, timeout=8)
-            self.click(self.OPEN_GENERAL_MASTER_MENU)
-            self.wait_for_element_to_be_clickable(self.OPEN_GENERAL_COMPONENT_MENU, timeout=8)
-            self.logger.info("'General Master(s)' menu expanded.")
-
         self.wait_for_element_to_be_clickable(self.OPEN_GENERAL_COMPONENT_MENU, timeout=8)
         self.click(self.OPEN_GENERAL_COMPONENT_MENU)
-        self.wait_for_element_to_be_clickable(self.OPEN_COMPONENT_CREATION_MENU, timeout=10)
+        self.sleep(0.5)
         self.scroll_to_element(self.OPEN_COMPONENT_CREATION_MENU)
         self.logger.info("'General Component(s)' menu expanded.")
 

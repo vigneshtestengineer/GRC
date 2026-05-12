@@ -21,6 +21,7 @@ from utilities.driver_factory import DriverFactory
 from utilities.screenshot import Screenshot
 from utilities.logger import Logger
 from utilities.json_config import get_path
+from utilities.Report_Generator import ReportGenerator
 
 logger = Logger.get_logger(__name__)
 CAPTCHA_DIR = get_path("paths", "captcha_image_dir", "reports/captchas")
@@ -30,6 +31,7 @@ _failed_tests: set = set()
 
 
 TEST_ORDER = [
+    "test_login",
     "unitmaster",
     "approval_settings",
     "approve_approval_settings",
@@ -40,6 +42,8 @@ TEST_ORDER = [
     "employee_component_mapping",
     "shift_master_creation",
     "weekly_holiday_master",
+    "contract_labour_master",
+    "pf_statutory_mapping",
     # add next test module keywords here in execution order
 ]
 
@@ -55,11 +59,10 @@ def pytest_collection_modifyitems(config, items):
 
     items.sort(key=sort_key)
 
+
 @pytest.fixture(scope="session")
 def driver(request):
-    """
-    WebDriver fixture - single browser session shared across all tests
-    """
+    """WebDriver fixture - single browser session shared across all tests."""
     try:
         logger.info("=" * 80)
         logger.info("Initializing WebDriver")
@@ -74,11 +77,10 @@ def driver(request):
     except Exception:
         pass
 
+
 @pytest.fixture(scope="session", autouse=True)
 def setup_teardown():
-    """
-    Session-level setup and teardown
-    """
+    """Session-level setup and teardown."""
     try:
         logger.info("=" * 80)
         logger.info("TEST SESSION STARTED - GRC Automation")
@@ -100,7 +102,11 @@ def setup_teardown():
     else:
         os.makedirs(screenshot_dir, exist_ok=True)
 
+    ReportGenerator.clear_output_dir()
+    logger.info(f"Cleared reports folder: {ReportGenerator.REPORT_DIR}")
+
     yield
+
     try:
         logger.info("=" * 80)
         logger.info("TEST SESSION COMPLETED")
@@ -108,32 +114,52 @@ def setup_teardown():
     except Exception:
         pass
 
+
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
-    """
-    Hook to capture test results and take screenshots on failure
-    """
+    """Capture test results and take screenshots on failure."""
     outcome = yield
     report = outcome.get_result()
 
     if report.when == "call":
+        screenshot_filename = None
         if report.failed:
             _failed_tests.add(item.nodeid)
-            driver = item.funcargs.get('driver')
+            driver = item.funcargs.get("driver")
             if driver:
                 test_name = item.name
                 screenshot_path = Screenshot.take_screenshot(driver, test_name)
                 logger.error(f"Test failed: {test_name}")
                 if screenshot_path:
                     logger.info(f"Screenshot saved: {screenshot_path}")
+                    screenshot_filename = os.path.basename(screenshot_path)
         elif report.passed:
             logger.info(f"Test passed: {item.name}")
+
+        ReportGenerator.add_result(
+            nodeid=item.nodeid,
+            name=item.name,
+            status="PASSED" if report.passed else "FAILED",
+            duration=getattr(report, "duration", 0),
+            screenshot=screenshot_filename,
+            module=getattr(item.module, "MODULE_NAME", None),
+        )
 
 
 def pytest_runtest_logreport(report):
     """Stop execution immediately after any test failure."""
     if report.when == "call" and report.failed:
         pytest.exit(f"Stopping execution: {report.nodeid} failed", returncode=1)
+
+
+def pytest_sessionfinish(session, exitstatus):
+    """Generate HTML test report after the session ends."""
+    report_path = ReportGenerator.generate()
+    if report_path:
+        try:
+            logger.info(f"HTML report saved: {report_path}")
+        except Exception:
+            pass
 
 
 @pytest.fixture(autouse=True)
@@ -163,18 +189,12 @@ def clear_captcha_folder():
 
 
 def pytest_configure(config):
-    """Configure pytest"""
+    """Configure pytest."""
     if hasattr(config.option, "reruns"):
         config.option.reruns = 0
     if hasattr(config.option, "reruns_delay"):
         config.option.reruns_delay = 0
 
-    config.addinivalue_line(
-        "markers", "smoke: Smoke tests"
-    )
-    config.addinivalue_line(
-        "markers", "regression: Regression tests"
-    )
-    config.addinivalue_line(
-        "markers", "e2e: End-to-end tests"
-    )
+    config.addinivalue_line("markers", "smoke: Smoke tests")
+    config.addinivalue_line("markers", "regression: Regression tests")
+    config.addinivalue_line("markers", "e2e: End-to-end tests")

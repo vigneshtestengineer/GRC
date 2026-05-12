@@ -11,7 +11,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utilities.json_config import get_str
 
-LEGAL_ENTITY = get_str("auth", "legal_entity", "")
+# LEGAL_ENTITY = get_str("auth", "legal_entity", "")
 
 UNIT_MASTER_DATA_FILE = (
     Path(__file__).resolve().parents[2] / "config" / "Unit_Master_Data.json"
@@ -46,6 +46,8 @@ class EmployeeComponentMapping(BasePage):
     # SEARCH_LEGAL_ENTITY        = (By.XPATH, "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
     # SELECT_LEGAL_ENTITY_ROW    = (By.XPATH, "//table//tbody//tr[1]//td")
     # SELECT_LEGAL_ENTITY_BUTTON = (By.XPATH, "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+
+    SPLASH_SCREEN                = (By.TAG_NAME, "compfie-splash-screen")
 
     # ── Sidebar navigation ────────────────────────────────────────────────────
     OPEN_GENERAL_MASTER_MENU    = (By.XPATH, "//span[normalize-space()='General Master(s)']")
@@ -148,7 +150,6 @@ class EmployeeComponentMapping(BasePage):
     def employee_component_mapping(self):
         self.click(self.CLICK_COMPONENT_MAPPING_MENU, timeout=8)
         self.logger.info("Clicked 'Component Mapping' menu.")
-
         self.click(self.ADD_COMPONENT_MAPPING_BUTTON, timeout=8)
         self.logger.info("Clicked 'Add' button.")
 
@@ -163,12 +164,13 @@ class EmployeeComponentMapping(BasePage):
         )
         self.logger.info("Selected unit: %s", unit_name)
 
+        contractor_name = self._get_contractor_name()
         self.click(self.CONTRACTOR_DROPDOWN, timeout=8)
         self.wait_for_element(self.DROPDOWN_SEARCH, timeout=8)
-        self.enter_text(self.DROPDOWN_SEARCH, CONTRACTOR_NAME)
+        self.enter_text(self.DROPDOWN_SEARCH, contractor_name)
         self.sleep(0.3)
         self.click(self.SELECT_CONTRACTOR, timeout=8)
-        self.logger.info("Selected contractor: %s", CONTRACTOR_NAME)
+        self.logger.info("Selected contractor: %s", contractor_name)
         self.driver.switch_to.active_element.send_keys(Keys.ESCAPE)
         self.click(self.SHOW_DETAILS, timeout=8)
         self.sleep(0.5)
@@ -177,7 +179,6 @@ class EmployeeComponentMapping(BasePage):
         self.sleep(0.5)
         self.driver.refresh()
         self.sleep(2)
-        self.wait_for_element_to_disappear(self.SPLASH_SCREEN, timeout=15)
         self.logger.info("Page refreshed after save.")
 
     # ── Public orchestration ──────────────────────────────────────────────────
@@ -198,3 +199,10 @@ class EmployeeComponentMapping(BasePage):
                 return json.load(f).get("Unit_Details", {}).get("unit_name", UNIT_NAME)
         except Exception:
             return UNIT_NAME
+
+    def _get_contractor_name(self) -> str:
+        try:
+            with open(CONTRACTOR_DATA_FILE, "r", encoding="utf-8") as f:
+                return json.load(f).get("Contractor_Information", {}).get("Contractor_Name", CONTRACTOR_NAME)
+        except Exception:
+            return CONTRACTOR_NAME

@@ -3,6 +3,7 @@ from pages.login.grc_login_page import GRCLoginPage
 from pages.cgm.Add_Contractor_Master import AddContractorMaster
 from utilities.json_config import get_str
 
+MODULE_NAME = "Add Contractor Master"
 
 @pytest.mark.e2e
 def test_add_contractor_master(driver):

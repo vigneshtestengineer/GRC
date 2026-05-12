@@ -1,6 +1,7 @@
 import pytest
 from pages.cgm.Approval_settings_creation import ApprovalSettingsCreation
 
+MODULE_NAME = "Approval Settings"
 
 @pytest.mark.e2e
 def test_create_approval_settings(driver):

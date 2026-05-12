@@ -3,6 +3,7 @@ from pages.login.grc_login_page import GRCLoginPage
 from pages.cgm.Employee_Pattern_Config import EmployeePatternConfig
 from utilities.json_config import get_str
 
+MODULE_NAME = "Employee Pattern Config"
 
 @pytest.mark.e2e
 def test_employee_pattern_config(driver):

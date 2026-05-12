@@ -2,6 +2,8 @@
 Base page class with common methods for all page objects
 """
 import string
+import json
+import re
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -47,6 +49,21 @@ CITIES = [
 STATES = [
     "Tamil Nadu", "Karnataka", "Maharashtra", "Telangana", "Delhi",
     "West Bengal", "Gujarat", "Rajasthan", "Kerala"
+]
+
+MALE_FIRST_NAMES = [
+    "Arjun", "Vikram", "Rohit", "Suresh", "Rajesh", "Anil", "Nikhil",
+    "Karan", "Deepak", "Manoj", "Sanjay", "Rahul", "Vivek", "Amit",
+    "Harish", "Naveen", "Pranav", "Tarun", "Varun", "Yash",
+]
+FEMALE_FIRST_NAMES = [
+    "Priya", "Sneha", "Anjali", "Kavya", "Divya", "Meena", "Rekha",
+    "Pooja", "Sunita", "Anita", "Lakshmi", "Nisha", "Swathi", "Deepa",
+    "Kavitha", "Radha", "Usha", "Shalini", "Geeta", "Jyoti",
+]
+LAST_NAMES = [
+    "Sharma", "Verma", "Patel", "Kumar", "Singh", "Reddy", "Nair",
+    "Rao", "Pillai", "Mehta", "Joshi", "Iyer", "Gupta", "Das", "Shah",
 ]
 
 class BasePage:
@@ -411,3 +428,80 @@ class BasePage:
                 self.generated_codes.add(esi_code)
                 self.logger.info(f"Generated contractor ESI code: {esi_code}")
                 return esi_code
+
+    @staticmethod
+    def generate_contract_labour_code(contract_labour_data_file, contractor_master_data_file) -> str:
+        """
+        Generates the next contract labour Ecode in format {Contractor_Code}-{N},
+        saves it back to Contract_Labour_Data.json, and returns it.
+        e.g. first call → 'ZOF282-1', second call → 'ZOF282-2'
+        """
+        try:
+            with open(contractor_master_data_file, "r", encoding="utf-8") as f:
+                contractor_code = json.load(f).get("Contractor_Information", {}).get("Contractor_Code", "")
+        except (FileNotFoundError, json.JSONDecodeError):
+            contractor_code = ""
+
+        try:
+            with open(contract_labour_data_file, "r", encoding="utf-8") as f:
+                labour_data = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            labour_data = {}
+
+        current_ecode = labour_data.get("Personal_Details", {}).get("Ecode", "")
+        match = re.match(rf"^{re.escape(contractor_code)}-(\d+)$", current_ecode)
+        next_seq = int(match.group(1)) + 1 if match else 1
+
+        new_code = f"{contractor_code}-{next_seq}"
+
+        labour_data.setdefault("Personal_Details", {})["Ecode"] = new_code
+        with open(contract_labour_data_file, "w", encoding="utf-8") as f:
+            json.dump(labour_data, f, indent=4)
+
+        return new_code
+
+    @staticmethod
+    def generate_uan_number(contract_labour_data_file) -> str:
+        """
+        Generates a random 12-digit UAN number, saves it to
+        Contract_Labour_Data.json under Professional_Details.UAN_Number, and returns it.
+        e.g. '482910374651'
+        """
+        uan = str(random.randint(1, 9)) + ''.join(random.choices(string.digits, k=11))
+
+        try:
+            with open(contract_labour_data_file, "r", encoding="utf-8") as f:
+                labour_data = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            labour_data = {}
+
+        labour_data.setdefault("Professional_Details", {})["UAN_Number"] = uan
+        with open(contract_labour_data_file, "w", encoding="utf-8") as f:
+            json.dump(labour_data, f, indent=4)
+
+        return uan
+
+    @staticmethod
+    def generate_labour_name(contract_labour_data_file) -> tuple:
+        """
+        Randomly picks a gender, generates a matching full name, saves both
+        Name and Gender to Contract_Labour_Data.json, and returns (name, gender).
+        e.g. ('Priya Sharma', 'Female') or ('Arjun Patel', 'Male')
+        """
+        gender = random.choice(["Male", "Female"])
+        first_names = MALE_FIRST_NAMES if gender == "Male" else FEMALE_FIRST_NAMES
+        name = f"{random.choice(first_names)} {random.choice(LAST_NAMES)}"
+
+        try:
+            with open(contract_labour_data_file, "r", encoding="utf-8") as f:
+                labour_data = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            labour_data = {}
+
+        personal = labour_data.setdefault("Personal_Details", {})
+        personal["Name"]   = name
+        personal["Gender"] = gender
+        with open(contract_labour_data_file, "w", encoding="utf-8") as f:
+            json.dump(labour_data, f, indent=4)
+
+        return name, gender

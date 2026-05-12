@@ -1,6 +1,7 @@
 import pytest
 from pages.cgm.Approve_Approval_settings import Approve_Approval_Settings
 
+MODULE_NAME = "Approve Approval Settings"
 
 @pytest.mark.e2e
 def test_approve_approval_settings():

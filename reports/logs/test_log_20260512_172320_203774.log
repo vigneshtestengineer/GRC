@@ -1,0 +1,13 @@
+2026-05-12 17:23:20 - DatePicker - INFO - Element found: ('xpath', "(//button[@aria-label='Open calendar'])[1]")
+2026-05-12 17:23:21 - DatePicker - INFO - Clicked calendar icon.
+2026-05-12 17:23:21 - DatePicker - INFO - Calendar opened.
+2026-05-12 17:23:21 - DatePicker - INFO - Clicked on element: ('xpath', "//button[@aria-label='Choose month and year']")
+2026-05-12 17:23:21 - DatePicker - INFO - Clicked on element: ('xpath', "//button[@aria-label='2025']")
+2026-05-12 17:23:21 - DatePicker - INFO - Selected year: 2025
+2026-05-12 17:23:21 - DatePicker - INFO - Clicked on element: ('xpath', "//button[@aria-label='February 2025']")
+2026-05-12 17:23:21 - DatePicker - INFO - Selected month: February
+2026-05-12 17:23:21 - DatePicker - INFO - Clicked on element: ('xpath', "//button[@aria-label='February 1, 2025']")
+2026-05-12 17:23:21 - DatePicker - INFO - Selected day: 1
+2026-05-12 17:23:22 - DatePicker - INFO - Clicked on element: ('xpath', "//button[.//span[normalize-space()='Apply']]")
+2026-05-12 17:23:22 - DatePicker - INFO - Clicked Apply button.
+2026-05-12 17:23:22 - DatePicker - INFO - Date '02/01/2025' set successfully.

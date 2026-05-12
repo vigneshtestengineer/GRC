@@ -227,7 +227,6 @@ class ShiftMasterCreation(BasePage):
         self.sleep(0.5)
         self.driver.refresh()
         self.sleep(2)
-        self.wait_for_element_to_disappear(self.SPLASH_SCREEN, timeout=15)
         self.logger.info("Page refreshed after save.")
 
     # ── Public orchestration ──────────────────────────────────────────────────
