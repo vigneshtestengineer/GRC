@@ -8,5 +8,23 @@
         "ESI Primary settings": "General ESI",
         "Applied_From": "02/01/2025",
         "Limit_Based" : "Statutory Limit"
+    },
+    "PTAX" : {
+        "PTAX Primary settings": "Ptax",
+        "Applied_From": "03/01/2025"
+    },
+    "Minimum_Wage" : {
+        "Minimum Wage Primary settings": "DADARA MW",
+        "Applied_From": "04/01/2025"
+    },
+    "Holiday_Rules" : {
+        "Holiday_Type" : "Festival Holiday",
+        "Holiday Rules Primary settings": "TN NH & FH",
+        "Applied_From": "05/01/2025"
+    },
+    "Holiday_Mapping" : {
+        "Holiday Year": "2026",
+        "Holiday Type": "Festival Holiday",
+        "Holiday Mapping Primary settings": "TNFH 2026"
     }
 }

@@ -1,0 +1,43 @@
+2026-05-13 16:48:54 - HolidayMapping - INFO - === Add Holiday Mapping flow started ===
+2026-05-13 16:48:55 - HolidayMapping - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[text()='apps']]")
+2026-05-13 16:48:55 - HolidayMapping - INFO - Clicked app-switcher menu.
+2026-05-13 16:48:56 - HolidayMapping - INFO - Clicked on element: ('xpath', "//mat-card[span[text()='General Master-Executive']]")
+2026-05-13 16:48:56 - HolidayMapping - INFO - Switched to new CGM Executive window.
+2026-05-13 16:48:56 - HolidayMapping - INFO - CGM Executive tab active.
+2026-05-13 16:48:57 - HolidayMapping - INFO - Element found: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-05-13 16:48:57 - HolidayMapping - INFO - Entered text 'Microsoft Focused' in element: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-05-13 16:48:57 - HolidayMapping - INFO - Element found: ('xpath', '//table//tbody//tr[1]//td')
+2026-05-13 16:48:58 - HolidayMapping - INFO - Element found: ('xpath', '//table//tbody//tr[1]//td')
+2026-05-13 16:48:58 - HolidayMapping - INFO - Legal entity row selected (attempt 1).
+2026-05-13 16:48:58 - HolidayMapping - INFO - Element found: ('xpath', "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-05-13 16:48:58 - HolidayMapping - INFO - Clicked on element: ('xpath', "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-05-13 16:48:58 - HolidayMapping - INFO - Legal entity selected and confirmed.
+2026-05-13 16:48:59 - HolidayMapping - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Statutory Master(s)']")
+2026-05-13 16:48:59 - HolidayMapping - INFO - Clicked on element: ('xpath', "//a[.//span[normalize-space()='Statutory Mapping']]")
+2026-05-13 16:49:00 - HolidayMapping - INFO - Navigated to Statutory Mapping page.
+2026-05-13 16:49:01 - HolidayMapping - INFO - Clicked on element: ('xpath', "//button[.//span[contains(@class,'mat-button-wrapper') and contains(normalize-space(),'Add')]]")
+2026-05-13 16:49:02 - HolidayMapping - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Choose State']")
+2026-05-13 16:49:03 - HolidayMapping - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-13 16:49:03 - HolidayMapping - INFO - Entered text 'Tamil Nadu' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-13 16:49:04 - HolidayMapping - INFO - Clicked on element: ('xpath', "(//mat-option//span[@class='mat-option-text'])[2]")
+2026-05-13 16:49:05 - HolidayMapping - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Choose Unit']")
+2026-05-13 16:49:06 - HolidayMapping - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-13 16:49:06 - HolidayMapping - INFO - Entered text 'Vega Systems 408' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-13 16:49:07 - HolidayMapping - INFO - Clicked on element: ('xpath', "(//mat-option[@role='option'])[2]")
+2026-05-13 16:49:08 - HolidayMapping - INFO - Clicked on element: ('xpath', '(//mat-expansion-panel-header)[12]')
+2026-05-13 16:49:09 - HolidayMapping - INFO - Selected state 'Tamil Nadu' and unit 'Vega Systems 408'.
+2026-05-13 16:49:10 - HolidayMapping - INFO - Clicked on element: ('xpath', "(//input[@role='switch'])[12]")
+2026-05-13 16:49:10 - HolidayMapping - INFO - Clicked on element: ('xpath', "(//div[contains(@class,'mat-select-value')])[25]")
+2026-05-13 16:49:10 - HolidayMapping - INFO - Holiday Year: 2026
+2026-05-13 16:49:10 - HolidayMapping - INFO - Holiday Type: Festival Holiday
+2026-05-13 16:49:10 - HolidayMapping - INFO - Element found: ('xpath', "//mat-option//span[normalize-space()='2026']")
+2026-05-13 16:49:11 - HolidayMapping - INFO - Holiday year '2026' selected.
+2026-05-13 16:49:11 - HolidayMapping - INFO - Clicked on element: ('xpath', "(//div[contains(@class,'mat-select-value')])[26]")
+2026-05-13 16:49:12 - HolidayMapping - INFO - Clicked on element: ('xpath', "//span[contains(text(),'Festival Holiday')]")
+2026-05-13 16:49:12 - HolidayMapping - INFO - Clicked on element: ('xpath', "(//mat-select//div[contains(@class,'mat-select-trigger')])[27]")
+2026-05-13 16:49:12 - HolidayMapping - INFO - Element found: ('xpath', "//span[contains(text(),'TNFH 2026')]")
+2026-05-13 16:49:13 - HolidayMapping - INFO - Clicked on element: ('xpath', "//span[contains(text(),'TNFH 2026')]")
+2026-05-13 16:49:14 - HolidayMapping - INFO - Selected all 3 holiday checkboxes.
+2026-05-13 16:49:14 - HolidayMapping - INFO - Clicked on element: ('xpath', "//mat-icon[text()='fast_forward']")
+2026-05-13 16:49:15 - HolidayMapping - INFO - Clicked on element: ('xpath', "//button[.//span[normalize-space()='Submit as save']]")
+2026-05-13 16:49:25 - HolidayMapping - INFO - === Add Holiday Mapping flow completed ===
