@@ -429,6 +429,53 @@ class BasePage:
                 self.logger.info(f"Generated contractor ESI code: {esi_code}")
                 return esi_code
 
+    def generate_work_order_number(self) -> str:
+        """
+        Generates a random 3-digit work order number.
+        Returns:
+            str: e.g. '123'
+        """
+        while True:
+            work_order_number = f"{random.randint(100, 999)}"
+            if work_order_number not in self.generated_codes:
+                self.generated_codes.add(work_order_number)
+                self.logger.info(f"Generated work order number: {work_order_number}")
+                return work_order_number
+
+    def save_json_value(self, json_file_path, section, key, value):
+        """
+        Saves a value to a JSON file under the specified section and key.
+        Args:
+            json_file_path (str | Path): Path to the JSON file.
+            section (str): Top-level section name.
+            key (str): Field key.
+            value: Value to save.
+        """
+        json_path = str(json_file_path)
+        try:
+            with open(json_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            data = {}
+
+        if not isinstance(data, dict):
+            data = {}
+
+        section_data = data.setdefault(section, {})
+        if not isinstance(section_data, dict):
+            section_data = {}
+            data[section] = section_data
+
+        section_data[key] = value
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4)
+            f.write("\n")
+
+        self.logger.info(
+            "Saved JSON value '%s'='%s' to section '%s' in %s",
+            key, value, section, json_path,
+        )
+
     @staticmethod
     def generate_contract_labour_code(contract_labour_data_file, contractor_master_data_file) -> str:
         """

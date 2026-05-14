@@ -1,0 +1,35 @@
+2026-05-14 16:55:37 - ShiftMasterCreation - INFO - ShiftMasterCreation page initialized.
+2026-05-14 16:55:37 - ShiftMasterCreation - INFO - Element found: ('xpath', "//span[normalize-space()='Shift Master']")
+2026-05-14 16:55:38 - ShiftMasterCreation - INFO - Element found: ('xpath', "//span[normalize-space()='Shift Master']")
+2026-05-14 16:55:38 - ShiftMasterCreation - INFO - Clicked 'Shift Master' menu item.
+2026-05-14 16:55:40 - ShiftMasterCreation - INFO - Clicked on element: ('xpath', "//button[contains(.,'Add')]")
+2026-05-14 16:55:40 - ShiftMasterCreation - INFO - Clicked 'Add' button.
+2026-05-14 16:55:41 - ShiftMasterCreation - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Choose Unit']")
+2026-05-14 16:55:41 - ShiftMasterCreation - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-14 16:55:41 - ShiftMasterCreation - INFO - Entered text 'Zeta Manufacturing 352' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-14 16:55:41 - ShiftMasterCreation - INFO - Clicked on element: ('xpath', "//mat-option//span[contains(text(),'Zeta Manufacturing 352')]")
+2026-05-14 16:55:41 - ShiftMasterCreation - INFO - Selected unit: Zeta Manufacturing 352
+2026-05-14 16:55:43 - ShiftMasterCreation - INFO - Clicked on element: ('xpath', '//button[@mat-mini-fab]')
+2026-05-14 16:55:44 - ShiftMasterCreation - INFO - Element found: ('xpath', "//input[@id='mat-input-2']")
+2026-05-14 16:55:44 - ShiftMasterCreation - INFO - Entered text 'Morning Shift' in element: ('xpath', "//input[@id='mat-input-2']")
+2026-05-14 16:55:46 - ShiftMasterCreation - INFO - Element found: ('xpath', "//input[@id='mat-input-4']")
+2026-05-14 16:55:46 - ShiftMasterCreation - INFO - Entered text '09:00' in element: ('xpath', "//input[@id='mat-input-4']")
+2026-05-14 16:55:46 - ShiftMasterCreation - INFO - Element found: ('xpath', "//input[@id='mat-input-5']")
+2026-05-14 16:55:46 - ShiftMasterCreation - INFO - Entered text '18:00' in element: ('xpath', "//input[@id='mat-input-5']")
+2026-05-14 16:55:46 - ShiftMasterCreation - INFO - Element found: ('xpath', "//input[@id='mat-input-6']")
+2026-05-14 16:55:47 - ShiftMasterCreation - INFO - Entered text '13:00' in element: ('xpath', "//input[@id='mat-input-6']")
+2026-05-14 16:55:47 - ShiftMasterCreation - INFO - Element found: ('xpath', "//input[@id='mat-input-7']")
+2026-05-14 16:55:47 - ShiftMasterCreation - INFO - Entered text '14:00' in element: ('xpath', "//input[@id='mat-input-7']")
+2026-05-14 16:55:47 - ShiftMasterCreation - INFO - Element found: ('xpath', "//input[@id='mat-input-10']")
+2026-05-14 16:55:47 - ShiftMasterCreation - INFO - Entered text '08:30' in element: ('xpath', "//input[@id='mat-input-10']")
+2026-05-14 16:55:47 - ShiftMasterCreation - INFO - Element found: ('xpath', "//input[@id='mat-input-11']")
+2026-05-14 16:55:48 - ShiftMasterCreation - INFO - Entered text '18:30' in element: ('xpath', "//input[@id='mat-input-11']")
+2026-05-14 16:55:48 - ShiftMasterCreation - INFO - Element found: ('xpath', "//span[contains(@class,'gt-xs')]//input")
+2026-05-14 16:55:48 - ShiftMasterCreation - INFO - Entered text '#FF5733' in element: ('xpath', "//span[contains(@class,'gt-xs')]//input")
+2026-05-14 16:55:48 - ShiftMasterCreation - INFO - Element found: ('xpath', "//textarea[@id='mat-input-16']")
+2026-05-14 16:55:48 - ShiftMasterCreation - INFO - Entered text 'This is the morning shift for regular employees.' in element: ('xpath', "//textarea[@id='mat-input-16']")
+2026-05-14 16:55:48 - ShiftMasterCreation - INFO - Clicked on element: ('xpath', "//span[contains(normalize-space(),'Save & Close')]")
+2026-05-14 16:55:49 - ShiftMasterCreation - INFO - Clicked on element: ('xpath', "(//button[.//span[contains(.,'Submit as save')]])[1]")
+2026-05-14 16:55:49 - ShiftMasterCreation - INFO - ✓ Shift Master saved.
+2026-05-14 16:55:52 - ShiftMasterCreation - INFO - Page refreshed after save.
+2026-05-14 16:55:52 - ShiftMasterCreation - INFO - ✓ Shift Master Creation completed.

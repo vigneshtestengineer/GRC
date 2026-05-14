@@ -1,14 +1,14 @@
 {
     "Basic Information": {
         "Category": "Labour",
-        "Work Order Number": "WO-00001",
+        "Work Order Number": "780",
         "Work Order strength": "500",
         "Work Order Value": "123",
         "Work Order Type": "Permanent",
-        "Description": "This is a sample work order for testing purposes.",
+        "Description": "Automation",
         "Effective FROM": "01/01/2025"
     },
-    "STATUTORY INFORMATION" : {
+    "STATUTORY INFORMATION": {
         "Wage Type": "Monthly Wage",
         "Wage Based on": "Skill",
         "Wage Distribution based on": "Skill"

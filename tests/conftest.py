@@ -37,6 +37,7 @@ TEST_ORDER = [
     "approve_approval_settings",
     "contractor_pattern_config",
     "add_contractor_master",
+    "work_order_master",
     "employee_pattern_config",
     "employee_component_creation",
     "employee_component_mapping",
@@ -44,6 +45,11 @@ TEST_ORDER = [
     "weekly_holiday_master",
     "contract_labour_master",
     "pf_statutory_mapping",
+    "esi_statutory_mapping",
+    "ptax_statutory_mapping",
+    "minimum_wage_statutory_mapping",
+    "holiday_rules_statutory_mapping",
+    "holiday_mapping"
     # add next test module keywords here in execution order
 ]
 

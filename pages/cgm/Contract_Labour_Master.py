@@ -12,7 +12,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pages.base.date_picker import DatePicker
 from utilities.json_config import get_str
 
-LEGAL_ENTITY = get_str("auth", "legal_entity", "")
+# LEGAL_ENTITY = get_str("auth", "legal_entity", "")
 
 CONTRACT_LABOUR_DATA_FILE = (
     Path(__file__).resolve().parents[2] / "config" / "Contract_Labour_Data.json"
@@ -36,15 +36,15 @@ def _load_json(path):
 class ContractLabourMaster(BasePage):
 
     # ── CGM Navigation ────────────────────────────────────────────────────────
-    MENU_BUTTON                = (By.XPATH, "//button[.//mat-icon[text()='apps']]")
-    GENERAL_MASTER_EXEC_CARD   = (By.XPATH, "//mat-card[span[text()='General Master-Executive']]")
-    EXECUTIVE_URL              = "http://13.203.6.58:5002/#/home/welcome"
-    SEARCH_LEGAL_ENTITY        = (By.XPATH, "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
-    SELECT_LEGAL_ENTITY_ROW    = (By.XPATH, "//table//tbody//tr[1]//td")
-    SELECT_LEGAL_ENTITY_BUTTON = (By.XPATH, "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+    # MENU_BUTTON                = (By.XPATH, "//button[.//mat-icon[text()='apps']]")
+    # GENERAL_MASTER_EXEC_CARD   = (By.XPATH, "//mat-card[span[text()='General Master-Executive']]")
+    # EXECUTIVE_URL              = "http://13.203.6.58:5002/#/home/welcome"
+    # SEARCH_LEGAL_ENTITY        = (By.XPATH, "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+    # SELECT_LEGAL_ENTITY_ROW    = (By.XPATH, "//table//tbody//tr[1]//td")
+    # SELECT_LEGAL_ENTITY_BUTTON = (By.XPATH, "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
 
     # ── Sidebar ───────────────────────────────────────────────────────────────
-    OPEN_GENERAL_MASTER_MENU     = (By.XPATH, "//span[normalize-space()='General Master(s)']")
+    # OPEN_GENERAL_MASTER_MENU     = (By.XPATH, "//span[normalize-space()='General Master(s)']")
     CLICK_CONTRACTOR_LABOUR_MENU = (By.XPATH, "//a[@href='#/general-master/contract-labour-master']")
 
     # ── Contractor Master form ────────────────────────────────────────────────
@@ -203,18 +203,24 @@ class ContractLabourMaster(BasePage):
             "(//button[@aria-label='Open calendar'])[1]", self._date_of_birth
         )
         self.click(self.CLICK_STATE_DROPDOWN)
-        self.click((By.XPATH, f"//mat-option//span[contains(text(),'{self._state}')]"))
+        self.enter_text(self.DROPDOWN_SEARCH, self._state)
+        self.click(self.SELECT_DROPDOWN_SEARCHED_DATA)
         self.click(self.CLICK_CITY_DROPDOWN)
-        self.click((By.XPATH, f"//mat-option//span[contains(text(),'{self._city}')]"))
+        self.enter_text(self.DROPDOWN_SEARCH, self._city)
+        self.click(self.SELECT_DROPDOWN_SEARCHED_DATA)
         self.enter_text(self.ENTER_PINCODE, self._pincode)
         self.click(self.DESIGNATION_DROPDOWN)
-        self.click((By.XPATH, f"//mat-option//span[contains(text(),'{self._designation}')]"))
+        self.enter_text(self.DROPDOWN_SEARCH, self._designation)
+        self.click(self.SELECT_DROPDOWN_SEARCHED_DATA)
         self.click(self.DEPARTMENT_DROPDOWN)
-        self.click((By.XPATH, f"//mat-option//span[contains(text(),'{self._department}')]"))
+        self.enter_text(self.DROPDOWN_SEARCH, self._department)
+        self.click(self.SELECT_DROPDOWN_SEARCHED_DATA)
         self.click(self.SKILL_DROPDOWN)
-        self.click((By.XPATH, f"//mat-option//span[contains(text(),'{self._skill}')]"))
+        self.enter_text(self.DROPDOWN_SEARCH, self._skill)
+        self.click(self.SELECT_DROPDOWN_SEARCHED_DATA)
         self.click(self.CATEGORY_DROPDOWN)
-        self.click((By.XPATH, f"//mat-option//span[contains(text(),'{self._category}')]"))
+        self.enter_text(self.DROPDOWN_SEARCH, self._category)
+        self.click(self.SELECT_DROPDOWN_SEARCHED_DATA)
         DatePicker(self.driver).set_date(
             "(//button[@aria-label='Open calendar'])[2]", self._date_of_joining
         )

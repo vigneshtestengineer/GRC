@@ -12,7 +12,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pages.base.date_picker import DatePicker
 from utilities.json_config import get_str
 
-LEGAL_ENTITY = get_str("auth", "legal_entity", "")
+# LEGAL_ENTITY = get_str("auth", "legal_entity", "")
 
 CONTRACT_LABOUR_DATA_FILE = (
     Path(__file__).resolve().parents[3] / "config" / "Contract_Labour_Data.json"
@@ -38,17 +38,17 @@ def _load_json(path):
 
 class ESIStatutoryMapping(BasePage):
 
-    # ── CGM Navigation ────────────────────────────────────────────────────────
-    MENU_BUTTON                = (By.XPATH, "//button[.//mat-icon[text()='apps']]")
-    GENERAL_MASTER_EXEC_CARD   = (By.XPATH, "//mat-card[span[text()='General Master-Executive']]")
-    EXECUTIVE_URL              = "http://13.203.6.58:5002/#/home/welcome"
-    SEARCH_LEGAL_ENTITY        = (By.XPATH, "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
-    SELECT_LEGAL_ENTITY_ROW    = (By.XPATH, "//table//tbody//tr[1]//td")
-    SELECT_LEGAL_ENTITY_BUTTON = (By.XPATH, "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+    # # ── CGM Navigation ────────────────────────────────────────────────────────
+    # MENU_BUTTON                = (By.XPATH, "//button[.//mat-icon[text()='apps']]")
+    # GENERAL_MASTER_EXEC_CARD   = (By.XPATH, "//mat-card[span[text()='General Master-Executive']]")
+    # EXECUTIVE_URL              = "http://13.203.6.58:5002/#/home/welcome"
+    # SEARCH_LEGAL_ENTITY        = (By.XPATH, "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+    # SELECT_LEGAL_ENTITY_ROW    = (By.XPATH, "//table//tbody//tr[1]//td")
+    # SELECT_LEGAL_ENTITY_BUTTON = (By.XPATH, "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
 
-    # ── Sidebar ───────────────────────────────────────────────────────────────
-    OPEN_STATUTORY_MAPPING     = (By.XPATH, "//span[normalize-space()='Statutory Master(s)']")
-    CLICK_STATUTORY_MAPPING_MENU = (By.XPATH, "//a[.//span[normalize-space()='Statutory Mapping']]")
+    # # ── Sidebar ───────────────────────────────────────────────────────────────
+    # OPEN_STATUTORY_MAPPING     = (By.XPATH, "//span[normalize-space()='Statutory Master(s)']")
+    # CLICK_STATUTORY_MAPPING_MENU = (By.XPATH, "//a[.//span[normalize-space()='Statutory Mapping']]")
 
     # ── ESI STATUTORY MAPPING ────────────────────────────────────────────────
     SPLASH_SCREEN_OVERLAY      = (By.TAG_NAME, "compfie-splash-screen")
@@ -94,72 +94,72 @@ class ESIStatutoryMapping(BasePage):
 
 
     # ── Step 1: Open CGM Executive ────────────────────────────────────────────
-    def open_cgm_executive(self):
-        self.wait_for_element_to_be_clickable(self.MENU_BUTTON, timeout=30)
-        self.click(self.MENU_BUTTON)
-        self.logger.info("Clicked app-switcher menu.")
+    # def open_cgm_executive(self):
+    #     self.wait_for_element_to_be_clickable(self.MENU_BUTTON, timeout=30)
+    #     self.click(self.MENU_BUTTON)
+    #     self.logger.info("Clicked app-switcher menu.")
 
-        previous_windows = self.driver.window_handles
-        self.wait_for_element_to_be_clickable(self.GENERAL_MASTER_EXEC_CARD, timeout=8)
-        self.click(self.GENERAL_MASTER_EXEC_CARD)
-        self._switch_to_new_window(previous_windows)
+    #     previous_windows = self.driver.window_handles
+    #     self.wait_for_element_to_be_clickable(self.GENERAL_MASTER_EXEC_CARD, timeout=8)
+    #     self.click(self.GENERAL_MASTER_EXEC_CARD)
+    #     self._switch_to_new_window(previous_windows)
 
-        WebDriverWait(self.driver, 20).until(EC.url_contains(self.EXECUTIVE_URL))
-        self.logger.info("CGM Executive tab active.")
+    #     WebDriverWait(self.driver, 20).until(EC.url_contains(self.EXECUTIVE_URL))
+    #     self.logger.info("CGM Executive tab active.")
 
-        self.wait_for_element(self.SEARCH_LEGAL_ENTITY, timeout=10)
-        self.enter_text(self.SEARCH_LEGAL_ENTITY, LEGAL_ENTITY)
-        WebDriverWait(self.driver, 10).until(
-            lambda d: d.find_element(*self.SEARCH_LEGAL_ENTITY)
-                       .get_attribute("value").strip() == LEGAL_ENTITY
-        )
-        self._select_legal_entity()
+    #     self.wait_for_element(self.SEARCH_LEGAL_ENTITY, timeout=10)
+    #     self.enter_text(self.SEARCH_LEGAL_ENTITY, LEGAL_ENTITY)
+    #     WebDriverWait(self.driver, 10).until(
+    #         lambda d: d.find_element(*self.SEARCH_LEGAL_ENTITY)
+    #                    .get_attribute("value").strip() == LEGAL_ENTITY
+    #     )
+    #     self._select_legal_entity()
 
-        self.wait_for_element_to_be_clickable(self.SELECT_LEGAL_ENTITY_BUTTON, timeout=8)
-        self.scroll_to_element(self.SELECT_LEGAL_ENTITY_BUTTON)
-        self.click(self.SELECT_LEGAL_ENTITY_BUTTON)
-        self.logger.info("Legal entity selected and confirmed.")
+    #     self.wait_for_element_to_be_clickable(self.SELECT_LEGAL_ENTITY_BUTTON, timeout=8)
+    #     self.scroll_to_element(self.SELECT_LEGAL_ENTITY_BUTTON)
+    #     self.click(self.SELECT_LEGAL_ENTITY_BUTTON)
+    #     self.logger.info("Legal entity selected and confirmed.")
 
-    def _switch_to_new_window(self, previous_windows):
-        try:
-            WebDriverWait(self.driver, 10).until(
-                lambda d: len(d.window_handles) > len(previous_windows)
-            )
-            new = [h for h in self.driver.window_handles if h not in previous_windows]
-            if new:
-                self.driver.switch_to.window(new[-1])
-                self.logger.info("Switched to new CGM Executive window.")
-        except Exception:
-            self.logger.info("No new window opened — continuing in current window.")
+    # def _switch_to_new_window(self, previous_windows):
+    #     try:
+    #         WebDriverWait(self.driver, 10).until(
+    #             lambda d: len(d.window_handles) > len(previous_windows)
+    #         )
+    #         new = [h for h in self.driver.window_handles if h not in previous_windows]
+    #         if new:
+    #             self.driver.switch_to.window(new[-1])
+    #             self.logger.info("Switched to new CGM Executive window.")
+    #     except Exception:
+    #         self.logger.info("No new window opened — continuing in current window.")
 
-    def _select_legal_entity(self):
-        for attempt in range(1, 3):
-            self.wait_for_element(self.SELECT_LEGAL_ENTITY_ROW, timeout=8)
-            self.scroll_to_element(self.SELECT_LEGAL_ENTITY_ROW)
-            row = self.find_element(self.SELECT_LEGAL_ENTITY_ROW)
-            try:
-                row.click()
-            except Exception:
-                self.driver.execute_script("arguments[0].click();", row)
-            try:
-                WebDriverWait(self.driver, 5).until(
-                    lambda d: not d.find_element(*self.SELECT_LEGAL_ENTITY_BUTTON).get_attribute("disabled")
-                )
-                self.logger.info("Legal entity row selected (attempt %d).", attempt)
-                return
-            except Exception:
-                self.logger.warning("Legal entity click attempt %d did not enable button.", attempt)
-        raise RuntimeError("Legal entity row was clicked but the select button did not become enabled.")
+    # def _select_legal_entity(self):
+    #     for attempt in range(1, 3):
+    #         self.wait_for_element(self.SELECT_LEGAL_ENTITY_ROW, timeout=8)
+    #         self.scroll_to_element(self.SELECT_LEGAL_ENTITY_ROW)
+    #         row = self.find_element(self.SELECT_LEGAL_ENTITY_ROW)
+    #         try:
+    #             row.click()
+    #         except Exception:
+    #             self.driver.execute_script("arguments[0].click();", row)
+    #         try:
+    #             WebDriverWait(self.driver, 5).until(
+    #                 lambda d: not d.find_element(*self.SELECT_LEGAL_ENTITY_BUTTON).get_attribute("disabled")
+    #             )
+    #             self.logger.info("Legal entity row selected (attempt %d).", attempt)
+    #             return
+    #         except Exception:
+    #             self.logger.warning("Legal entity click attempt %d did not enable button.", attempt)
+    #     raise RuntimeError("Legal entity row was clicked but the select button did not become enabled.")
 
     # ── Step 1: Navigate to Statutory Mapping ─────────────────────────────────
 
-    def navigate_to_statutory_mapping(self):
-        self.wait_for_element(self.OPEN_STATUTORY_MAPPING, timeout=15)
-        self.click(self.OPEN_STATUTORY_MAPPING)
-        self.wait_for_element(self.CLICK_STATUTORY_MAPPING_MENU, timeout=10)
-        self.click(self.CLICK_STATUTORY_MAPPING_MENU)
-        self.wait_for_element(self.ADD_STATUTORY_MAPPING_BTN, timeout=15)
-        self.logger.info("Navigated to Statutory Mapping page.")
+    # def navigate_to_statutory_mapping(self):
+    #     self.wait_for_element(self.OPEN_STATUTORY_MAPPING, timeout=15)
+    #     self.click(self.OPEN_STATUTORY_MAPPING)
+    #     self.wait_for_element(self.CLICK_STATUTORY_MAPPING_MENU, timeout=10)
+    #     self.click(self.CLICK_STATUTORY_MAPPING_MENU)
+    #     self.wait_for_element(self.ADD_STATUTORY_MAPPING_BTN, timeout=15)
+    #     self.logger.info("Navigated to Statutory Mapping page.")
 
     # ── Step 3: MAPPING THE STATUTORY SETTINGS ───────────────────────────────────────────────────
     def _add_esi_statutory_mapping(self):
@@ -197,8 +197,8 @@ class ESIStatutoryMapping(BasePage):
     # ── Public orchestration ──────────────────────────────────────────────────
     def add_ESI_statutory_mapping(self):
         self.logger.info("=== Add ESI Statutory Mapping flow started ===")
-        self.open_cgm_executive()
-        self.navigate_to_statutory_mapping()
+        # self.open_cgm_executive()
+        # self.navigate_to_statutory_mapping()
         self._add_esi_statutory_mapping()
 
         self.logger.info("=== Add ESI Statutory Mapping flow completed ===")

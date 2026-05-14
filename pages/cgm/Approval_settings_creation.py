@@ -1,17 +1,24 @@
 from pages.base.base_page import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import json
 import sys
 import os
 from pathlib import Path
+from utilities.json_config import get_str
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# LEGAL_ENTITY = get_str("auth", "legal_entity", "")
 
 # Load Unit Master Data
 UNIT_MASTER_DATA_FILE = (
     Path(__file__).resolve().parents[2] / "config" / "Unit_Master_Data.json"
 )
+
+
 
 try:
     with open(UNIT_MASTER_DATA_FILE, "r", encoding="utf-8") as file:
@@ -163,7 +170,7 @@ class ApprovalSettingsCreation(BasePage):
         except Exception:
             self.logger.info(f"No confirmation dialog found for {module_name} — continuing.")
 
-        self.sleep(2)
+        self.sleep(1)
         self.logger.info(f"✓ Sent for Approval — {module_name} module done.")
 
     def verify_success_notification(self, timeout=6):

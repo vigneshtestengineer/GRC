@@ -1,0 +1,93 @@
+2026-05-14 16:41:42 - ApprovalSettingsCreation - INFO - ApprovalSettingsCreation page initialized.
+2026-05-14 16:41:43 - ApprovalSettingsCreation - INFO - Approval Settings page loaded successfully
+2026-05-14 16:41:43 - ApprovalSettingsCreation - INFO - Starting approval settings creation process.
+2026-05-14 16:41:43 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//span[normalize-space()='General Setting(s)']")
+2026-05-14 16:41:43 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//span[normalize-space()='General Setting(s)']")
+2026-05-14 16:41:50 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Approval Setting(s)']")
+2026-05-14 16:41:52 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//button[contains(., 'Add')]")
+2026-05-14 16:41:52 - ApprovalSettingsCreation - INFO - Clicked Add Approval Settings button
+2026-05-14 16:41:52 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//label[contains(@class, 'mat-radio-label') and contains(., 'Unit')]")
+2026-05-14 16:41:52 - ApprovalSettingsCreation - INFO - Selected 'Based On' as 'Unit'
+2026-05-14 16:41:53 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Unit')]]")
+2026-05-14 16:41:53 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:41:53 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:41:53 - ApprovalSettingsCreation - INFO - Entered text 'Zeta Manufacturing 352' in element: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:41:53 - ApprovalSettingsCreation - INFO - Searched for unit: Zeta Manufacturing 352
+2026-05-14 16:41:54 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "(//span[contains(@class,'mat-option-text')])[2]")
+2026-05-14 16:41:54 - ApprovalSettingsCreation - INFO - Selected unit: Zeta Manufacturing 352
+2026-05-14 16:41:56 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Module')]]")
+2026-05-14 16:41:58 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:41:58 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:41:58 - ApprovalSettingsCreation - INFO - Entered text 'General Masters Module' in element: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:41:58 - ApprovalSettingsCreation - INFO - Searched for module: General Masters Module
+2026-05-14 16:41:59 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "(//span[contains(@class,'mat-option-text')])[2]")
+2026-05-14 16:41:59 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Type of Approval(s)')]]")
+2026-05-14 16:41:59 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//label[contains(@class,'mat-checkbox-layout') and .//span[text()='Select All']]")
+2026-05-14 16:42:00 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:42:00 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//span[contains(normalize-space(),'Send for Approval')]")
+2026-05-14 16:42:22 - ApprovalSettingsCreation - INFO - No confirmation dialog found for General Masters Module — continuing.
+2026-05-14 16:42:23 - ApprovalSettingsCreation - INFO - ✓ Sent for Approval — General Masters Module module done.
+2026-05-14 16:42:23 - ApprovalSettingsCreation - INFO - Refreshing page before starting Time Office Module module...
+2026-05-14 16:42:24 - ApprovalSettingsCreation - INFO - ✓ Page refreshed — ready for Time Office Module.
+2026-05-14 16:42:26 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//button[contains(., 'Add')]")
+2026-05-14 16:42:26 - ApprovalSettingsCreation - INFO - Clicked Add Approval Settings button
+2026-05-14 16:42:26 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//label[contains(@class, 'mat-radio-label') and contains(., 'Unit')]")
+2026-05-14 16:42:26 - ApprovalSettingsCreation - INFO - Selected 'Based On' as 'Unit'
+2026-05-14 16:42:27 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Unit')]]")
+2026-05-14 16:42:27 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:42:27 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:42:27 - ApprovalSettingsCreation - INFO - Entered text 'Zeta Manufacturing 352' in element: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:42:27 - ApprovalSettingsCreation - INFO - Searched for unit: Zeta Manufacturing 352
+2026-05-14 16:42:27 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "(//span[contains(@class,'mat-option-text')])[2]")
+2026-05-14 16:42:27 - ApprovalSettingsCreation - INFO - Selected unit: Zeta Manufacturing 352
+2026-05-14 16:42:30 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Module')]]")
+2026-05-14 16:42:32 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:42:32 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:42:32 - ApprovalSettingsCreation - INFO - Entered text 'Time Office Module' in element: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:42:32 - ApprovalSettingsCreation - INFO - Searched for module: Time Office Module
+2026-05-14 16:42:32 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "(//span[contains(@class,'mat-option-text')])[2]")
+2026-05-14 16:42:33 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Type of Approval(s)')]]")
+2026-05-14 16:42:33 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//label[contains(@class,'mat-checkbox-layout') and .//span[text()='Select All']]")
+2026-05-14 16:42:33 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:42:34 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[@role='tab']//span[normalize-space()='Other Setting(s)']")
+2026-05-14 16:42:35 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-select[@placeholder='For Criteria Mismatch']")
+2026-05-14 16:42:36 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='Auto Approve']")
+2026-05-14 16:42:37 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//mat-select[@placeholder='In case of no Approver']")
+2026-05-14 16:42:38 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-select[@placeholder='In case of no Approver']")
+2026-05-14 16:42:39 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='Auto Approve']")
+2026-05-14 16:42:40 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//span[contains(normalize-space(),'Send for Approval')]")
+2026-05-14 16:42:41 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//span[contains(normalize-space(),'Send for Approval')]")
+2026-05-14 16:42:41 - ApprovalSettingsCreation - INFO - Confirmed Send for Approval dialog for Time Office Module.
+2026-05-14 16:42:42 - ApprovalSettingsCreation - INFO - ✓ Sent for Approval — Time Office Module module done.
+2026-05-14 16:42:42 - ApprovalSettingsCreation - INFO - Refreshing page before starting Payroll Module module...
+2026-05-14 16:42:43 - ApprovalSettingsCreation - INFO - ✓ Page refreshed — ready for Payroll Module.
+2026-05-14 16:42:44 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//button[contains(., 'Add')]")
+2026-05-14 16:42:44 - ApprovalSettingsCreation - INFO - Clicked Add Approval Settings button
+2026-05-14 16:42:44 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//label[contains(@class, 'mat-radio-label') and contains(., 'Unit')]")
+2026-05-14 16:42:44 - ApprovalSettingsCreation - INFO - Selected 'Based On' as 'Unit'
+2026-05-14 16:42:45 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Unit')]]")
+2026-05-14 16:42:45 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:42:45 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:42:45 - ApprovalSettingsCreation - INFO - Entered text 'Zeta Manufacturing 352' in element: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:42:45 - ApprovalSettingsCreation - INFO - Searched for unit: Zeta Manufacturing 352
+2026-05-14 16:42:46 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "(//span[contains(@class,'mat-option-text')])[2]")
+2026-05-14 16:42:46 - ApprovalSettingsCreation - INFO - Selected unit: Zeta Manufacturing 352
+2026-05-14 16:42:48 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Module')]]")
+2026-05-14 16:42:50 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:42:50 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:42:50 - ApprovalSettingsCreation - INFO - Entered text 'Payroll Module' in element: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:42:50 - ApprovalSettingsCreation - INFO - Searched for module: Payroll Module
+2026-05-14 16:42:51 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "(//span[contains(@class,'mat-option-text')])[2]")
+2026-05-14 16:42:51 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[contains(@class, 'mat-select-value') and .//span[contains(text(), 'Choose Type of Approval(s)')]]")
+2026-05-14 16:42:51 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//label[contains(@class,'mat-checkbox-layout') and .//span[text()='Select All']]")
+2026-05-14 16:42:52 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//input[@placeholder='Search...']")
+2026-05-14 16:42:52 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//div[@role='tab']//span[normalize-space()='Other Setting(s)']")
+2026-05-14 16:42:53 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-select[@placeholder='For Criteria Mismatch']")
+2026-05-14 16:42:54 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='Auto Approve']")
+2026-05-14 16:42:55 - ApprovalSettingsCreation - INFO - Element found: ('xpath', "//mat-select[@placeholder='In case of no Approver']")
+2026-05-14 16:42:56 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-select[@placeholder='In case of no Approver']")
+2026-05-14 16:42:57 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='Auto Approve']")
+2026-05-14 16:42:58 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//span[contains(normalize-space(),'Send for Approval')]")
+2026-05-14 16:42:59 - ApprovalSettingsCreation - INFO - Clicked on element: ('xpath', "//span[contains(normalize-space(),'Send for Approval')]")
+2026-05-14 16:42:59 - ApprovalSettingsCreation - INFO - Confirmed Send for Approval dialog for Payroll Module.
+2026-05-14 16:43:00 - ApprovalSettingsCreation - INFO - ✓ Sent for Approval — Payroll Module module done.

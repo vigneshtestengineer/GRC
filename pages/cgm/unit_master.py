@@ -103,28 +103,28 @@ class unit_Master(BasePage):
         "//mat-select[.//span[contains(text(),'Choose Business Group')]]",
     )
     SEARCH_BUSSINESSGROUP = (By.XPATH, "//input[@aria-label='dropdown search']")
-    CLICK_COUNTRY_DROPDOWN = (By.XPATH, "//mat-select[@id='country']")
+    CLICK_COUNTRY_DROPDOWN = (By.XPATH, "//mat-select[.//span[contains(text(),'Choose Country')]]")
     SPLASH_SCREEN_OVERLAY = (By.TAG_NAME, "compfie-splash-screen")
 
     # Unit master Details locators
 
-    CLICK_DIVISION_DROPDOWN = (By.XPATH, "//mat-select[@id='division']")
+    CLICK_DIVISION_DROPDOWN = (By.XPATH, "//span[contains(text(),'Choose Division')]")
     SEARCH_DIVISION = (By.XPATH, "//input[@placeholder='Search...']")
-    CLICK_CATEGORY_DROPDOWN = (By.XPATH, "//mat-select[@id='category']")
+    CLICK_CATEGORY_DROPDOWN = (By.XPATH, "//span[contains(text(),'Choose Category')]")
     SEARCH_CATEGORY = (By.XPATH, "//input[@aria-label='dropdown search']")
     ENTER_UNIT_NAME = (By.XPATH, "//input[@id='unit_name']")
     ENTER_UNIT_CODE = (By.XPATH, "//input[@id='unit_code']")
     ENTER_UNIT_ADDRESS = (By.XPATH, "//textarea[@id='unit_addr1']")
-    SELECT_UNIT_STATE = (By.XPATH, "//mat-select[@id='unit_state']")
+    SELECT_UNIT_STATE = (By.XPATH, "//span[contains(text(),'Choose State')]")
     SEARCH_UNIT_STATE = (By.XPATH, "//input[@aria-label='dropdown search']")
     CLICK_UNIT_STATE = (By.XPATH, "(//mat-option[contains(@class,'mat-option')])[2]")
-    SELECT_UNIT_CITY = (By.XPATH, "//mat-select[@id='unit_loc']")
+    SELECT_UNIT_CITY = (By.XPATH, "//span[contains(text(),'Choose City')]")
     SEARCH_UNIT_CITY = (By.XPATH, "//input[@aria-label='dropdown search']")
     PIN_CODE = (By.XPATH, "//input[@id='unit_pincode']")
     MOBILE_NUMBER = (By.XPATH, "//input[@id='mat-input-22']")
     UNIT_EMAIL = (By.XPATH, "//input[@id='email_id']")
     NATURE_OF_WORK = (By.XPATH, "//input[@id='nature_of_work']")
-    CLICK_INDUSTRY_DROPDOWN = (By.XPATH, "//mat-select[@id='industry_type']")
+    CLICK_INDUSTRY_DROPDOWN = (By.XPATH, "//span[contains(text(),'Choose Industry Type')]")
     SEARCH_INDUSTRY = (By.XPATH, "//input[@aria-label='dropdown search']")
     CLICK_DATE_OF_CREATION = (By.XPATH, "(//button[@aria-label='Open calendar'])[1]")
     DATE_OF_CREATION_INPUT = (By.ID, "date_of_creation")
@@ -132,7 +132,7 @@ class unit_Master(BasePage):
         By.XPATH,
         "//button[@matdatepickerapply and .//span[normalize-space()='Apply']]",
     )
-    SERVICE_AGREEMENT_DROPDOWN = (By.XPATH, "//mat-select[@id='legal_agreement_id']")
+    SERVICE_AGREEMENT_DROPDOWN = (By.XPATH, "//span[contains(text(),'Choose Services Agreement')]")
     SEARCH_AGREEMENT = (By.XPATH, "//input[@aria-label='dropdown search']")
     APPLICABLE_EMPLOYEE = (
         By.XPATH,
@@ -181,7 +181,7 @@ class unit_Master(BasePage):
 
     SCOPE_INFORMATION_DROPDOWN = (By.XPATH, "//p[normalize-space()='Scope Information']")
 
-    DOMAIN_DROPDOWN = (By.XPATH, "//mat-select[@id='domain_id']")
+    DOMAIN_DROPDOWN = (By.XPATH, "//span[contains(text(),'Choose Domain')]")
 
     # Common Search locator for dropdowns
     SEARCH = (By.XPATH, "//input[@aria-label='dropdown search']")
@@ -189,11 +189,11 @@ class unit_Master(BasePage):
     # Selecting the 1st element after search in dropdown
     SELECT_DATA = (By.XPATH, "//mat-option[not(@aria-disabled='true')][1]")
 
-    ORGANIZATION_DROPDOWN = (By.XPATH, "//mat-select[@id='org_id']")
+    ORGANIZATION_DROPDOWN = (By.XPATH, "(//mat-select[contains(@class,'mat-select')])[4]")
 
-    SCOPE_STATE = (By.XPATH, "//mat-select[@id='state_id']")
+    SCOPE_STATE = (By.XPATH, "(//mat-select[contains(@class,'mat-select')])[5]")
 
-    ACT_DROPDOWN = (By.XPATH, "//mat-select[@id='act_id']")
+    ACT_DROPDOWN = (By.XPATH, "(//mat-select[contains(@class,'mat-select')])[6]")
 
     # Save Unit master
 

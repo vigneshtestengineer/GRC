@@ -1,0 +1,74 @@
+2026-05-14 16:54:07 - AddContractorMaster - INFO - Generated contractor name: Global Apex Infrastructure 673
+2026-05-14 16:54:07 - AddContractorMaster - INFO - Generated contractor code: MZX573
+2026-05-14 16:54:07 - AddContractorMaster - INFO - Generated contractor short name: TSGN
+2026-05-14 16:54:07 - AddContractorMaster - INFO - Generated contractor PF code: OVNCG5210R
+2026-05-14 16:54:07 - AddContractorMaster - INFO - Generated contractor ESI code: 85505491072147193
+2026-05-14 16:54:07 - AddContractorMaster - INFO - Saved to E:\AutomationTask\GRC Payroll\config\Contractor_Master_Data.json — name: 'nt', code: 'MZX573', short: 'TSGN', PF: 'OVNCG5210R', ESI: '85505491072147193'
+2026-05-14 16:54:07 - AddContractorMaster - INFO - AddContractorMaster initialized — unit: 'Zeta Manufacturing 352', name: 'Global Apex Infrastructure 673', code: 'MZX573', short: 'TSGN'
+2026-05-14 16:54:07 - AddContractorMaster - INFO - === Add Contractor Master flow started ===
+2026-05-14 16:54:17 - AddContractorMaster - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Contractor Master']")
+2026-05-14 16:54:19 - AddContractorMaster - INFO - Navigated to Contractor Master.
+2026-05-14 16:54:19 - AddContractorMaster - INFO - Clicked on element: ('xpath', "//button[.//span[contains(@class,'mat-button-wrapper') and contains(normalize-space(),'Add')]]")
+2026-05-14 16:54:20 - AddContractorMaster - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Choose Unit']")
+2026-05-14 16:54:20 - AddContractorMaster - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-14 16:54:20 - AddContractorMaster - INFO - Entered text 'Zeta Manufacturing 352' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-14 16:54:21 - AddContractorMaster - INFO - Clicked on element: ('xpath', "//mat-option//span[contains(text(),'Zeta Manufacturing 352')]")
+2026-05-14 16:54:21 - AddContractorMaster - INFO - Unit selected: 'Zeta Manufacturing 352'
+2026-05-14 16:54:21 - AddContractorMaster - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[normalize-space()='sort'] and .//span[contains(.,'Show Detail')]]")
+2026-05-14 16:54:22 - AddContractorMaster - INFO - Element found: ('xpath', "//input[@maxlength='50']")
+2026-05-14 16:54:22 - AddContractorMaster - INFO - Entered text 'MZX573' in element: ('xpath', "//input[@maxlength='50']")
+2026-05-14 16:54:22 - AddContractorMaster - INFO - Element found: ('xpath', "(//input[@maxlength='250'])[1]")
+2026-05-14 16:54:23 - AddContractorMaster - INFO - Entered text 'Global Apex Infrastructure 673' in element: ('xpath', "(//input[@maxlength='250'])[1]")
+2026-05-14 16:54:23 - AddContractorMaster - INFO - Element found: ('xpath', "(//textarea[@maxlength='450'])[1]")
+2026-05-14 16:54:23 - AddContractorMaster - INFO - Entered text '450 Industrial Parkway, Suite 300' in element: ('xpath', "(//textarea[@maxlength='450'])[1]")
+2026-05-14 16:54:23 - AddContractorMaster - INFO - Element found: ('xpath', "(//textarea[@maxlength='450'])[2]")
+2026-05-14 16:54:23 - AddContractorMaster - INFO - Entered text 'Tamil Nadu' in element: ('xpath', "(//textarea[@maxlength='450'])[2]")
+2026-05-14 16:54:24 - AddContractorMaster - INFO - Clicked on element: ('xpath', "(//span[normalize-space()='Choose State'])[1]")
+2026-05-14 16:54:24 - AddContractorMaster - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-14 16:54:24 - AddContractorMaster - INFO - Entered text 'Tamil Nadu' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-14 16:54:25 - AddContractorMaster - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='Tamil Nadu']")
+2026-05-14 16:54:25 - AddContractorMaster - INFO - Clicked on element: ('xpath', "(//span[normalize-space()='Choose City'])[1]")
+2026-05-14 16:54:25 - AddContractorMaster - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-14 16:54:25 - AddContractorMaster - INFO - Entered text 'BB' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-14 16:54:26 - AddContractorMaster - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='BB']")
+2026-05-14 16:54:26 - AddContractorMaster - INFO - Element found: ('xpath', "(//input[@maxlength='6'])[1]")
+2026-05-14 16:54:26 - AddContractorMaster - INFO - Entered text '657889' in element: ('xpath', "(//input[@maxlength='6'])[1]")
+2026-05-14 16:54:26 - AddContractorMaster - INFO - Element found: ('xpath', "(//input[@maxlength='10'])[1]")
+2026-05-14 16:54:27 - AddContractorMaster - INFO - Entered text '9876554433' in element: ('xpath', "(//input[@maxlength='10'])[1]")
+2026-05-14 16:54:27 - AddContractorMaster - INFO - Element found: ('xpath', "(//input[@maxlength='75'])[1]")
+2026-05-14 16:54:27 - AddContractorMaster - INFO - Entered text 'vignesh.kv@aparajitha.com' in element: ('xpath', "(//input[@maxlength='75'])[1]")
+2026-05-14 16:54:27 - AddContractorMaster - INFO - Element found: ('xpath', "(//input[@maxlength='4'])[1]")
+2026-05-14 16:54:27 - AddContractorMaster - INFO - Entered text 'TSGN' in element: ('xpath', "(//input[@maxlength='4'])[1]")
+2026-05-14 16:54:27 - AddContractorMaster - INFO - Clicked on element: ('xpath', "(//div[contains(@class,'mat-select-value')])[7]")
+2026-05-14 16:54:27 - AddContractorMaster - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-14 16:54:28 - AddContractorMaster - INFO - Entered text 'vignesh.kv@aparajitha.com' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-14 16:54:28 - AddContractorMaster - INFO - Clicked on element: ('xpath', "//mat-option[.//span[contains(.,'vignesh.kv@aparajitha.com')]]")
+2026-05-14 16:54:28 - AddContractorMaster - INFO - Access For — selected CGM_EXE: 'vignesh.kv@aparajitha.com'
+2026-05-14 16:54:28 - AddContractorMaster - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-14 16:54:29 - AddContractorMaster - INFO - Entered text 'qc.test100@aparajitha.net' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-14 16:54:29 - AddContractorMaster - INFO - Clicked on element: ('xpath', "//mat-option[.//span[contains(.,'qc.test100@aparajitha.net')]]")
+2026-05-14 16:54:29 - AddContractorMaster - INFO - Access For — selected CGM_ADMIN: 'qc.test100@aparajitha.net'
+2026-05-14 16:54:30 - AddContractorMaster - INFO - Element found: ('xpath', "//mat-form-field[.//label[contains(.,'Establishment Name')]]//input")
+2026-05-14 16:54:31 - AddContractorMaster - INFO - Element found: ('xpath', "//mat-form-field[.//label[contains(.,'Establishment Name')]]//input")
+2026-05-14 16:54:31 - AddContractorMaster - INFO - Entered text 'Food' in element: ('xpath', "//mat-form-field[.//label[contains(.,'Establishment Name')]]//input")
+2026-05-14 16:54:31 - AddContractorMaster - INFO - Element found: ('xpath', "//mat-form-field[.//label[contains(.,'Establishment Type')]]//input")
+2026-05-14 16:54:32 - AddContractorMaster - INFO - Entered text 'Food' in element: ('xpath', "//mat-form-field[.//label[contains(.,'Establishment Type')]]//input")
+2026-05-14 16:54:32 - AddContractorMaster - INFO - Clicked on element: ('xpath', "//mat-checkbox[.//span[contains(.,'establishment address')]]")
+2026-05-14 16:54:32 - AddContractorMaster - INFO - Clicked on element: ('xpath', "((//span[contains(@class,'mat-checkbox-inner-container')])[5])")
+2026-05-14 16:54:32 - AddContractorMaster - INFO - Clicked on element: ('xpath', "//p[normalize-space()='Leave Accounting Period']")
+2026-05-14 16:54:33 - AddContractorMaster - INFO - Clicked on element: ('xpath', "//label[contains(.,'Leave Acounting period based on DOJ')]")
+2026-05-14 16:54:33 - AddContractorMaster - INFO - Contractor Information filled.
+2026-05-14 16:54:35 - AddContractorMaster - INFO - Clicked on element: ('xpath', "//span[normalize-space()='STATUTORY INFORMATION']")
+2026-05-14 16:54:35 - AddContractorMaster - INFO - Element found: ('xpath', "(//input[@maxlength='150'])[1]")
+2026-05-14 16:54:36 - AddContractorMaster - WARNING - Stale element on enter_text attempt 1/3 for ('xpath', "(//input[@maxlength='150'])[1]"), retrying...
+2026-05-14 16:54:36 - AddContractorMaster - INFO - Element found: ('xpath', "(//input[@maxlength='150'])[1]")
+2026-05-14 16:54:37 - AddContractorMaster - INFO - Entered text 'Food' in element: ('xpath', "(//input[@maxlength='150'])[1]")
+2026-05-14 16:54:37 - AddContractorMaster - INFO - Element found: ('xpath', "//mat-form-field[.//label[contains(.,'PF')]]//input")
+2026-05-14 16:54:37 - AddContractorMaster - INFO - Entered text 'OVNCG5210R' in element: ('xpath', "//mat-form-field[.//label[contains(.,'PF')]]//input")
+2026-05-14 16:54:37 - AddContractorMaster - INFO - Element found: ('xpath', "//mat-form-field[.//label[contains(.,'ESI')]]//input")
+2026-05-14 16:54:37 - AddContractorMaster - INFO - Entered text '85505491072147193' in element: ('xpath', "//mat-form-field[.//label[contains(.,'ESI')]]//input")
+2026-05-14 16:54:37 - AddContractorMaster - INFO - Statutory Information filled.
+2026-05-14 16:54:37 - AddContractorMaster - INFO - Clicked on element: ('xpath', "//button[.//span[normalize-space()='Submit as save']]")
+2026-05-14 16:54:38 - AddContractorMaster - INFO - Clicked on element: ('xpath', "//button[.//span[normalize-space()='Submit as save']]")
+2026-05-14 16:54:42 - AddContractorMaster - INFO - Page refreshed after save.
+2026-05-14 16:54:42 - AddContractorMaster - INFO - === Add Contractor Master flow completed ===
