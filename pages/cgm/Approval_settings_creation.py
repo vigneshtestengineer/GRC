@@ -129,7 +129,7 @@ class ApprovalSettingsCreation(BasePage):
 
         # Select Module
         self.click(self.SELECT_MODULE, timeout=6)
-        self.sleep(2)
+        self.wait_for_element(self.SEARCH, timeout=10)
         search_element = self.find_element(self.SEARCH)
         search_element.clear()
         self.enter_text(self.SEARCH, module_name)
@@ -209,5 +209,5 @@ class ApprovalSettingsCreation(BasePage):
     def save_approval_settings(self):
         """Save the approval settings"""
         self.logger.info("Saving approval settings...")
-        self.click(self.SAVE_BUTTON, timeout=6)
+        self.click(self.SAVE_BUTTON, timeout=1)
         self.logger.info("Approval settings saved successfully")

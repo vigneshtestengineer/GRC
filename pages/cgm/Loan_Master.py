@@ -24,9 +24,10 @@ CONTRACTOR_DATA_FILE = (
     Path(__file__).resolve().parents[2] / "config" / "Contractor_Master_Data.json"
 )
 
-SHIFT_MASTER_DATA_FILE = (
-    Path(__file__).resolve().parents[2] / "config" / "Shift_Master_Details.json"
+LOAN_MASTER_DATA_FILE = (
+    Path(__file__).resolve().parents[2] / "config" / "Loan_Master_Data.json"
 )
+
 
 try:
     with open(UNIT_MASTER_DATA_FILE, "r", encoding="utf-8") as _f:
@@ -58,51 +59,76 @@ except (FileNotFoundError, json.JSONDecodeError):
     PUNCH_BEFORE_SHIFT = PUNCH_AFTER_SHIFT = ""
     SHIFT_COLOR = SHIFT_MASTER_REMARKS = ""
 
+try:
+    with open(LOAN_MASTER_DATA_FILE, "r", encoding="utf-8") as _f:
+        _loan_raw = json.load(_f).get("Loan Master Details", {})
+        LOAN_CODE                = _loan_raw.get("Loan_Code", "")
+        LOAN_DESCRIPTION         = _loan_raw.get("Loan_Description", "")
+        TYPE_OF_CREDIT           = _loan_raw.get("Type_Of_Credit", "")
+        INTEREST_APPLICABLE      = _loan_raw.get("Interest_Applicable", "False").strip().lower() == "true"
+        PRINCIPAL_LOAN           = _loan_raw.get("Principal_Loan", "")
+        INTEREST_LOAN            = _loan_raw.get("Interest_Loan", "")
+        INTEREST_TYPE_VALUE      = _loan_raw.get("Type_Of_Interest", "")
+        LOAN_INTEREST_PERCENTAGE = _loan_raw.get("Loan_Interest_Percentage", "")
+        SBI_PERCENTAGE           = _loan_raw.get("SBI_Percentage", "")
+except (FileNotFoundError, json.JSONDecodeError):
+    LOAN_CODE = LOAN_DESCRIPTION = TYPE_OF_CREDIT = ""
+    INTEREST_APPLICABLE = False
+    PRINCIPAL_LOAN = INTEREST_LOAN = INTEREST_TYPE_VALUE = ""
+    LOAN_INTEREST_PERCENTAGE = SBI_PERCENTAGE = ""
 
-class ShiftMasterCreation(BasePage):
-    """Page object for Shift Master Creation under General Component(s)."""
+
+class LoanMaster(BasePage):
+    """Page object for Loan Master."""
 
     # ── CGM Executive navigation ──────────────────────────────────────────────
-    # MENU_BUTTON                = (By.XPATH, "//button[.//mat-icon[text()='apps']]")
-    # GENERAL_MASTER_EXEC_CARD   = (By.XPATH, "//mat-card[span[text()='General Master-Executive']]")
-    # EXECUTIVE_URL              = "http://13.203.6.58:5002/#/home/welcome"
-    # SPLASH_SCREEN              = (By.TAG_NAME, "compfie-splash-screen")
-    # SEARCH_LEGAL_ENTITY        = (By.XPATH, "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
-    # SELECT_LEGAL_ENTITY_ROW    = (By.XPATH, "//table//tbody//tr[1]//td")
-    # SELECT_LEGAL_ENTITY_BUTTON = (By.XPATH, "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+    MENU_BUTTON                = (By.XPATH, "//button[.//mat-icon[text()='apps']]")
+    GENERAL_MASTER_EXEC_CARD   = (By.XPATH, "//mat-card[span[text()='General Master-Executive']]")
+    EXECUTIVE_URL              = "http://13.203.6.58:5002/#/home/welcome"
+    SPLASH_SCREEN              = (By.TAG_NAME, "compfie-splash-screen")
+    SEARCH_LEGAL_ENTITY        = (By.XPATH, "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+    SELECT_LEGAL_ENTITY_ROW    = (By.XPATH, "//table//tbody//tr[1]//td")
+    SELECT_LEGAL_ENTITY_BUTTON = (By.XPATH, "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
 
     # ── Sidebar navigation ────────────────────────────────────────────────────
-    OPEN_GENERAL_MASTER_MENU = (By.XPATH, "//span[normalize-space()='General Master(s)']")
-    CLICK_SHIFT_MASTER_MENU  = (By.XPATH, "//span[normalize-space()='Shift Master']")
+    OPEN_PAYROLL_MASTER_MENU = (By.XPATH, "//span[contains(text(),'Payroll Master(s)')]")
+    CLICK_LOAN_MASTER_MENU = (By.XPATH,"//a[contains(@href,'loan-master')]")
 
-    # ── Shift Master page ─────────────────────────────────────────────────────
-    ADD_SHIFT_MASTER_BUTTON  = (By.XPATH, "//button[contains(.,'Add')]")
-    UNIT_DROPDOWN            = (By.XPATH, "//span[normalize-space()='Choose Unit']")
+    #------------COMMON LOCATORS------------------
     DROPDOWN_SEARCH          = (By.XPATH, "//input[@aria-label='dropdown search']")
-    SELECT_UNIT              = (By.XPATH, "(//mat-option[contains(@class,'mat-option')])[2]")
-    ADD_SHIFT                = (By.XPATH, "//button[@mat-mini-fab]")
+    SELECT_DROPDOWN_DATA     = (By.XPATH, "(//mat-option//span[contains(@class,'mat-option-text')])[2]")
 
-    # ── Shift form fields ─────────────────────────────────────────────────────
-    SHIFT_NAME_INPUT         = (By.XPATH, "//input[@id='mat-input-2']")
-    SHIFT_START_FROM_INPUT   = (By.XPATH, "//input[@id='mat-input-4']")
-    SHIFT_END_TO_INPUT       = (By.XPATH, "//input[@id='mat-input-5']")
-    INTERVAL_START_FROM_INPUT= (By.XPATH, "//input[@id='mat-input-6']")
-    INTERVAL_END_TO_INPUT    = (By.XPATH, "//input[@id='mat-input-7']")
-    BEFORE_SHIFT_INPUT       = (By.XPATH, "//input[@id='mat-input-10']")
-    AFTER_SHIFT_INPUT        = (By.XPATH, "//input[@id='mat-input-11']")
-    ENTER_COLOR_CODE         = (By.XPATH, "//span[contains(@class,'gt-xs')]//input")
-    SHIFT_MASTER_REMARKS_INPUT = (By.XPATH, "//textarea[@id='mat-input-16']")
-    SAVE_SHIFT_BUTTON        = (By.XPATH, "//span[contains(normalize-space(),'Save & Close')]")
-    SAVE_SHIFT_MASTER_BUTTON = (By.XPATH, "(//button[.//span[contains(.,'Submit as save')]])[1]")
+    # ── LOAN MASTER page ────────────────────────────────────────────
+    ADD_LOAN_MASTER_BTN  =(By.XPATH,"//button[contains(.,'Add')]")
+    UNIT_DROPDOWN            = (By.XPATH, "(//mat-select[@role='combobox'])[1]")
+    CONTRACTOR_DROPDOWN      = (By.XPATH,"(//mat-select[@role='combobox'])[2]")
+
+    #--------LOAN MASTER DETAILS LOCATORS---------------------------
+
+    LOAN_CODE =(By.XPATH,"//input[@autocomplete='off' and @maxlength='10']")
+    LOAN_DESCRIPTION =(By.XPATH,"//input[@autocomplete='off' and @maxlength='50']")
+    INTEREST_PERCENTAGE =(By.XPATH,"//input[contains(@class,'mat-input-element') and contains(@class,'font-medium')]")
+    TYPE_OF_CREDIT_DROPDOWN =(By.XPATH,"//span[contains(text(),'Choose Type of Credit')]")
+    INTEREST_APPLICABLE_CHECKBOX =(By.XPATH,"//mat-checkbox[contains(.,'Interest Applicable')]//label")
+    PRINCIPAL_MATCHING_COMPONENT_DROPDOWN =(By.XPATH,"//span[contains(text(),'Principal Matching Component')]")
+    INTEREST_MATCHING_COMPONENT =(By.XPATH,"//span[contains(text(),'Interest Matching Component')]")
+    TYPE_OF_INTEREST =(By.XPATH,"//span[contains(text(),'Type of Interest')]")
+    SELECT_INTEREST_TYPE =(By.XPATH,f"//mat-option//span[contains(@class,'mat-option-text') and normalize-space()='{INTEREST_TYPE_VALUE}']")
+    SBI_INTEREST_RATE =(By.XPATH,"//input[@autocomplete='off' and @maxlength='5']")
+    DEDUCT_PRINCIPAL_FROM_FIRST_MONTH_CHECKBOX =(By.XPATH,"//mat-checkbox[contains(.,'Deduct Principal From First Month')]//label")
+    #----------SAVE LOAN MASTER-------------------------------------
+
+    SAVE_LOAN_MASTER =(By.XPATH,"//button[contains(.,'Submit as save')]")
+
 
     def __init__(self, driver):
         super().__init__(driver)
-        self.logger.info("ShiftMasterCreation page initialized.")
+        self.logger.info("WeeklyHolidayMaster page initialized.")
         self.unit_master_data  = UNIT_MASTER_DATA
         self.Unit_Details      = self.unit_master_data.get("Unit_Details", {})
         self.date_of_creation  = self.Unit_Details.get("Date_of_Creation", "")
 
-    # # ── CGM Executive: open via app-switcher ─────────────────────────────────
+    # ── CGM Executive: open via app-switcher ─────────────────────────────────
     # def open_cgm_executive(self):
     #     self.wait_for_element_to_be_clickable(self.MENU_BUTTON, timeout=30)
     #     self.click(self.MENU_BUTTON)
@@ -167,72 +193,61 @@ class ShiftMasterCreation(BasePage):
     #             self.logger.warning("Attempt %d: select button not yet enabled.", attempt)
     #     raise RuntimeError("Legal entity row clicked but select button did not become enabled.")
 
-    # # ── Step 1: Expand General Master(s) menu ────────────────────────────────
+    # # ── Step 1: Expand Payroll Master menu ────────────────────────────────
     # def general_master_menu(self):
-    #     self.scroll_to_element(self.OPEN_GENERAL_MASTER_MENU)
+    #     self.scroll_to_element(self.OPEN_PAYROLL_MASTER_MENU)
     #     self.sleep(0.3)
-    #     parent_el = self.find_element(self.OPEN_GENERAL_MASTER_MENU)
+    #     parent_el = self.find_element(self.OPEN_PAYROLL_MASTER_MENU)
     #     self.driver.execute_script("arguments[0].click();", parent_el)
     #     self.logger.info("Clicked General Master(s) menu.")
 
-    def _click_shift_master(self):
-        """Scrolls to and JS-clicks the Shift Master menu item."""
-        self.scroll_to_element(self.CLICK_SHIFT_MASTER_MENU)
-        self.sleep(0.3)
-        el = self.find_element(self.CLICK_SHIFT_MASTER_MENU)
-        self.driver.execute_script("arguments[0].click();", el)
-        self.logger.info("Clicked 'Shift Master' menu item.")
 
-    # ── Step 2: Fill and save Shift Master form ───────────────────────────────
-    def shift_master_creation(self):
-        """Fills the Shift Master form and saves."""
-        self._click_shift_master()
+    # ── Step 2: Fill and save Loan Master form ───────────────────────────────
+    def loan_master(self):
 
-        self.click(self.ADD_SHIFT_MASTER_BUTTON, timeout=8)
-        self.logger.info("Clicked 'Add' button.")
-
-        unit_name = self._get_unit_name()
-        self.click(self.UNIT_DROPDOWN, timeout=8)
-        self.wait_for_element(self.DROPDOWN_SEARCH, timeout=8)
-        self.enter_text(self.DROPDOWN_SEARCH, unit_name)
-        self.sleep(0.3)
-        self.click(
-            (By.XPATH, f"//mat-option//span[contains(text(),'{unit_name}')]"),
-            timeout=8,
-        )
-        self.logger.info("Selected unit: %s", unit_name)
-        self.driver.switch_to.active_element.send_keys(Keys.ESCAPE)
+        self.click(self.CLICK_LOAN_MASTER_MENU)
+        self.click(self.ADD_LOAN_MASTER_BTN)
+        self.click(self.UNIT_DROPDOWN)
+        self.enter_text(self.DROPDOWN_SEARCH, self._get_unit_name())
+        self.click(self.SELECT_DROPDOWN_DATA)
+        self.click(self.CONTRACTOR_DROPDOWN)
+        self.enter_text(self.DROPDOWN_SEARCH, self._get_contractor_name())
+        self.click(self.SELECT_DROPDOWN_DATA)
+        self.sleep(0.5)
+        self.enter_text(self.LOAN_CODE, LOAN_CODE)
+        self.enter_text(self.LOAN_DESCRIPTION, LOAN_DESCRIPTION)
+        # Select Type of Credit
+        self.click(self.TYPE_OF_CREDIT_DROPDOWN)
+        self.enter_text(self.DROPDOWN_SEARCH, TYPE_OF_CREDIT)
+        self.click(self.SELECT_DROPDOWN_DATA)
+        # Select Interest Applicable
+        self.click(self.INTEREST_APPLICABLE_CHECKBOX)
+        # Select Principal component (always required)
+        self.click(self.PRINCIPAL_MATCHING_COMPONENT_DROPDOWN)
+        self.enter_text(self.DROPDOWN_SEARCH, PRINCIPAL_LOAN)
+        self.click(self.SELECT_DROPDOWN_DATA)
         self.sleep(1)
-
-        self.click(self.ADD_SHIFT, timeout=8)
-        self.sleep(1)
-        self.enter_text(self.SHIFT_NAME_INPUT, SHIFT_NAME)
-        DatePicker(self.driver).set_date(
-            "//button[@aria-label='Open calendar']", self.date_of_creation
-        )
+        self.click(self.INTEREST_MATCHING_COMPONENT)
+        self.enter_text(self.DROPDOWN_SEARCH, INTEREST_LOAN)
+        self.click(self.SELECT_DROPDOWN_DATA)
+        self.click(self.TYPE_OF_INTEREST)
+        self.click(self.SELECT_INTEREST_TYPE)
+        self.enter_text(self.INTEREST_PERCENTAGE, LOAN_INTEREST_PERCENTAGE)
+        self.click(self.DEDUCT_PRINCIPAL_FROM_FIRST_MONTH_CHECKBOX)
+        self.enter_text(self.SBI_INTEREST_RATE, SBI_PERCENTAGE)
         self.sleep(0.5)
-        self.enter_text(self.SHIFT_START_FROM_INPUT, SHIFT_START_FROM)
-        self.enter_text(self.SHIFT_END_TO_INPUT, SHIFT_END_TO)
-        self.enter_text(self.INTERVAL_START_FROM_INPUT, INTERVAL_START_FROM)
-        self.enter_text(self.INTERVAL_END_TO_INPUT, INTERVAL_END_TO)
-        self.enter_text(self.BEFORE_SHIFT_INPUT, PUNCH_BEFORE_SHIFT)
-        self.enter_text(self.AFTER_SHIFT_INPUT, PUNCH_AFTER_SHIFT)
-        self.enter_text(self.ENTER_COLOR_CODE, SHIFT_COLOR)
-        self.enter_text(self.SHIFT_MASTER_REMARKS_INPUT, SHIFT_MASTER_REMARKS)
-        self.click(self.SAVE_SHIFT_BUTTON, timeout=8)
-        self.sleep(0.5)
-        self.wait_for_element_to_be_clickable(self.SAVE_SHIFT_MASTER_BUTTON, timeout=8)
-        self.click(self.SAVE_SHIFT_MASTER_BUTTON, timeout=8)
-        self.logger.info("✓ Shift Master saved.")
-        self.sleep(0.5)
+        self.click(self.SAVE_LOAN_MASTER)
+        self.sleep(5)
         self.driver.refresh()
         self.sleep(1)
-        self.logger.info("Page refreshed after save.")
+        self.logger.info("Loan Master form filled and submitted.")
 
     # ── Public orchestration ──────────────────────────────────────────────────
-    def navigate_to_shift_master(self):
-        self.shift_master_creation() # fills and saves the form
-        self.logger.info("✓ Shift Master Creation completed.")
+    def navigate_to_weekly_holiday_master(self):
+        # self.open_cgm_executive()
+        # self.general_master_menu()
+        self.loan_master()
+        self.logger.info("✓ Weekly Holiday Master completed.")
 
     # ── Helper ────────────────────────────────────────────────────────────────
     def _get_unit_name(self) -> str:
@@ -241,3 +256,10 @@ class ShiftMasterCreation(BasePage):
                 return json.load(f).get("Unit_Details", {}).get("unit_name", UNIT_NAME)
         except Exception:
             return UNIT_NAME
+
+    def _get_contractor_name(self) -> str:
+        try:
+            with open(CONTRACTOR_DATA_FILE, "r", encoding="utf-8") as f:
+                return json.load(f).get("Contractor_Information", {}).get("Contractor_Name", CONTRACTOR_NAME)
+        except Exception:
+            return CONTRACTOR_NAME

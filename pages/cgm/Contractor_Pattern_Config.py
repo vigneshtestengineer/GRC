@@ -84,8 +84,8 @@ class ContractorPatternConfig(BasePage):
         self.click((By.XPATH, f"//mat-option//span[contains(text(),'{unit_name}')]"), timeout=8)
         self.logger.info("Selected unit: %s", unit_name)
 
-        self.click(self.CONTRACTOR_BASED_CODE_PATTERN, timeout=8)
-        self.click(self.CONTRACTOR_BASED_SUBCONTRACTOR_PATTERN, timeout=8)
+        self.click(self.CONTRACTOR_BASED_CODE_PATTERN, timeout=1)
+        self.click(self.CONTRACTOR_BASED_SUBCONTRACTOR_PATTERN, timeout=1)
         self.click(self.PATTERN_CONFIG_SAVE, timeout=8)
         self.logger.info("✓ Contractor pattern configuration created and saved.")
         self.sleep(2)

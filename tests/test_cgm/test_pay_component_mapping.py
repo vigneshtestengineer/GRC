@@ -1,12 +1,12 @@
 import pytest
-from pages.cgm.statutory_mapping.Holiday_Mapping import HolidayMapping
+from pages.cgm.Pay_Component_Mapping import PayComponentMapping
 from pages.login.grc_login_page import GRCLoginPage
 from utilities.json_config import get_str
 
-MODULE_NAME = "Holiday Mapping"
+MODULE_NAME = "Pay Component Mapping"
 
 @pytest.mark.e2e
-def test_holiday_mapping(driver):
+def test_pay_component_mapping(driver):
 
     # login_page = GRCLoginPage(driver)
     # username   = get_str("auth", "username", "")
@@ -15,6 +15,6 @@ def test_holiday_mapping(driver):
     # login_page.login(username, password, group_name)
     # print("✓ Logged in successfully")
 
-    page = HolidayMapping(driver)
-    page.add_holiday_mapping()
-    print("✓ Holiday Mapping completed successfully")
+    page = PayComponentMapping(driver)
+    page.pay_component_mapping()
+    print("✓ Pay Component Mapping completed successfully")

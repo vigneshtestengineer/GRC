@@ -26,5 +26,10 @@
         "Holiday Year": "2026",
         "Holiday Type": "Festival Holiday",
         "Holiday Mapping Primary settings": "TNFH 2026"
+    },
+    "LWF" : {
+        "LWF Primary settings" :"LWF Con",
+        "Applied_From" :"01/01/2025",
+        "Limit_Based" :"Full Wages"
     }
 }

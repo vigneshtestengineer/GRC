@@ -1,0 +1,13 @@
+{
+    "Loan Master Details" : {
+            "Loan_Code" : "EDU LOAN",
+            "Loan_Description" :"Education Loan",
+            "Type_Of_Credit" :"Loan",
+            "Principal_Loan" :"EDU Loan",
+            "Interest_Loan" :"EDU LOANINT",
+            "Type_Of_Interest" :"Simple Interest",
+            "Loan_Interest_Percentage" :"20",
+            "SBI_Percentage" :"10"
+
+    }
+}

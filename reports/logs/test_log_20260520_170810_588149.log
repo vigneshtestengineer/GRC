@@ -1,0 +1,51 @@
+2026-05-20 17:08:10 - PayRevisionSettings - INFO - WeeklyHolidayMaster page initialized.
+2026-05-20 17:08:11 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//button[.//mat-icon[text()='apps']]")
+2026-05-20 17:08:11 - PayRevisionSettings - INFO - Clicked app-switcher menu.
+2026-05-20 17:08:11 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//mat-card[span[text()='General Master-Executive']]")
+2026-05-20 17:08:11 - PayRevisionSettings - INFO - Switched to new CGM Executive window.
+2026-05-20 17:08:16 - PayRevisionSettings - INFO - CGM Executive tab active.
+2026-05-20 17:08:17 - PayRevisionSettings - INFO - Element found: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-05-20 17:08:17 - PayRevisionSettings - INFO - Entered text 'Microsoft Focused' in element: ('xpath', "//input[@placeholder='Search here...' and contains(@class,'mat-input-element')]")
+2026-05-20 17:08:17 - PayRevisionSettings - INFO - Element found: ('xpath', '//table//tbody//tr[1]//td')
+2026-05-20 17:08:18 - PayRevisionSettings - INFO - Element found: ('xpath', '//table//tbody//tr[1]//td')
+2026-05-20 17:08:18 - PayRevisionSettings - INFO - Legal entity row selected (attempt 1).
+2026-05-20 17:08:18 - PayRevisionSettings - INFO - Element found: ('xpath', "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-05-20 17:08:18 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//button[contains(@class,'mat-flat-button') and .//mat-icon[@data-mat-icon-name='plus']]")
+2026-05-20 17:08:19 - PayRevisionSettings - INFO - Legal entity selected — CGM Executive ready.
+2026-05-20 17:08:20 - PayRevisionSettings - INFO - Element found: ('xpath', "//span[contains(text(),'Payroll Master(s)')]")
+2026-05-20 17:08:20 - PayRevisionSettings - INFO - Element found: ('xpath', "//span[contains(text(),'Payroll Master(s)')]")
+2026-05-20 17:08:20 - PayRevisionSettings - INFO - Clicked General Master(s) menu.
+2026-05-20 17:08:21 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//span[normalize-space()='Pay Revision Setting(s)']")
+2026-05-20 17:08:23 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//button[contains(.,'Add')]")
+2026-05-20 17:08:23 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "(//mat-select[@role='combobox'])[1]")
+2026-05-20 17:08:23 - PayRevisionSettings - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-20 17:08:24 - PayRevisionSettings - INFO - Entered text 'Gamma Manufacturing 350' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-20 17:08:24 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "(//mat-option//span[contains(@class,'mat-option-text')])[2]")
+2026-05-20 17:08:25 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "(//mat-select[@role='combobox'])[2]")
+2026-05-20 17:08:25 - PayRevisionSettings - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-20 17:08:25 - PayRevisionSettings - INFO - Entered text 'Vega Delta Works 498' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-20 17:08:25 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "(//mat-option//span[contains(@class,'mat-option-text')])[2]")
+2026-05-20 17:08:25 - PayRevisionSettings - INFO - Element found: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-20 17:08:26 - PayRevisionSettings - INFO - Entered text '' in element: ('xpath', "//input[@aria-label='dropdown search']")
+2026-05-20 17:08:26 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//span[contains(normalize-space(),'Show Detail(s)')]")
+2026-05-20 17:08:26 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//mat-icon[@data-mat-icon-name='plus-sm']")
+2026-05-20 17:08:26 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//mat-icon[@data-mat-icon-name='plus-sm']")
+2026-05-20 17:08:26 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//mat-icon[@data-mat-icon-name='plus-sm']")
+2026-05-20 17:08:26 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "(//span[normalize-space()='Select component'])[1]")
+2026-05-20 17:08:27 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='FD Basic']")
+2026-05-20 17:08:27 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "(//span[normalize-space()='Select component'])[1]")
+2026-05-20 17:08:27 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='FD HRA']")
+2026-05-20 17:08:27 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "(//span[normalize-space()='Select component'])[1]")
+2026-05-20 17:08:28 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='DA']")
+2026-05-20 17:08:28 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "(//span[normalize-space()='Select Component'])[1]")
+2026-05-20 17:08:28 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='Arrear Basic']")
+2026-05-20 17:08:28 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "(//span[normalize-space()='Select Component'])[1]")
+2026-05-20 17:08:29 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='Arrear HRA']")
+2026-05-20 17:08:29 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "(//span[normalize-space()='Select Component'])[1]")
+2026-05-20 17:08:30 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//mat-option//span[normalize-space()='Arrear DA Component']")
+2026-05-20 17:08:31 - PayRevisionSettings - INFO - Found 6 elements: ('xpath', "//span[contains(@class,'mat-checkbox-inner-container')]")
+2026-05-20 17:08:31 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//button[contains(.,'Submit as save')]")
+2026-05-20 17:08:32 - PayRevisionSettings - INFO - Success toast appeared.
+2026-05-20 17:08:33 - PayRevisionSettings - INFO - Clicked on element: ('xpath', "//compfie-toast-notification//mat-icon[@data-mat-icon-name='x']")
+2026-05-20 17:08:38 - PayRevisionSettings - INFO - Pay revision settings created.
+2026-05-20 17:08:38 - PayRevisionSettings - INFO - ✓ Pay revision settings completed.

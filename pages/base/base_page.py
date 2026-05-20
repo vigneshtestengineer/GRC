@@ -225,6 +225,32 @@ class BasePage:
                 )
                 time.sleep(0.4)
     
+    def clear_text(self, locator):
+        """
+        Clears the content of an input field.
+        Args:
+            locator (tuple): Element locator
+        """
+        element = self.find_element(locator)
+        self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", element)
+        try:
+            element.click()
+        except WebDriverException:
+            self.driver.execute_script("arguments[0].click();", element)
+        try:
+            element.clear()
+        except WebDriverException:
+            pass
+        try:
+            element.send_keys(Keys.CONTROL, "a")
+            element.send_keys(Keys.DELETE)
+        except WebDriverException:
+            self.driver.execute_script(
+                "arguments[0].value = ''; arguments[0].dispatchEvent(new Event('input', {bubbles:true}));",
+                element,
+            )
+        self.logger.info(f"Cleared text in element: {locator}")
+
     def get_text(self, locator):
         """
         Gets text from element

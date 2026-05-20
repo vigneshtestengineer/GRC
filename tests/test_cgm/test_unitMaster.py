@@ -19,7 +19,7 @@ def test_open_general_master_executive(driver):
 
     executive_page = unit_Master(driver)
     executive_page.open_general_master_executive()
-    executive_page.general_master_menu()
+    # executive_page.general_master_menu()
     executive_page.create_unit_master()
 
     assert "unit-creation" in driver.current_url

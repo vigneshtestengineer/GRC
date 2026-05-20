@@ -1,12 +1,12 @@
 import pytest
-from pages.cgm.statutory_mapping.Holiday_Mapping import HolidayMapping
+from pages.cgm.Loan_Master import LoanMaster
 from pages.login.grc_login_page import GRCLoginPage
 from utilities.json_config import get_str
 
-MODULE_NAME = "Holiday Mapping"
+MODULE_NAME = "Loan Master"
 
 @pytest.mark.e2e
-def test_holiday_mapping(driver):
+def test_loan_master(driver):
 
     # login_page = GRCLoginPage(driver)
     # username   = get_str("auth", "username", "")
@@ -15,6 +15,6 @@ def test_holiday_mapping(driver):
     # login_page.login(username, password, group_name)
     # print("✓ Logged in successfully")
 
-    page = HolidayMapping(driver)
-    page.add_holiday_mapping()
-    print("✓ Holiday Mapping completed successfully")
+    page = LoanMaster(driver)
+    page.navigate_to_weekly_holiday_master()
+    print("✓ Loan Master completed successfully")

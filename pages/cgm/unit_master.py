@@ -362,26 +362,11 @@ class unit_Master(BasePage):
     # Click General master to create the unit creation
 
     def general_master_menu(self):
-        # # If the menu is already open, clicking again would close it (toggle).
-        # if self.is_element_visible(self.CLICK_ON_UNIT_MASTER, timeout=2):
-        #     self.logger.info("General Master menu already expanded.")
-        #     return
-
-        for attempt in range(1, 3):
-            try:
-                self.click(self.OPEN_GENERAL_MASTER_MENU, timeout=5)
-                # self.wait_for_element_to_be_clickable(self.CLICK_ON_UNIT_MASTER, timeout=8)
-                self.logger.info(
-                    "General Master menu expanded successfully%s.",
-                    " on retry" if attempt > 1 else "",
-                )
-                return
-            except Exception as e:
-                self.logger.debug(f"Attempt {attempt} failed: {e}")
-
-        raise RuntimeError(
-            "Could not expand 'General Master(s)' menu to access 'Unit Creation' after 2 attempts."
-        )
+        self.scroll_to_element(self.OPEN_GENERAL_MASTER_MENU)
+        self.sleep(0.3)
+        parent_el = self.find_element(self.OPEN_GENERAL_MASTER_MENU)
+        self.driver.execute_script("arguments[0].click();", parent_el)
+        self.logger.info("Expanded General Master(s) menu.")
 
     # Create Unit master
 

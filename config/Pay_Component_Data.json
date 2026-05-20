@@ -1,4 +1,48 @@
 {
-    "Effective Month" :"January",
-    "Effective Year" :"2024"
+    "Basic Details" : {
+        "Effective Month": "January",
+        "Effective Year": "2024",
+        "Payroll Applicability CTC": "Include for CTC",
+        "Payroll Applicability Gross": "Include for Gross Earnings",
+        "Payroll Applicability Taxable" :"Taxable Component",
+        "Arrear Components": "Arrear Component (Pay Revisions)"
+    },
+    "Fixed components" : {
+        "Basic": "FD Basic",
+        "HRA": "FD HRA",
+        "DA": "DA",
+        "Behaviour Type": "Direct Input"
+    },
+    "Earned components" : {
+        "Earned Basic": "Earn Basic",
+        "Earned HRA": "Earned HRA",
+        "Earned DA": "Earned DA",
+        "Behaviour Type": "Percentage-Field",
+        "Payroll_Based_On": "LOP"
+    },
+    "Monthly Components" : {
+        "Incentive" : "Incentive",
+        "Behaviour Type": "Direct Input"
+    },
+    "Arrear Components" : {
+        "Arrear Basic": "Arrear Basic",
+        "Arrear HRA": "Arrear HRA",
+        "Arrear DA": "Arrear DA Component",
+        "Behaviour Type": "Direct Input"
+    },
+    "Days Matching Components" : {
+        "Month Days": "Month Days",
+        "Paid Days": "Paid Days",
+        "Worked Days": "Worked Days",
+        "LOP Days": "LOP",
+        "Behaviour Type": "Days Matching-Field"
+    },
+    "Loan Components" : {
+        "Loan": "EDU Loan",
+        "Loan Interest": "EDU LOANINT",
+        "Behaviour Type": "Direct Input"
+    },
+    "Rounding Method" : {
+        "Rounding Method": "Normal"
+    }
 }

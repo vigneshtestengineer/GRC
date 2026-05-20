@@ -181,13 +181,14 @@ class PTAXStatutoryMapping(BasePage):
         self.click(self.PRIMARY_SETTINGS)
         self.scroll_to_element(self.SELECT_PRIMARY_SETTING)
         self.click(self.SELECT_PRIMARY_SETTING)
+        self.sleep(1)
         DatePicker(self.driver).set_date(
             "(//button[@aria-label='Open calendar'])[1]", self._applied_from
         )
         self.click(self.SAVE_BTN)
-        self.sleep(5)
+        self.sleep(2)
         self.driver.refresh()
-        self.sleep(5)
+        self.sleep(2)
 
     # ── Public orchestration ──────────────────────────────────────────────────
     def add_ptax_statutory_mapping(self):

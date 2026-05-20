@@ -49,7 +49,10 @@ TEST_ORDER = [
     "ptax_statutory_mapping",
     "minimum_wage_statutory_mapping",
     "holiday_rules_statutory_mapping",
-    "holiday_mapping"
+    "holiday_mapping",
+    "pay_component_mapping",
+    "loan_master",
+    "pay_revision_settings"
     # add next test module keywords here in execution order
 ]
 

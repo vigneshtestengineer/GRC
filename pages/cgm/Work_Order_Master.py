@@ -293,7 +293,7 @@ class WorkOrderMaster(BasePage):
         self.sleep(2)
         self.logger.info("Refreshing page...")
         self.driver.refresh()
-        self.sleep(5)
+        self.sleep(2)
         self.logger.info("Page refreshed after Work Order Master creation.")
 
     # ── Public orchestration ──────────────────────────────────────────────────

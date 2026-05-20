@@ -12,7 +12,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pages.base.date_picker import DatePicker
 from utilities.json_config import get_str
 
-LEGAL_ENTITY = get_str("auth", "legal_entity", "")
+# LEGAL_ENTITY = get_str("auth", "legal_entity", "")
 
 CONTRACT_LABOUR_DATA_FILE = (
     Path(__file__).resolve().parents[3] / "config" / "Contract_Labour_Data.json"
@@ -36,7 +36,7 @@ def _load_json(path):
         return {}
 
 
-class PFStatutoryMapping(BasePage):
+class LWFStatutoryMapping(BasePage):
 
     # ── CGM Navigation ────────────────────────────────────────────────────────
     MENU_BUTTON                = (By.XPATH, "//button[.//mat-icon[text()='apps']]")
@@ -50,7 +50,7 @@ class PFStatutoryMapping(BasePage):
     OPEN_STATUTORY_MAPPING     = (By.XPATH, "//span[normalize-space()='Statutory Master(s)']")
     CLICK_STATUTORY_MAPPING_MENU = (By.XPATH, "//a[.//span[normalize-space()='Statutory Mapping']]")
 
-    # ── PF STATUTORY MAPPING ────────────────────────────────────────────────
+    # ── ESI STATUTORY MAPPING ────────────────────────────────────────────────
     SPLASH_SCREEN_OVERLAY      = (By.TAG_NAME, "compfie-splash-screen")
     ADD_STATUTORY_MAPPING_BTN  = (By.XPATH, "//button[.//span[contains(@class,'mat-button-wrapper') and contains(normalize-space(),'Add')]]")
     STATE_DROPDOWN              = (By.XPATH, "//span[normalize-space()='Choose State']")
@@ -59,13 +59,10 @@ class PFStatutoryMapping(BasePage):
     UNIT_DROPDOWN               = (By.XPATH, "//span[normalize-space()='Choose Unit']")
     SELECT_UNIT                 = (By.XPATH, "(//mat-option[@role='option'])[2]")
 
-    # OPEN PF STATUTORY MAPPING DETAILS
-    OPEN_PF_STATUTORY_MAPPING_DETAILS = (By.XPATH, "//mat-expansion-panel-header[@id='mat-expansion-panel-header-0']")
-    ENABLE_PF_STATUTORY_MAPPING     = (By.XPATH, "//input[@role='switch']")
-    SELECT_CONTRACTOR_BASED     = (By.XPATH, "//label[.//span[contains(normalize-space(),'Contractor Employee')]]")
-    CONTRACTOR_DROPDOWN          = (By.XPATH, "//mat-select[.//span[normalize-space()='Contractor']]")
-    SELECT_CONTRACTOR              = (By.XPATH, "(//mat-option[@role='option'])[2]")
-    PRIMARY_SETTINGS              = (By.XPATH, "(//mat-select//div[contains(@class,'mat-select-trigger')])[4]")
+    # OPEN LWF STATUTORY MAPPING DETAILS
+    OPEN_LWF_STATUTORY_MAPPING_DETAILS = (By.XPATH, "(//mat-expansion-panel-header)[5]")
+    ENABLE_LWF_STATUTORY_MAPPING     = (By.XPATH, "(//input[@role='switch'])[5]")
+    PRIMARY_SETTINGS              = (By.XPATH, "(//mat-select//div[contains(@class,'mat-select-trigger')])[12]")
     SELECT_PRIMARY_SETTING         = None  # set dynamically in __init__ from Statutory_Mapping_Data.json
     SELECT_LIMIT_BASED             = None  # set dynamically in __init__ from Statutory_Mapping_Data.json
     SAVE_BTN                   = (By.XPATH, "//button[.//span[normalize-space()='Submit as save']]")
@@ -79,17 +76,17 @@ class PFStatutoryMapping(BasePage):
 
         contractor_info   = _contractor_data.get("Contractor_Information", {})
         unit_details      = _unit_data.get("Unit_Details", {})
-        pf_data           = _statutory_data.get("PF", {})
+        lwf_data           = _statutory_data.get("LWF", {})
 
         self._unit_name        = unit_details.get("unit_name", "")
         self._state            = unit_details.get("State", "")
         self._contractor_name  = contractor_info.get("Contractor_Name", "")
 
-        _pf_primary_setting  = pf_data.get("PF Primary settings", "")
-        _limit_based         = pf_data.get("Limit_Based", "")
-        self._applied_from   = pf_data.get("Applied_From", "")
+        _lwf_primary_setting  = lwf_data.get("LWF Primary settings", "")
+        _limit_based         = lwf_data.get("Limit_Based", "")
+        self._applied_from   = lwf_data.get("Applied_From", "")
         self.SELECT_PRIMARY_SETTING = (
-            By.XPATH, f"//mat-option//span[normalize-space()='{_pf_primary_setting}']"
+            By.XPATH, f"//mat-option[.//span[@class='mat-option-text' and normalize-space()='{_lwf_primary_setting}']]"
         )
         self.SELECT_LIMIT_BASED = (
             By.XPATH, f"//mat-radio-button[.//*[contains(text(),'{_limit_based}')]]"
@@ -154,49 +151,39 @@ class PFStatutoryMapping(BasePage):
     #             self.logger.warning("Legal entity click attempt %d did not enable button.", attempt)
     #     raise RuntimeError("Legal entity row was clicked but the select button did not become enabled.")
 
-    # ── Step 1: Navigate to Contractor Labour Master ─────────────────────────────────
+    # #── Step 1: Navigate to Statutory Mapping ─────────────────────────────────
 
-    def navigate_to_statutory_mapping(self):
-        # self.wait_for_element(self.OPEN_STATUTORY_MAPPING, timeout=15)
-        self.click(self.OPEN_STATUTORY_MAPPING)
-        self.wait_for_element(self.CLICK_STATUTORY_MAPPING_MENU, timeout=10)
-        self.click(self.CLICK_STATUTORY_MAPPING_MENU)
-        self.wait_for_element(self.ADD_STATUTORY_MAPPING_BTN, timeout=15)
-        self.logger.info("Navigated to Statutory Mapping page.")
+    # def navigate_to_statutory_mapping(self):
+    #     self.wait_for_element(self.OPEN_STATUTORY_MAPPING, timeout=15)
+    #     self.click(self.OPEN_STATUTORY_MAPPING)
+    #     self.wait_for_element(self.CLICK_STATUTORY_MAPPING_MENU, timeout=10)
+    #     self.click(self.CLICK_STATUTORY_MAPPING_MENU)
+    #     self.wait_for_element(self.ADD_STATUTORY_MAPPING_BTN, timeout=15)
+    #     self.logger.info("Navigated to Statutory Mapping page.")
 
     # ── Step 3: MAPPING THE STATUTORY SETTINGS ───────────────────────────────────────────────────
-    def _add_pf_statutory_mapping(self):
+    def _add_lwf_statutory_mapping(self):
         self.click(self.ADD_STATUTORY_MAPPING_BTN)
         self.wait_for_element(self.STATE_DROPDOWN, timeout=10)
         self.click(self.STATE_DROPDOWN)
         self.sleep(1)
         self.enter_text(self.SEARCH, self._state)
         self.sleep(1)
-        self.wait_for_element(self.SELECT_DROPDOWN_OPTION, timeout=10)
         self.click(self.SELECT_DROPDOWN_OPTION)
-        self.sleep(1)
         self.click(self.UNIT_DROPDOWN)
         self.sleep(1)
         self.enter_text(self.SEARCH, self._unit_name)
         self.sleep(1)
         self.click(self.SELECT_UNIT)
-        self.sleep(1)
         self.driver.switch_to.active_element.send_keys(Keys.ESCAPE)
         self.sleep(1)
-        self.click(self.OPEN_PF_STATUTORY_MAPPING_DETAILS)
+        self.click(self.OPEN_LWF_STATUTORY_MAPPING_DETAILS)
         self.sleep(0.5)
         self.logger.info("Selected state '%s' and unit '%s'.", self._state, self._unit_name)
-        self.click(self.ENABLE_PF_STATUTORY_MAPPING)
+        self.click(self.ENABLE_LWF_STATUTORY_MAPPING)
         self.sleep(0.5)
-        self.click(self.SELECT_CONTRACTOR_BASED)
-        self.sleep(0.5)
-        self.click(self.CONTRACTOR_DROPDOWN)
-        self.enter_text(self.SEARCH, self._contractor_name)
-        self.click(self.SELECT_CONTRACTOR)
-        self.driver.switch_to.active_element.send_keys(Keys.ESCAPE)
-        self.sleep(1)
-        self.wait_for_element_to_disappear(self.SPLASH_SCREEN_OVERLAY, timeout=15)
         self.click(self.PRIMARY_SETTINGS)
+        self.scroll_to_element(self.SELECT_PRIMARY_SETTING)
         self.click(self.SELECT_PRIMARY_SETTING)
         DatePicker(self.driver).set_date(
             "(//button[@aria-label='Open calendar'])[1]", self._applied_from
@@ -205,14 +192,14 @@ class PFStatutoryMapping(BasePage):
         self.click(self.SAVE_BTN)
         self.sleep(5)
         self.driver.refresh()
-        self.sleep(2)
+        self.sleep(5)
 
     # ── Public orchestration ──────────────────────────────────────────────────
-    def add_pf_statutory_mapping(self):
-        self.logger.info("=== Add PF Statutory Mapping flow started ===")
+    def add_LWF_statutory_mapping(self):
+        self.logger.info("=== Add ESI Statutory Mapping flow started ===")
         # self.open_cgm_executive()
-        self.navigate_to_statutory_mapping()
-        self._add_pf_statutory_mapping()
+        # self.navigate_to_statutory_mapping()
+        self._add_lwf_statutory_mapping()
 
-        self.logger.info("=== Add PF Statutory Mapping flow completed ===")
+        self.logger.info("=== Add ESI Statutory Mapping flow completed ===")
 

@@ -230,7 +230,7 @@ class ContractLabourMaster(BasePage):
         self.logger.info("Contractor labour information submitted for '%s'.", self._labour_name)
         self.sleep(5)
         self.driver.refresh()
-        self.sleep(5)
+        self.sleep(2)
 
     # ── Public orchestration ──────────────────────────────────────────────────
     def add_contract_labour_master(self):
